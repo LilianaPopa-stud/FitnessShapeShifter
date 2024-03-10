@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EEF2B9DD228009E12F2 /* ForgotPasswordButton.swift */; };
+		E6129EF52B9DD228009E12F2 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF02B9DD228009E12F2 /* ForgotPasswordView.swift */; };
+		E6129EF62B9DD228009E12F2 /* LogInConfirmationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF12B9DD228009E12F2 /* LogInConfirmationButton.swift */; };
+		E6129EF72B9DD228009E12F2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF22B9DD228009E12F2 /* LoginView.swift */; };
+		E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF92B9DD607009E12F2 /* ProfileView.swift */; };
+		E6129EFF2B9DE920009E12F2 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EFE2B9DE920009E12F2 /* UserManager.swift */; };
 		E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */; };
 		E654CBAF2B9D38400017B3F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBAE2B9D38400017B3F6 /* Assets.xcassets */; };
 		E654CBB22B9D38400017B3F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBB12B9D38400017B3F6 /* Preview Assets.xcassets */; };
@@ -26,10 +32,6 @@
 		E654CC162B9D3B020017B3F6 /* SignUpConfirmationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBCF2B9D3B010017B3F6 /* SignUpConfirmationButton.swift */; };
 		E654CC172B9D3B020017B3F6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD12B9D3B010017B3F6 /* LoginViewModel.swift */; };
 		E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD22B9D3B010017B3F6 /* RegisterViewModel.swift */; };
-		E654CC192B9D3B020017B3F6 /* ForgotPasswordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD42B9D3B010017B3F6 /* ForgotPasswordButton.swift */; };
-		E654CC1A2B9D3B020017B3F6 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD52B9D3B010017B3F6 /* ForgotPasswordView.swift */; };
-		E654CC1B2B9D3B020017B3F6 /* LogInConfirmationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD62B9D3B010017B3F6 /* LogInConfirmationButton.swift */; };
-		E654CC1C2B9D3B020017B3F6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD72B9D3B010017B3F6 /* LoginView.swift */; };
 		E654CC1D2B9D3B020017B3F6 /* ActivityLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBD92B9D3B010017B3F6 /* ActivityLevel.swift */; };
 		E654CC1E2B9D3B020017B3F6 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBDA2B9D3B010017B3F6 /* AppBackground.swift */; };
 		E654CC1F2B9D3B020017B3F6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBDB2B9D3B010017B3F6 /* CustomTextField.swift */; };
@@ -81,6 +83,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E6129EEF2B9DD228009E12F2 /* ForgotPasswordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordButton.swift; sourceTree = "<group>"; };
+		E6129EF02B9DD228009E12F2 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		E6129EF12B9DD228009E12F2 /* LogInConfirmationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInConfirmationButton.swift; sourceTree = "<group>"; };
+		E6129EF22B9DD228009E12F2 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E6129EF92B9DD607009E12F2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		E6129EFE2B9DE920009E12F2 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E654CBA72B9D383E0017B3F6 /* FitnessShapeShifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessShapeShifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessShapeShifterApp.swift; sourceTree = "<group>"; };
 		E654CBAE2B9D38400017B3F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,10 +104,6 @@
 		E654CBCF2B9D3B010017B3F6 /* SignUpConfirmationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpConfirmationButton.swift; sourceTree = "<group>"; };
 		E654CBD12B9D3B010017B3F6 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		E654CBD22B9D3B010017B3F6 /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
-		E654CBD42B9D3B010017B3F6 /* ForgotPasswordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordButton.swift; sourceTree = "<group>"; };
-		E654CBD52B9D3B010017B3F6 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
-		E654CBD62B9D3B010017B3F6 /* LogInConfirmationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInConfirmationButton.swift; sourceTree = "<group>"; };
-		E654CBD72B9D3B010017B3F6 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E654CBD92B9D3B010017B3F6 /* ActivityLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevel.swift; sourceTree = "<group>"; };
 		E654CBDA2B9D3B010017B3F6 /* AppBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
 		E654CBDB2B9D3B010017B3F6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -167,6 +171,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E6129EF32B9DD228009E12F2 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				E6129EEF2B9DD228009E12F2 /* ForgotPasswordButton.swift */,
+				E6129EF02B9DD228009E12F2 /* ForgotPasswordView.swift */,
+				E6129EF12B9DD228009E12F2 /* LogInConfirmationButton.swift */,
+				E6129EF22B9DD228009E12F2 /* LoginView.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		E6129EF82B9DD5D0009E12F2 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				E6129EF92B9DD607009E12F2 /* ProfileView.swift */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		E6129EFC2B9DE39E009E12F2 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		E6129EFD2B9DE3AE009E12F2 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				E6129EFE2B9DE920009E12F2 /* UserManager.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
 		E654CB9E2B9D383E0017B3F6 = {
 			isa = PBXGroup;
 			children = (
@@ -188,13 +227,11 @@
 			children = (
 				E654CC4D2B9D3FDE0017B3F6 /* Info.plist */,
 				E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */,
-				E654CC092B9D3B020017B3F6 /* Authentication */,
+				E654CC092B9D3B020017B3F6 /* Managers */,
 				E654CBC62B9D3B000017B3F6 /* Actions */,
 				E654CC072B9D3B020017B3F6 /* fonts */,
 				E654CBCB2B9D3B010017B3F6 /* Helpers */,
-				E654CBD82B9D3B010017B3F6 /* LoginView */,
 				E654CC0C2B9D3B020017B3F6 /* Models */,
-				E654CBD02B9D3B010017B3F6 /* RegisterView */,
 				E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */,
 				E654CBD32B9D3B010017B3F6 /* ViewModels */,
 				E654CBE12B9D3B010017B3F6 /* Views */,
@@ -250,20 +287,12 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		E654CBD82B9D3B010017B3F6 /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-				E654CBD42B9D3B010017B3F6 /* ForgotPasswordButton.swift */,
-				E654CBD52B9D3B010017B3F6 /* ForgotPasswordView.swift */,
-				E654CBD62B9D3B010017B3F6 /* LogInConfirmationButton.swift */,
-				E654CBD72B9D3B010017B3F6 /* LoginView.swift */,
-			);
-			path = LoginView;
-			sourceTree = "<group>";
-		};
 		E654CBE12B9D3B010017B3F6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E6129EF82B9DD5D0009E12F2 /* ProfileView */,
+				E654CBD02B9D3B010017B3F6 /* RegisterView */,
+				E6129EF32B9DD228009E12F2 /* LoginView */,
 				E654CBD92B9D3B010017B3F6 /* ActivityLevel.swift */,
 				E654CBCC2B9D3B010017B3F6 /* MainScreenView.swift */,
 				E654CBDA2B9D3B010017B3F6 /* AppBackground.swift */,
@@ -328,12 +357,13 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
-		E654CC092B9D3B020017B3F6 /* Authentication */ = {
+		E654CC092B9D3B020017B3F6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */,
+				E6129EFD2B9DE3AE009E12F2 /* Firestore */,
+				E6129EFC2B9DE39E009E12F2 /* Authentication */,
 			);
-			path = Authentication;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		E654CC0C2B9D3B020017B3F6 /* Models */ = {
@@ -468,25 +498,27 @@
 				E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */,
 				E654CC222B9D3B020017B3F6 /* NextButton.swift in Sources */,
 				E654CC4B2B9D3B020017B3F6 /* LoginResponse.swift in Sources */,
+				E6129EF62B9DD228009E12F2 /* LogInConfirmationButton.swift in Sources */,
+				E6129EFF2B9DE920009E12F2 /* UserManager.swift in Sources */,
 				E654CC1F2B9D3B020017B3F6 /* CustomTextField.swift in Sources */,
 				E654CC152B9D3B020017B3F6 /* SignInLink.swift in Sources */,
+				E6129EF52B9DD228009E12F2 /* ForgotPasswordView.swift in Sources */,
 				E654CC492B9D3B020017B3F6 /* AuthenticationManager.swift in Sources */,
 				E654CC212B9D3B020017B3F6 /* Goal.swift in Sources */,
-				E654CC1B2B9D3B020017B3F6 /* LogInConfirmationButton.swift in Sources */,
+				E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */,
 				E654CC122B9D3B020017B3F6 /* View+Extensions.swift in Sources */,
 				E654CC102B9D3B020017B3F6 /* KeyBoardHandler.swift in Sources */,
 				E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */,
-				E654CC1C2B9D3B020017B3F6 /* LoginView.swift in Sources */,
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
 				E654CC172B9D3B020017B3F6 /* LoginViewModel.swift in Sources */,
 				E654CC242B9D3B020017B3F6 /* WelcomeScreenView.swift in Sources */,
 				E654CC0E2B9D3B020017B3F6 /* LoginAction.swift in Sources */,
+				E6129EF72B9DD228009E12F2 /* LoginView.swift in Sources */,
 				E654CC1E2B9D3B020017B3F6 /* AppBackground.swift in Sources */,
-				E654CC192B9D3B020017B3F6 /* ForgotPasswordButton.swift in Sources */,
 				E654CC112B9D3B020017B3F6 /* Keyboardresponder.swift in Sources */,
 				E654CC232B9D3B020017B3F6 /* WeightAndHeight.swift in Sources */,
-				E654CC1A2B9D3B020017B3F6 /* ForgotPasswordView.swift in Sources */,
+				E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */,
 				E654CC132B9D3B020017B3F6 /* MainScreenView.swift in Sources */,
 				E654CC1D2B9D3B020017B3F6 /* ActivityLevel.swift in Sources */,
 			);

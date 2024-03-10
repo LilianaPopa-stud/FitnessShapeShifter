@@ -47,21 +47,21 @@ struct RegisterView: View {
                             .padding()
                             .foregroundStyle(.secondary)
                         // full name
-                        //                        CustomTextField(sfIcon: "person", hint: "Full Name", value: $viewModel.fullName)
-                        //                            .focused($fullNameFocused)
-                        //                            .keyboardType(.default)
-                        //                            .autocorrectionDisabled(true)
-                        //                            .autocapitalization(.none)
-                        //                            .onTapGesture {
-                        //                                fullNameFocused = true
-                        //                            }
-                        //                            .onSubmit {
-                        //                                fullNameFocused = false
-                        //                                emailFocused = true
-                        //                            }
-                        //                            .padding(.bottom,5)
+                        CustomTextField(sfIcon: "person", hint: "Full Name", value: $viewModel.displayName)
+                            .focused($fullNameFocused)
+                            .keyboardType(.default)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+                            .onTapGesture {
+                                fullNameFocused = true
+                            }
+                            .onSubmit {
+                                fullNameFocused = false
+                                emailFocused = true
+                            }
+                            .padding(.bottom,5)
                         
-                        // email
+                        //email
                         CustomTextField(sfIcon: "at", hint: "Email", value: $viewModel.email)
                             .focused($emailFocused)
                             .keyboardType(.default)
@@ -94,13 +94,13 @@ struct RegisterView: View {
                         }
                         // sign up button
                         SignUpConfirmationButton(viewModel: viewModel, errorMessages: $errorMessage, showSignInView: $showSignInView)
-                            .disableWithOpacity( viewModel.email.isEmpty || viewModel.password.isEmpty)
+                            .disableWithOpacity( viewModel.email.isEmpty || viewModel.password.isEmpty || viewModel.displayName.isEmpty)
                             .padding(.top, 10)
                         
                         if errorMessage != nil {
                             Text(errorMessage!)
                                 .foregroundColor(.red)
-                                
+                            
                         }
                     }
                     .padding(.horizontal, 30)

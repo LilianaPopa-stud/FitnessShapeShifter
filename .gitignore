@@ -1,3 +1,5 @@
 
 *.resolved
 FitnessShapeShifter.xcodeproj/xcuserdata/lilschnapsidee.xcuserdatad/xcschemes/xcschememanagement.plist
+*.xcbkptlist
+*.pbxproj
