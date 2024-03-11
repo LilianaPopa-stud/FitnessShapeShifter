@@ -8,7 +8,14 @@
 import SwiftUI
 
 struct MainScreenView: View {
-    @State private var showSignInView: Bool = false
+    @State private var showSignInView: Bool = true
+    init() {
+   
+           UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
+           let attributes: [NSAttributedString.Key:Any] = [
+               .foregroundColor: UIColor.white]
+           UISegmentedControl.appearance().setTitleTextAttributes(attributes, for: .selected)
+       }
     var body: some View {
         ZStack{
             NavigationStack{
@@ -20,7 +27,7 @@ struct MainScreenView: View {
             self.showSignInView = authUser == nil ? true : false
             
         }
-        .fullScreenCover(isPresented: $showSignInView) {
+        .fullScreenCover(isPresented: $showSignInView ) {
             NavigationStack{
                 WelcomeScreenView(showSignInView: $showSignInView)
             }

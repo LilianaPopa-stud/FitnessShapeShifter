@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct FinishOnboardingButton: View {
+    @ObservedObject var viewModel: ProfileViewModel
+    // @Binding var errorMessages: String?
+    @Binding var showSignInView: Bool
+    @Binding var showOnboarding: Bool
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            Task{
+                do{
+                    try await viewModel.loadCurrentUser()
+                    try /*await*/ viewModel.saveUserProfile()
+                    showOnboarding = false
+                    showSignInView = false
+                }
+                catch{
+                    print("Error signing up: \(error.localizedDescription)")
+                    
+                }
+            }
+        }) {
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("Finish")  
+                    Image(systemName: "checkmark")
+                }
+            }
+            .font(Font.custom("RobotoCondensed-Bold", size: 20))
+            .padding(.trailing, 10)}
     }
 }
 
+
 #Preview {
-    FinishOnboardingButton()
+    FinishOnboardingButton(viewModel: ProfileViewModel(), showSignInView: .constant(false), showOnboarding: .constant(false))
 }

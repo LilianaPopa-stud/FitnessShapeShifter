@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct WeightAndHeight: View {
+    
+    @StateObject var viewModel: ProfileViewModel
+    @Binding var showSignInView: Bool
+    @Binding var showOnboarding: Bool
+    
     @State private var weight: Double?
     @State private var height: Double?
     @State private var selectedUnitIndex = 0
@@ -49,6 +54,7 @@ struct WeightAndHeight: View {
                                 Text("\(ages[index])")
                             }
                         }
+                        .onChange(of: selectedAgeIndex, { viewModel.age = ages[selectedAgeIndex] })
                         .pickerStyle(DefaultPickerStyle())
                         
                         Spacer()
@@ -59,31 +65,42 @@ struct WeightAndHeight: View {
                             Text(self.measurementUnits[$0])
                         }
                     }
+                    /*onChange(of: selectedUnitIndex, {viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]})*/
+                    
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(maxWidth: .infinity)
                     HStack {
-                        TextField("Height", value: $height, format: .number)
+                        TextField("Height", value: $viewModel.height, format: .number)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(maxWidth: .infinity)
                             .focused($isHeightFieldFocused)
                             .onTapGesture {
                                 isHeightFieldFocused = true
                             }
-                        TextField("Weight", value: $weight, format: .number)
+                            .onSubmit {
+                                isHeightFieldFocused = false
+                                isWeightFieldFocused = true
+                                viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]
+                                viewModel.age = ages[selectedAgeIndex]
+                                
+                            }
+                        TextField("Weight", value: $viewModel.weight, format: .number)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(maxWidth: .infinity)
                             .focused($isWeightFieldFocused)
-                            .onTapGesture {
-                                isHeightFieldFocused = false
-                                isWeightFieldFocused = true
+                            .onSubmit {
+                                isWeightFieldFocused = false
+                                viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]
+                                viewModel.age = ages[selectedAgeIndex]
+                                
                             }
-                        
                         
                     }
                     
                     .padding(.bottom, 10)
                     NextButton(buttonTitle: "Next", isLast: false,
-                               isActive: $isNextViewActive, destination: Goal())}
+                               isActive: $isNextViewActive, destination: Goal(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding))}
+                
                 .padding(30)
                 
             }
@@ -95,5 +112,5 @@ struct WeightAndHeight: View {
 }
 
 #Preview {
-    WeightAndHeight()
+    WeightAndHeight(viewModel: ProfileViewModel(), showSignInView: .constant(true),showOnboarding: .constant(false))
 }

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ActivityLevel: View {
+    @StateObject var viewModel: ProfileViewModel
+    @Binding var showSignInView: Bool
+    @Binding var showOnboarding: Bool
     @State private var isSheetShowing = false
     @State private var isNextViewActive = false
     @State private var selectedActivityLevelIndex = 2
@@ -54,10 +57,14 @@ struct ActivityLevel: View {
                         Text(activityLevels[index]).tag(index)
                     }
                 }
+                .onChange(of: selectedActivityLevelIndex, {viewModel.activityLevel = activityLevels[selectedActivityLevelIndex]})
                 .pickerStyle(WheelPickerStyle())
-                NextButton(buttonTitle: "Finish", isLast: true,
-                           isActive: $isNextViewActive,
-                           destination: Text("Profile"))
+                
+                FinishOnboardingButton(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding)
+//                //change this to update user profile
+//                NextButton(buttonTitle: "Finish", isLast: true,
+//                           isActive: $isNextViewActive,
+//                           destination: Text("Profile"))
                 Spacer()
             }
             .padding(30)
@@ -90,5 +97,5 @@ struct ActivityLevelsSheet: View {
 }
 
 #Preview {
-    ActivityLevel()
+    ActivityLevel(viewModel: ProfileViewModel(), showSignInView: .constant(false), showOnboarding: .constant(false))
 }

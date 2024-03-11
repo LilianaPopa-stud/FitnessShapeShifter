@@ -13,6 +13,8 @@
 		E6129EF72B9DD228009E12F2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF22B9DD228009E12F2 /* LoginView.swift */; };
 		E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF92B9DD607009E12F2 /* ProfileView.swift */; };
 		E6129EFF2B9DE920009E12F2 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EFE2B9DE920009E12F2 /* UserManager.swift */; };
+		E6129F012B9E3DE0009E12F2 /* ProfilePicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F002B9E3DE0009E12F2 /* ProfilePicView.swift */; };
+		E6129F052B9E6BE3009E12F2 /* FinishOnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */; };
 		E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */; };
 		E654CBAF2B9D38400017B3F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBAE2B9D38400017B3F6 /* Assets.xcassets */; };
 		E654CBB22B9D38400017B3F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBB12B9D38400017B3F6 /* Preview Assets.xcassets */; };
@@ -89,6 +91,8 @@
 		E6129EF22B9DD228009E12F2 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E6129EF92B9DD607009E12F2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E6129EFE2B9DE920009E12F2 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		E6129F002B9E3DE0009E12F2 /* ProfilePicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicView.swift; sourceTree = "<group>"; };
+		E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishOnboardingButton.swift; sourceTree = "<group>"; };
 		E654CBA72B9D383E0017B3F6 /* FitnessShapeShifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessShapeShifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessShapeShifterApp.swift; sourceTree = "<group>"; };
 		E654CBAE2B9D38400017B3F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				E6129EF92B9DD607009E12F2 /* ProfileView.swift */,
+				E6129F002B9E3DE0009E12F2 /* ProfilePicView.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				E654CBDC2B9D3B010017B3F6 /* GenderView.swift */,
 				E654CBDD2B9D3B010017B3F6 /* Goal.swift */,
 				E654CBDE2B9D3B010017B3F6 /* NextButton.swift */,
+				E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */,
 				E654CBDF2B9D3B010017B3F6 /* WeightAndHeight.swift */,
 				E654CBE02B9D3B010017B3F6 /* WelcomeScreenView.swift */,
 			);
@@ -515,6 +521,8 @@
 				E654CC242B9D3B020017B3F6 /* WelcomeScreenView.swift in Sources */,
 				E654CC0E2B9D3B020017B3F6 /* LoginAction.swift in Sources */,
 				E6129EF72B9DD228009E12F2 /* LoginView.swift in Sources */,
+				E6129F052B9E6BE3009E12F2 /* FinishOnboardingButton.swift in Sources */,
+				E6129F012B9E3DE0009E12F2 /* ProfilePicView.swift in Sources */,
 				E654CC1E2B9D3B020017B3F6 /* AppBackground.swift in Sources */,
 				E654CC112B9D3B020017B3F6 /* Keyboardresponder.swift in Sources */,
 				E654CC232B9D3B020017B3F6 /* WeightAndHeight.swift in Sources */,

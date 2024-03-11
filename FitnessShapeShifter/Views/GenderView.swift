@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-struct OnboardingView: View {
+struct GenderView: View {
+    @StateObject var viewModel = ProfileViewModel()
+    @Binding var showSignInView: Bool
+    @Binding var showOnboarding: Bool
     @State private var selectedGender = "Female"
     @State var buttonTitle: String = "Next"
     let genders = ["Male", "Female","Other"]
     @State private var selectedAgeIndex = 0
     @State private var isNextViewActive = false
-    init() {
-        UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
-        let attributes: [NSAttributedString.Key:Any] = [
-            .foregroundColor: UIColor.white]
-        UISegmentedControl.appearance().setTitleTextAttributes(attributes, for: .selected)
-    }
+    
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -45,7 +44,7 @@ struct OnboardingView: View {
                         .padding(.top, 10)
                         .foregroundStyle(.secondary)
                         .padding(.bottom, 30)
-                    Picker("Gender", selection: $selectedGender) {
+                    Picker("Gender", selection: $viewModel.gender) {
                         ForEach(genders, id: \.self) {
                             Text($0)
                         }
@@ -54,7 +53,7 @@ struct OnboardingView: View {
                     .background()
                     .padding(.bottom, 10)
                     Spacer()
-                    NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: WeightAndHeight())
+                    NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: WeightAndHeight(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding))
                 }
                 .padding(30)
             }
@@ -63,5 +62,5 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView()
+    GenderView(showSignInView: .constant(false), showOnboarding: .constant(false))
 }

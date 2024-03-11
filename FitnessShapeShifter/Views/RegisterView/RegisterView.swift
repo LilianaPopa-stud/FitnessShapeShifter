@@ -13,6 +13,7 @@ struct RegisterView: View {
     @ObservedObject var viewModel: RegisterViewModel = RegisterViewModel()
     @State var errorMessage: String?
     @State var buttonTitle: String = "Sign up"
+    @State var showOnboarding: Bool = false
     
     @FocusState private var fullNameFocused: Bool
     @FocusState private var emailFocused: Bool
@@ -93,7 +94,7 @@ struct RegisterView: View {
                             Spacer()
                         }
                         // sign up button
-                        SignUpConfirmationButton(viewModel: viewModel, errorMessages: $errorMessage, showSignInView: $showSignInView)
+                        SignUpConfirmationButton(viewModel: viewModel, errorMessages: $errorMessage, showSignInView: $showSignInView, showOnboarding: $showOnboarding)
                             .disableWithOpacity( viewModel.email.isEmpty || viewModel.password.isEmpty || viewModel.displayName.isEmpty)
                             .padding(.top, 10)
                         
@@ -125,10 +126,18 @@ struct RegisterView: View {
                     self.isKeyboardVisible = false
                 }
             }
-        } } }
+            .fullScreenCover(isPresented: $showOnboarding) {
+                NavigationStack{
+                    GenderView(showSignInView: $showSignInView, showOnboarding: $showOnboarding)
+                }
+            }
+            
+        }
+        
+    } }
 
 
 
 #Preview {
-    RegisterView(showSignInView: .constant(false))
+    RegisterView(showSignInView: .constant(true))
 }

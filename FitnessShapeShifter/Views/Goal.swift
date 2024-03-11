@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct Goal: View {
+    @StateObject var viewModel: ProfileViewModel
+    @Binding var showSignInView: Bool
+    @Binding var showOnboarding: Bool
     @State private var selectedGoalIndex = 2
       let fitnessGoals = [
           "Weight Loss",
@@ -42,10 +45,11 @@ struct Goal: View {
                         Text(fitnessGoals[index]).tag(index)
                     }
                 }
+                .onChange(of: selectedGoalIndex, {viewModel.goal = fitnessGoals[selectedGoalIndex]})
                 .pickerStyle(WheelPickerStyle())
                 .padding(.bottom, 30)
                
-                NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: ActivityLevel())
+                NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: ActivityLevel(viewModel: viewModel, showSignInView: $showSignInView,showOnboarding: $showOnboarding))
                 
                 Spacer()
             }
@@ -55,5 +59,5 @@ struct Goal: View {
 }
 
 #Preview {
-    Goal()
+    Goal(viewModel: ProfileViewModel(), showSignInView: .constant(false), showOnboarding: .constant(false))
 }
