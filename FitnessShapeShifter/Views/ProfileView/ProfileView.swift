@@ -26,15 +26,16 @@ final class ProfileViewModel: ObservableObject {
         let authDataRestult = try  AuthenticationManager.shared.getAuthenticatedUser()
         self.user = try await UserManager.shared.fetchUser(userId: authDataRestult.uid)
     }
-    func saveUserProfile() throws {
+    func saveUserProfile() async throws {
         guard let user else { return }
         Task {
             try await UserManager.shared.updateUser(userId: user.userId, age: age, weight: weight ?? 0, height: height ?? 0, gender: gender, goal: goal, activityLevel: activityLevel, measurementUnit: measurementUnit)
             self.user = try await UserManager.shared.fetchUser(userId: user.userId)
             
         }
+        
     }
-
+    
     
 }
 protocol DBUserMock{
@@ -62,57 +63,79 @@ class MockProfileViewModel: ObservableObject {
 
 struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
-   // @StateObject private var viewModel = MockProfileViewModel()
+    // @StateObject private var viewModel = MockProfileViewModel()
     @Binding var showSignInView: Bool
+    @State private var refreshProfile = false
     
     
     var body: some View {
         ZStack {
             AppBackground()
-            ScrollView {
-                VStack {
-                    ProfilePicView(imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqYwDFciXUM91OfgdrjzDYHaxX66xQtYqHCw&usqp=CAU")
-                    //.padding(.top,30)
-                    
-                    Text("\(viewModel.user?.displayName ?? "Guest")")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                    Text("\(String(describing: viewModel.user?.email ?? "Guest"))")
-                        .font(.caption)
-                        .padding(.bottom, 10)
-                    // edit profile button
-                    Button(action: {
-                        // Handle edit profile action
-                    }) {
-                        Text("Edit Profile")
-                            .font(.subheadline)
-                            .padding(.horizontal,25)
-                            .padding(.vertical, 3)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.blue, lineWidth: 1)
-                                
-                            )}
+            VStack {
+                ProfilePicView()
+                //.padding(.top,30)
+                
+                Text("\(viewModel.user?.displayName ?? "Guest")")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                Text("\(String(describing: viewModel.user?.email ?? "Guest"))")
+                    .font(.caption)
                     .padding(.bottom, 10)
-                    Divider()
-                        .frame(minHeight: 0.5)
-                        .background(Color.gray)
-                        .padding(.horizontal, 20)
+                Button(action: {
+                    // Handle edit profile action
+                }) {
+                    Text("Edit Profile")
+                        .font(.subheadline)
+                        .padding(.horizontal,25)
+                        .padding(.vertical, 3)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.blue, lineWidth: 1)
+                            
+                        )}
+                .padding(.bottom, 10)
+                Divider()
+                    .frame(minHeight: 0.5)
+                    .background(Color.gray)
+                    .padding(.horizontal, 20)
+                //                ScrollView {
+                //                    VStack(alignment: .leading, spacing: 5) {
+                //                        Text("Name: \(viewModel.user?.displayName ?? "Guest")")
+                //                        Text("Email: \(viewModel.user?.email ?? "Guest")")
+                //                        Text("Member since: \(viewModel.user?.dateCreated ?? Date(), style: .date)")
+                //                        Text("Gender: \(viewModel.user?.gender ?? "Unknown")")
+                //                        Text("Age: \(viewModel.user?.age ?? 0)")
+                //                        Text("Weight: \(viewModel.user?.weight ?? 0.0)")
+                //                        Text("Height: \(viewModel.user?.height ?? 0.0)")
+                //                        Text("Goal: \(viewModel.user?.goal ?? "")")
+                //                        Text("Activity Level: \(viewModel.user?.activityLevel ?? "")")
+                //                        Text("Measurement Unit: \(viewModel.user?.measurementUnit ?? "")")
+                //                    }
+                //
+                //                }
+                List{
                     
-                    Section(header: Text("User Information")) {
-                        List{
-                            Text(". Age: \(String(describing: viewModel.user?.age))")
-                        }
+                    Text("Name: \(viewModel.user?.displayName ?? "Guest")")
+                    Text("Email: \(viewModel.user?.email ?? "Guest")")
+                    Text("Member since: \(viewModel.user?.dateCreated ?? Date(), style: .date)")
+                    Text("Gender: \(viewModel.user?.gender ?? "Unknown")")
+                    Text("Age: \(viewModel.user?.age ?? 0)")
+                    Text("Weight: \(viewModel.user?.weight ?? 0.0)")
+                    Text("Height: \(viewModel.user?.height ?? 0.0)")
+                    Text("Goal: \(viewModel.user?.goal ?? "")")
+                    Text("Activity Level: \(viewModel.user?.activityLevel ?? "")")
+                    Text("Measurement Unit: \(viewModel.user?.measurementUnit ?? "")")
+                    
+                }
+            }
+                .onAppear(){
+                    Task {
+                        try? await viewModel.loadCurrentUser()
+                        print("din profileView")
+                        print(viewModel.user)
+                        refreshProfile.toggle()
                     }
                 }
-                    .task {
-                        try? await viewModel.loadCurrentUser()
-                        try? viewModel.saveUserProfile()
-                    }
-              
-//                .task {
-//                    try? await viewModel.loadCurrentUser()
-//                }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
@@ -123,7 +146,7 @@ struct ProfileView: View {
                         }
                     }
                 }
-            }
+            
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)

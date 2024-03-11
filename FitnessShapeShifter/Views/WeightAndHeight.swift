@@ -77,12 +77,14 @@ struct WeightAndHeight: View {
                             .onTapGesture {
                                 isHeightFieldFocused = true
                             }
+                            .onChange(of: viewModel.height) {
+                                
+                                viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]
+                                viewModel.age = ages[selectedAgeIndex]
+                            }
                             .onSubmit {
                                 isHeightFieldFocused = false
                                 isWeightFieldFocused = true
-                                viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]
-                                viewModel.age = ages[selectedAgeIndex]
-                                
                             }
                         TextField("Weight", value: $viewModel.weight, format: .number)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -90,9 +92,11 @@ struct WeightAndHeight: View {
                             .focused($isWeightFieldFocused)
                             .onSubmit {
                                 isWeightFieldFocused = false
+                                
+                            }
+                            .onChange(of: viewModel.weight) {
                                 viewModel.measurementUnit = self.measurementUnits[selectedUnitIndex]
                                 viewModel.age = ages[selectedAgeIndex]
-                                
                             }
                         
                     }

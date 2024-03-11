@@ -57,14 +57,13 @@ struct ActivityLevel: View {
                         Text(activityLevels[index]).tag(index)
                     }
                 }
-                .onChange(of: selectedActivityLevelIndex, {viewModel.activityLevel = activityLevels[selectedActivityLevelIndex]})
+                
                 .pickerStyle(WheelPickerStyle())
                 
-                FinishOnboardingButton(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding)
-//                //change this to update user profile
-//                NextButton(buttonTitle: "Finish", isLast: true,
-//                           isActive: $isNextViewActive,
-//                           destination: Text("Profile"))
+                FinishOnboardingButton(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding, activityLevel: activityLevels[selectedActivityLevelIndex])
+                    .onTapGesture {
+                        viewModel.activityLevel = activityLevels[selectedActivityLevelIndex]
+                    }
                 Spacer()
             }
             .padding(30)

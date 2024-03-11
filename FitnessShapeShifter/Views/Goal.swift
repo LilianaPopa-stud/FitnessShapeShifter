@@ -45,13 +45,16 @@ struct Goal: View {
                         Text(fitnessGoals[index]).tag(index)
                     }
                 }
-                .onChange(of: selectedGoalIndex, {viewModel.goal = fitnessGoals[selectedGoalIndex]})
+//                .onChange(of: selectedGoalIndex, {viewModel.goal = fitnessGoals[selectedGoalIndex]})
                 .pickerStyle(WheelPickerStyle())
                 .padding(.bottom, 30)
                
                 NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: ActivityLevel(viewModel: viewModel, showSignInView: $showSignInView,showOnboarding: $showOnboarding))
-                
+                    
                 Spacer()
+            }
+            .onDisappear() {
+                viewModel.goal = fitnessGoals[selectedGoalIndex]
             }
             .padding(30)
         }

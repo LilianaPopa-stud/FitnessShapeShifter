@@ -12,12 +12,14 @@ struct FinishOnboardingButton: View {
     // @Binding var errorMessages: String?
     @Binding var showSignInView: Bool
     @Binding var showOnboarding: Bool
+    var activityLevel: String
     var body: some View {
         Button(action: {
+            viewModel.activityLevel = activityLevel
             Task{
                 do{
                     try await viewModel.loadCurrentUser()
-                    try /*await*/ viewModel.saveUserProfile()
+                    try await viewModel.saveUserProfile()
                     showOnboarding = false
                     showSignInView = false
                 }
@@ -41,5 +43,5 @@ struct FinishOnboardingButton: View {
 
 
 #Preview {
-    FinishOnboardingButton(viewModel: ProfileViewModel(), showSignInView: .constant(false), showOnboarding: .constant(false))
+    FinishOnboardingButton(viewModel: ProfileViewModel(), showSignInView: .constant(false), showOnboarding: .constant(false), activityLevel: "Sedentary")
 }

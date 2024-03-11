@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainScreenView: View {
+    @State private var profileViewRefreshFlag = UUID()
     @State private var showSignInView: Bool = true
     init() {
    
@@ -20,6 +21,7 @@ struct MainScreenView: View {
         ZStack{
             NavigationStack{
                 ProfileView(showSignInView: $showSignInView)
+                    .id(profileViewRefreshFlag)
             }
         }
         .onAppear {
@@ -32,6 +34,9 @@ struct MainScreenView: View {
                 WelcomeScreenView(showSignInView: $showSignInView)
             }
         }
+        .onChange(of: showSignInView) {
+                    profileViewRefreshFlag = UUID()
+                }
     }
 }
 
