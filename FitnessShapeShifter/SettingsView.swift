@@ -39,7 +39,7 @@ struct SettingsView: View {
                         try await viewModel.resetPassword()
                         print("Password reset email sent")
                     } catch {
-                        print("Error signing out: \(error.localizedDescription)")
+                        print("Error reseting password: \(error)")
                     }
                 }
             }
@@ -49,7 +49,7 @@ struct SettingsView: View {
                         try viewModel.signOut()
                         showSignInView = true
                     } catch {
-                        print("Error signing out: \(error.localizedDescription)")
+                        print("Error signing out: \(error)")
                     }
                 }
             }

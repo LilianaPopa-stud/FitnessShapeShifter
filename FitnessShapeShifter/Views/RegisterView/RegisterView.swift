@@ -13,7 +13,7 @@ struct RegisterView: View {
     @ObservedObject var viewModel: RegisterViewModel = RegisterViewModel()
     @State var errorMessage: String?
     @State var buttonTitle: String = "Sign up"
-    @State var showOnboarding: Bool = false
+    @State var showOnboarding: Bool = true
     
     @FocusState private var fullNameFocused: Bool
     @FocusState private var emailFocused: Bool
@@ -127,9 +127,9 @@ struct RegisterView: View {
                 }
             }
             .fullScreenCover(isPresented: $showOnboarding) {
-                NavigationStack{
+//
                     GenderView(showSignInView: $showSignInView, showOnboarding: $showOnboarding)
-                }
+//
             }
             
         }

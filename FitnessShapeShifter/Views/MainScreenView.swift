@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainScreenView: View {
     @State private var profileViewRefreshFlag = UUID()
-    @State private var showSignInView: Bool = true
+    @State private var showSignInView: Bool = false
     init() {
    
            UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
@@ -25,9 +25,15 @@ struct MainScreenView: View {
             }
         }
         .onAppear {
-            let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-            self.showSignInView = authUser == nil ? true : false
             
+            
+                if let authUser = try? AuthenticationManager.shared.getAuthenticatedUser() {
+                  showSignInView = false
+                } else {
+                    showSignInView = true
+                }
+            
+
         }
         .fullScreenCover(isPresented: $showSignInView ) {
             NavigationStack{

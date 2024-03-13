@@ -114,7 +114,7 @@ struct AppTitle: View {
                         Font.custom("Outfit", size: 40)
                             .weight(.bold)
                     )
-                    .foregroundColor(Color.main)
+                    .foregroundColor(Color.peachy)
                 Text("Shifter")
                     .font(Font.custom("Oatmilk", size: 50))
                     .fontWeight(.black)
