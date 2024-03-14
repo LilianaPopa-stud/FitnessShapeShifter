@@ -161,4 +161,10 @@ final class UserManager {
         
         try await userDocument(userId: userId).updateData(data)
     }
+    func updateUserProfileImage(userId: String, photoURL: String) async throws{
+        let data: [String:String] = [
+            DBUser.CodingKeys.photoURL.rawValue: photoURL
+        ]
+        try await userDocument(userId: userId).updateData(data)
+    }
 }

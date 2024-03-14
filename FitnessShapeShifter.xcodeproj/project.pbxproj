@@ -16,8 +16,7 @@
 		E6129F052B9E6BE3009E12F2 /* FinishOnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */; };
 		E6129F082B9FD1B1009E12F2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E6129F072B9FD1B1009E12F2 /* FirebaseStorage */; };
 		E6129F0A2B9FDE6E009E12F2 /* EditableCircularProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F092B9FDE6E009E12F2 /* EditableCircularProfileImage.swift */; };
-		E6129F0E2B9FDF63009E12F2 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F0D2B9FDF63009E12F2 /* EditProfileView.swift */; };
-		E6129F102BA10412009E12F2 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F0F2BA10412009E12F2 /* Test.swift */; };
+		E6129F102BA10412009E12F2 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F0F2BA10412009E12F2 /* EditProfileView.swift */; };
 		E6129F122BA11259009E12F2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F112BA11259009E12F2 /* ProfileViewModel.swift */; };
 		E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */; };
 		E654CBAF2B9D38400017B3F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBAE2B9D38400017B3F6 /* Assets.xcassets */; };
@@ -97,8 +96,7 @@
 		E6129EFE2B9DE920009E12F2 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishOnboardingButton.swift; sourceTree = "<group>"; };
 		E6129F092B9FDE6E009E12F2 /* EditableCircularProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCircularProfileImage.swift; sourceTree = "<group>"; };
-		E6129F0D2B9FDF63009E12F2 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
-		E6129F0F2BA10412009E12F2 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		E6129F0F2BA10412009E12F2 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		E6129F112BA11259009E12F2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E654CBA72B9D383E0017B3F6 /* FitnessShapeShifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessShapeShifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessShapeShifterApp.swift; sourceTree = "<group>"; };
@@ -198,9 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				E6129EF92B9DD607009E12F2 /* ProfileView.swift */,
-				E6129F0D2B9FDF63009E12F2 /* EditProfileView.swift */,
 				E6129F092B9FDE6E009E12F2 /* EditableCircularProfileImage.swift */,
-				E6129F0F2BA10412009E12F2 /* Test.swift */,
+				E6129F0F2BA10412009E12F2 /* EditProfileView.swift */,
 				E6129F112BA11259009E12F2 /* ProfileViewModel.swift */,
 			);
 			path = ProfileView;
@@ -534,11 +531,10 @@
 				E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */,
 				E654CC122B9D3B020017B3F6 /* View+Extensions.swift in Sources */,
 				E654CC102B9D3B020017B3F6 /* KeyBoardHandler.swift in Sources */,
-				E6129F0E2B9FDF63009E12F2 /* EditProfileView.swift in Sources */,
 				E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */,
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
-				E6129F102BA10412009E12F2 /* Test.swift in Sources */,
+				E6129F102BA10412009E12F2 /* EditProfileView.swift in Sources */,
 				E654CC172B9D3B020017B3F6 /* LoginViewModel.swift in Sources */,
 				E654CC242B9D3B020017B3F6 /* WelcomeScreenView.swift in Sources */,
 				E654CC0E2B9D3B020017B3F6 /* LoginAction.swift in Sources */,

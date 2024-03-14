@@ -1,62 +1,68 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-The main content view of the app.
-*/
-
 import SwiftUI
 import PhotosUI
 import FirebaseStorage
 
 struct EditProfileView: View {
+    @StateObject var viewModel: ProfileViewModel
+    var storageReference = Storage.storage().reference()
+    @State var errorMessage: String?
+    
     var body: some View {
-        #if os(macOS)
-        ProfileForm()
-            .labelsHidden()
-            .frame(width: 400)
-            .padding()
-        #else
-        NavigationView {
-            ProfileForm()
+        VStack {
+            EditableCircularProfileImage(viewModel: viewModel)
+                .padding()
+                .onChange(of: viewModel.uiImage) {
+                    errorMessage = nil
+                }
+            Button() {
+                viewModel.uploadImage { result in
+                    switch result {
+                    case .success:
+                        print("Upload successful")
+                        self.errorMessage = "Saved!"
+                        
+                    case .failure(let error):
+                        print("Upload failed with error: \(error.localizedDescription)")
+                        self.errorMessage = "Upload failed, please try again."
+                    }
+                    if errorMessage == "Saved!"{
+                        Task {
+                            try await viewModel.saveUserProfileImage()
+                        }
+                    }
+                }
+            } label:
+            {  if errorMessage == nil{
+                Text("Save")
+                    .font(.headline)
+            }
+                else if errorMessage == "Saved!"{
+                    Text("Saved!")
+                        .font(.headline)
+                } else
+                {
+                    Text("Upload failed, please try again.")
+                        .font(.headline)
+                        .foregroundStyle(.red)
+                }
+            }
+            .disabled(viewModel.uiImage == nil)
+            Form {
+                Section {
+                    TextField("Username",
+                              text: $viewModel.fullName,
+                              prompt: Text("Username"))
+                }
+            }
         }
-        #endif
+        .onAppear(){
+            Task {
+                try await viewModel.loadCurrentUser()
+            }
+        }
     }
 }
 
-struct ProfileForm: View {
-    @StateObject var viewModel = ProfileViewModel()
-    let storageReference = Storage.storage().reference().child("\(UUID().uuidString)")
-
-       var body: some View {
-           Form {
-               Section {
-                   HStack {
-                       Spacer()
-                       EditableCircularProfileImage(viewModel: viewModel)
-                       Spacer()
-                   }
-               }
-               .listRowBackground(Color.clear)
-               #if !os(macOS)
-               .padding([.top], 10)
-               #endif
-               Section {
-                   TextField("Full Name",
-                             text: $viewModel.fullName,
-                             prompt: Text("First Name"))
-               }
-               Section {
-                   TextField("About Me",
-                             text: $viewModel.aboutMe,
-                             prompt: Text("About Me"))
-               }
-           }
-           .navigationTitle("Account Profile")
-       }
-
-}
-
-#Preview{
-    EditProfileView()
+#Preview {
+    EditProfileView(viewModel: ProfileViewModel(), storageReference: Storage.storage().reference(), errorMessage: "Saved")
 }

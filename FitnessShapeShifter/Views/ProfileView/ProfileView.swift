@@ -36,13 +36,16 @@ struct ProfileView: View {
                     //.padding(.top,30)
                     
                     Text("\(viewModel.user?.displayName ?? "Guest")")
-                        .font(.subheadline)
+                        .font(.headline)
                         .fontWeight(.bold)
-                    Text("\(String(describing: viewModel.user?.email ?? "Guest"))")
-                        .font(.caption)
-                        .padding(.bottom, 10)
+                    Text("\(String(describing: viewModel.user?.email ?? "guest@example.com"))")
+                        .font(.subheadline)
+                         .padding(.bottom, 5)
+                    Text("Joined on: \(viewModel.user?.dateCreated ?? Date(), style: .date)")
+                        .font(.caption2)
+                        .padding(.bottom, 5)
                     NavigationLink {
-                        EditProfileView()
+                        EditProfileView(viewModel: viewModel)
                     } label: {
                         Text("Edit Profile")
                             .font(.subheadline)
@@ -57,7 +60,7 @@ struct ProfileView: View {
                     
                     List{
                         
-                        Text("Member since: \(viewModel.user?.dateCreated ?? Date(), style: .date)")
+                        
                         Text("Gender: \(viewModel.user?.gender ?? "Unknown")")
                         Text("Age: \(viewModel.user?.age ?? 0)")
                         Text("Weight: \(viewModel.user?.weight ?? 0.0)")
@@ -72,8 +75,7 @@ struct ProfileView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
-//                            SettingsView(showSignInView: $showSignInView)
-                            Test()
+                           SettingsView(showSignInView: $showSignInView)
                         } label: {
                             Image(systemName: "gearshape")
                                 .font(.headline)
@@ -86,6 +88,7 @@ struct ProfileView: View {
         .onAppear(){
             Task {
                 try? await viewModel.loadCurrentUser()
+                viewModel.downloadImage()
             }
         }
         
@@ -100,26 +103,3 @@ struct ProfileView: View {
         
     }
 }
-
-//protocol DBUserMock{
-//    var userId: String { get }
-//    var email: String? { get }
-//    var displayName: String? { get }
-//    var photoURL: String? { get }
-//    var dateCreated: Date { get }
-//}
-//struct MockDBUser: DBUserMock {
-//    var userId: String = "mockUserId"
-//    var email: String? = "mockEmail@example.com"
-//    var displayName: String? = "Mock User"
-//    var photoURL: String? = nil // Set to nil if there's no photo
-//    var dateCreated: Date = Date()
-//}
-//
-//class MockProfileViewModel: ObservableObject {
-//    /* @Published private(set)*/ var user: MockDBUser? = MockDBUser()
-//
-//    func loadCurrentUser() async throws {
-//        // No actual loading required for mock ViewModel
-//    }
-//}

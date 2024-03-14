@@ -59,10 +59,7 @@ struct EditableCircularProfileImage: View {
                         .foregroundColor(.accentColor)
                 }
                 .buttonStyle(.borderless)
-                .onChange(of: viewModel.imageSelection) {
-                    print("imageSelection changed")
-                    print(viewModel.uiImageToSave ?? "nihuia")
-                    }
+               
                 }
             
            

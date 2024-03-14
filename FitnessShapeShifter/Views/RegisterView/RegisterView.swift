@@ -13,9 +13,9 @@ struct RegisterView: View {
     @ObservedObject var viewModel: RegisterViewModel = RegisterViewModel()
     @State var errorMessage: String?
     @State var buttonTitle: String = "Sign up"
-    @State var showOnboarding: Bool = true
+    @State var showOnboarding: Bool = false
     
-    @FocusState private var fullNameFocused: Bool
+    @FocusState private var usernameFocused: Bool
     @FocusState private var emailFocused: Bool
     @FocusState private var passwordFocused: Bool
     
@@ -48,16 +48,15 @@ struct RegisterView: View {
                             .padding()
                             .foregroundStyle(.secondary)
                         // full name
-                        CustomTextField(sfIcon: "person", hint: "Full Name", value: $viewModel.displayName)
-                            .focused($fullNameFocused)
+                        CustomTextField(sfIcon: "person", hint: "Username", value: $viewModel.displayName)
+                            .focused($usernameFocused)
                             .keyboardType(.default)
                             .autocorrectionDisabled(true)
-                            .autocapitalization(.none)
                             .onTapGesture {
-                                fullNameFocused = true
+                                usernameFocused = true
                             }
                             .onSubmit {
-                                fullNameFocused = false
+                                usernameFocused = false
                                 emailFocused = true
                             }
                             .padding(.bottom,5)
@@ -70,7 +69,7 @@ struct RegisterView: View {
                             .autocapitalization(.none)
                             .onSubmit {
                                 emailFocused = false
-                                fullNameFocused = false
+                                usernameFocused = false
                                 passwordFocused = true
                             }
                             .padding(.bottom,5)
