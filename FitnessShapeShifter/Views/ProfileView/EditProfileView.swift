@@ -5,40 +5,42 @@ import FirebaseStorage
 struct EditProfileView: View {
     @StateObject var viewModel: ProfileViewModel
     var storageReference = Storage.storage().reference()
-    @State var errorMessage: String?
+    @State var message: String?
     
     var body: some View {
         VStack {
             EditableCircularProfileImage(viewModel: viewModel)
                 .padding()
                 .onChange(of: viewModel.uiImage) {
-                    errorMessage = nil
+                    message = nil
                 }
             Button() {
                 viewModel.uploadImage { result in
                     switch result {
                     case .success:
                         print("Upload successful")
-                        self.errorMessage = "Saved!"
+                        self.message = "Saved!"
                         
                     case .failure(let error):
                         print("Upload failed with error: \(error.localizedDescription)")
-                        self.errorMessage = "Upload failed, please try again."
+                        self.message = "Upload failed, please try again."
                     }
-                    if errorMessage == "Saved!"{
+                    if message == "Saved!"{
                         Task {
                             try await viewModel.saveUserProfileImage()
                         }
                     }
                 }
             } label:
-            {  if errorMessage == nil{
+            {  if message == nil{
                 Text("Save")
                     .font(.headline)
             }
-                else if errorMessage == "Saved!"{
+                else if message == "Saved!"{
                     Text("Saved!")
                         .font(.headline)
+                        .task {
+                        }
                 } else
                 {
                     Text("Upload failed, please try again.")
@@ -46,7 +48,7 @@ struct EditProfileView: View {
                         .foregroundStyle(.red)
                 }
             }
-            .disabled(viewModel.uiImage == nil)
+            .disabled(viewModel.uiImage == nil || message == "Saved!" || message == "Upload failed, please try again.")
             Form {
                 Section {
                     TextField("Username",
@@ -64,5 +66,5 @@ struct EditProfileView: View {
 }
 
 #Preview {
-    EditProfileView(viewModel: ProfileViewModel(), storageReference: Storage.storage().reference(), errorMessage: "Saved")
+    EditProfileView(viewModel: ProfileViewModel(), storageReference: Storage.storage().reference(), message: "Saved")
 }

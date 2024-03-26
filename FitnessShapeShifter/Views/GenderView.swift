@@ -51,9 +51,10 @@ struct GenderView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .background()
-                    .padding(.bottom, 10)
-                    Spacer()
+                    .padding(.bottom, 70)
+                    
                     NextButton(buttonTitle: "Next", isLast: false, isActive: $isNextViewActive, destination: WeightAndHeight(viewModel: viewModel, showSignInView: $showSignInView, showOnboarding: $showOnboarding))
+                        //.padding(.bottom,15)
                 }
                 .padding(30)
             }

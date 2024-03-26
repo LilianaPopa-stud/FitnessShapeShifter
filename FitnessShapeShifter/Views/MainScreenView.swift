@@ -10,30 +10,52 @@ import SwiftUI
 struct MainScreenView: View {
     @State private var profileViewRefreshFlag = UUID()
     @State private var showSignInView: Bool = false
+    @State var selectedTab = 0
     init() {
-   
-           UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
-           let attributes: [NSAttributedString.Key:Any] = [
-               .foregroundColor: UIColor.white]
-           UISegmentedControl.appearance().setTitleTextAttributes(attributes, for: .selected)
-       }
+        
+        UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
+        let attributes: [NSAttributedString.Key:Any] = [
+            .foregroundColor: UIColor.white]
+        UISegmentedControl.appearance().setTitleTextAttributes(attributes, for: .selected)
+    }
     var body: some View {
-        ZStack{
-            NavigationStack{
-                ProfileView(showSignInView: $showSignInView)
-                    .id(profileViewRefreshFlag)
-            }
-        }
-        .onAppear {
-            
-            
-                if let authUser = try? AuthenticationManager.shared.getAuthenticatedUser() {
-                  showSignInView = false
-                } else {
-                    showSignInView = true
+      
+       
+        TabView(selection: $selectedTab){
+                   
+                    ProfileView(showSignInView: $showSignInView)
+                        .tabItem {
+                            Image(systemName: "person")
+                            Text("Profile")
+                        }
+                        .tag(0)
+                        .id(profileViewRefreshFlag)
+                    Explore()
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                            Text("Explore")
+                        }
+                        .tag(1)
+                    Workouts()
+                        .tabItem {
+                            Image(systemName: "dumbbell")
+                            Text("Workouts")
+                        }
+                        .tag(2)
+                    Stats()
+                        .tabItem {
+                            Image(systemName: "chart.bar.xaxis")
+                            Text("Stats")
+                        }
+                        .tag(3)
                 }
-            
-
+        
+        .onAppear {
+            if (try? AuthenticationManager.shared.getAuthenticatedUser()) != nil {
+                showSignInView = false
+            } else {
+                showSignInView = true
+            }
         }
         .fullScreenCover(isPresented: $showSignInView ) {
             NavigationStack{
@@ -41,8 +63,8 @@ struct MainScreenView: View {
             }
         }
         .onChange(of: showSignInView) {
-                    profileViewRefreshFlag = UUID()
-                }
+            profileViewRefreshFlag = UUID()
+        }
     }
 }
 

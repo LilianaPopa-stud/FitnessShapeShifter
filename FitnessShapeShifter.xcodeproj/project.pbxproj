@@ -85,6 +85,9 @@
 		E654CC4A2B9D3B020017B3F6 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0A2B9D3B020017B3F6 /* LoginRequest.swift */; };
 		E654CC4B2B9D3B020017B3F6 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0B2B9D3B020017B3F6 /* LoginResponse.swift */; };
 		E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */; };
+		E6EDA0D42BB0D954003D85E3 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA0D32BB0D954003D85E3 /* Workouts.swift */; };
+		E6EDA0D62BB0D9F1003D85E3 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */; };
+		E6EDA0D82BB0DA44003D85E3 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA0D72BB0DA44003D85E3 /* Explore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +165,9 @@
 		E654CC0B2B9D3B020017B3F6 /* LoginResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E654CC4D2B9D3FDE0017B3F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E6EDA0D32BB0D954003D85E3 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
+		E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		E6EDA0D72BB0DA44003D85E3 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +330,9 @@
 				E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */,
 				E654CBDF2B9D3B010017B3F6 /* WeightAndHeight.swift */,
 				E654CBE02B9D3B010017B3F6 /* WelcomeScreenView.swift */,
+				E6EDA0D32BB0D954003D85E3 /* Workouts.swift */,
+				E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */,
+				E6EDA0D72BB0DA44003D85E3 /* Explore.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -526,6 +535,7 @@
 				E654CC1F2B9D3B020017B3F6 /* CustomTextField.swift in Sources */,
 				E654CC152B9D3B020017B3F6 /* SignInLink.swift in Sources */,
 				E6129EF52B9DD228009E12F2 /* ForgotPasswordView.swift in Sources */,
+				E6EDA0D42BB0D954003D85E3 /* Workouts.swift in Sources */,
 				E654CC492B9D3B020017B3F6 /* AuthenticationManager.swift in Sources */,
 				E654CC212B9D3B020017B3F6 /* Goal.swift in Sources */,
 				E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */,
@@ -545,9 +555,11 @@
 				E654CC232B9D3B020017B3F6 /* WeightAndHeight.swift in Sources */,
 				E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */,
 				E654CC132B9D3B020017B3F6 /* MainScreenView.swift in Sources */,
+				E6EDA0D62BB0D9F1003D85E3 /* Stats.swift in Sources */,
 				E6129F0A2B9FDE6E009E12F2 /* EditableCircularProfileImage.swift in Sources */,
 				E654CC1D2B9D3B020017B3F6 /* ActivityLevel.swift in Sources */,
 				E6129F122BA11259009E12F2 /* ProfileViewModel.swift in Sources */,
+				E6EDA0D82BB0DA44003D85E3 /* Explore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

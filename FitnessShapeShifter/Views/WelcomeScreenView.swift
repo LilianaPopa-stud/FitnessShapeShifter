@@ -38,7 +38,7 @@ struct WelcomeScreenForeground: View {
                 AppDescription()
                     .opacity(descriptionOpacity)
                     .onAppear {
-                        withAnimation(.easeInOut(duration: 1.0)) {
+                        withAnimation(.easeInOut(duration: 2.0)) {
                             descriptionOpacity=1.0
                         }
                     }

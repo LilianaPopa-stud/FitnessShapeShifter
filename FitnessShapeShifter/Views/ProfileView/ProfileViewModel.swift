@@ -26,7 +26,8 @@ final class ProfileViewModel: ObservableObject {
     @Published var measurementUnit: String = ""
     @Published private(set) var user: DBUser? = nil
     @Published private(set) var selectedImage: UIImage? = nil
-    @Published var uiImage: UIImage? = nil // trebuie sa mai adaugi o variabila pentru ca se suprapun si nu mai e butonul de save disabled
+    @Published var uiImage: UIImage? = nil 
+    @Published var downloadedUIImage: UIImage? = nil
     
     init(user: DBUser? = nil) {
         self.user = user
@@ -137,7 +138,7 @@ final class ProfileViewModel: ObservableObject {
         var data: Data?
         
         let storageReference = Storage.storage().reference()
-        data = self.uiImage?.jpegData(compressionQuality: 0.3)
+        data = self.uiImage?.jpegData(compressionQuality: 0.2)
         
         guard let imageData = data else {
             completion(.failure(MyError.noImageData))
@@ -175,8 +176,8 @@ final class ProfileViewModel: ObservableObject {
                     print("Failed to download: \(error.localizedDescription)")
                     self.imageState = .failure(error)
                 } else {
-                    self.uiImage = UIImage(data: data!)
-                    self.imageState =  .success(Image(uiImage: self.uiImage!))
+                    self.downloadedUIImage = UIImage(data: data!)
+                    self.imageState =  .success(Image(uiImage: self.downloadedUIImage!))
                     
                 }
             }
