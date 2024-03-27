@@ -14,8 +14,8 @@ struct Goal: View {
     @State private var selectedGoalIndex = 2
       let fitnessGoals = [
           "Weight Loss",
+          "Maintain Weight",
           "Muscle Gain",
-          "Endurance",
           "Flexibility",
           "Stress Relief"
       ]

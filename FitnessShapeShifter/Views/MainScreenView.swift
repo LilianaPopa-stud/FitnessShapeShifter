@@ -36,7 +36,7 @@ struct MainScreenView: View {
                             Text("Explore")
                         }
                         .tag(1)
-                    Workouts()
+                    WorkoutsView()
                         .tabItem {
                             Image(systemName: "dumbbell")
                             Text("Workouts")

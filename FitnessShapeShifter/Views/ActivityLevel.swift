@@ -14,6 +14,7 @@ struct ActivityLevel: View {
     @State private var isSheetShowing = false
     @State private var isNextViewActive = false
     @State private var selectedActivityLevelIndex = 2
+    
     let activityLevels = [
         "Sedentary",
         "Lightly Active",
