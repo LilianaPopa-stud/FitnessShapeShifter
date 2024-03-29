@@ -57,7 +57,9 @@ struct Goal: View {
             }
             .padding(30)
         }
+      
     }
+
 }
 
 #Preview {

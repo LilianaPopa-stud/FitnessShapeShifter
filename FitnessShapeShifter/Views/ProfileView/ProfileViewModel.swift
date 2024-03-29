@@ -28,7 +28,7 @@ final class ProfileViewModel: ObservableObject {
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var uiImage: UIImage? = nil 
     @Published var downloadedUIImage: UIImage? = nil
-    
+    @Published var isLoading = false
     init(user: DBUser? = nil) {
         self.user = user
     }
@@ -104,8 +104,10 @@ final class ProfileViewModel: ObservableObject {
     
     
     func loadCurrentUser() async throws {
+        isLoading = true
         let authDataRestult = try  AuthenticationManager.shared.getAuthenticatedUser()
         self.user = try await UserManager.shared.fetchUser(userId: authDataRestult.uid)
+        isLoading = false
     }
     
     func saveUserProfile() async throws {

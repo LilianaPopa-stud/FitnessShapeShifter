@@ -27,7 +27,6 @@
 		E654CBC02B9D3A6E0017B3F6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E654CBBF2B9D3A6E0017B3F6 /* FirebaseAuth */; };
 		E654CBC22B9D3A6E0017B3F6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E654CBC12B9D3A6E0017B3F6 /* FirebaseFirestore */; };
 		E654CBC42B9D3A6E0017B3F6 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E654CBC32B9D3A6E0017B3F6 /* FirebaseFirestoreSwift */; };
-		E654CC0E2B9D3B020017B3F6 /* LoginAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBC52B9D3B000017B3F6 /* LoginAction.swift */; };
 		E654CC102B9D3B020017B3F6 /* KeyBoardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBC82B9D3B010017B3F6 /* KeyBoardHandler.swift */; };
 		E654CC112B9D3B020017B3F6 /* Keyboardresponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBC92B9D3B010017B3F6 /* Keyboardresponder.swift */; };
 		E654CC122B9D3B020017B3F6 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBCA2B9D3B010017B3F6 /* View+Extensions.swift */; };
@@ -82,13 +81,15 @@
 		E654CC472B9D3B020017B3F6 /* Ropest.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E654CC052B9D3B020017B3F6 /* Ropest.ttf */; };
 		E654CC482B9D3B020017B3F6 /* Southland.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E654CC062B9D3B020017B3F6 /* Southland.ttf */; };
 		E654CC492B9D3B020017B3F6 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */; };
-		E654CC4A2B9D3B020017B3F6 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0A2B9D3B020017B3F6 /* LoginRequest.swift */; };
-		E654CC4B2B9D3B020017B3F6 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0B2B9D3B020017B3F6 /* LoginResponse.swift */; };
 		E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */; };
 		E6993A222BB437C300B1474C /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A212BB437C300B1474C /* WorkoutsView.swift */; };
 		E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */; };
+		E6993A262BB4615B00B1474C /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A252BB4615B00B1474C /* Workout.swift */; };
 		E6EDA0D62BB0D9F1003D85E3 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */; };
 		E6EDA0D82BB0DA44003D85E3 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA0D72BB0DA44003D85E3 /* Explore.swift */; };
+		E6EFC4FC2BB5DB9E0062D5D2 /* ExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EFC4FB2BB5DB9E0062D5D2 /* ExerciseManager.swift */; };
+		E6EFC5022BB63D610062D5D2 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EFC5012BB63D610062D5D2 /* ExerciseViewModel.swift */; };
+		E6EFC5042BB63F300062D5D2 /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EFC5032BB63F300062D5D2 /* ExerciseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,7 +108,6 @@
 		E654CBAE2B9D38400017B3F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E654CBB12B9D38400017B3F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E654CBB82B9D391F0017B3F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E654CBC52B9D3B000017B3F6 /* LoginAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAction.swift; sourceTree = "<group>"; };
 		E654CBC82B9D3B010017B3F6 /* KeyBoardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardHandler.swift; sourceTree = "<group>"; };
 		E654CBC92B9D3B010017B3F6 /* Keyboardresponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboardresponder.swift; sourceTree = "<group>"; };
 		E654CBCA2B9D3B010017B3F6 /* View+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
@@ -162,14 +162,16 @@
 		E654CC052B9D3B020017B3F6 /* Ropest.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ropest.ttf; sourceTree = "<group>"; };
 		E654CC062B9D3B020017B3F6 /* Southland.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Southland.ttf; sourceTree = "<group>"; };
 		E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
-		E654CC0A2B9D3B020017B3F6 /* LoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
-		E654CC0B2B9D3B020017B3F6 /* LoginResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E654CC4D2B9D3FDE0017B3F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E6993A212BB437C300B1474C /* WorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButton.swift; sourceTree = "<group>"; };
+		E6993A252BB4615B00B1474C /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		E6EDA0D72BB0DA44003D85E3 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
+		E6EFC4FB2BB5DB9E0062D5D2 /* ExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseManager.swift; sourceTree = "<group>"; };
+		E6EFC5012BB63D610062D5D2 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
+		E6EFC5032BB63F300062D5D2 /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				E6129EFE2B9DE920009E12F2 /* UserManager.swift */,
+				E6EFC4FB2BB5DB9E0062D5D2 /* ExerciseManager.swift */,
+				E6EFC5012BB63D610062D5D2 /* ExerciseViewModel.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -282,7 +286,6 @@
 		E654CBC62B9D3B000017B3F6 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				E654CBC52B9D3B000017B3F6 /* LoginAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				E654CBE02B9D3B010017B3F6 /* WelcomeScreenView.swift */,
 				E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */,
 				E6EDA0D72BB0DA44003D85E3 /* Explore.swift */,
+				E6EFC5032BB63F300062D5D2 /* ExerciseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -402,8 +406,6 @@
 		E654CC0C2B9D3B020017B3F6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E654CC0A2B9D3B020017B3F6 /* LoginRequest.swift */,
-				E654CC0B2B9D3B020017B3F6 /* LoginResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -413,6 +415,7 @@
 			children = (
 				E6993A212BB437C300B1474C /* WorkoutsView.swift */,
 				E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */,
+				E6993A252BB4615B00B1474C /* Workout.swift */,
 			);
 			path = WorkoutsView;
 			sourceTree = "<group>";
@@ -535,13 +538,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E654CC4A2B9D3B020017B3F6 /* LoginRequest.swift in Sources */,
+				E6EFC5042BB63F300062D5D2 /* ExerciseView.swift in Sources */,
 				E654CC142B9D3B020017B3F6 /* RegisterView.swift in Sources */,
 				E6993A222BB437C300B1474C /* WorkoutsView.swift in Sources */,
 				E654CC162B9D3B020017B3F6 /* SignUpConfirmationButton.swift in Sources */,
+				E6EFC5022BB63D610062D5D2 /* ExerciseViewModel.swift in Sources */,
 				E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */,
 				E654CC222B9D3B020017B3F6 /* NextButton.swift in Sources */,
-				E654CC4B2B9D3B020017B3F6 /* LoginResponse.swift in Sources */,
 				E6129EF62B9DD228009E12F2 /* LogInConfirmationButton.swift in Sources */,
 				E6129EFF2B9DE920009E12F2 /* UserManager.swift in Sources */,
 				E654CC1F2B9D3B020017B3F6 /* CustomTextField.swift in Sources */,
@@ -552,6 +555,7 @@
 				E6129EFA2B9DD607009E12F2 /* ProfileView.swift in Sources */,
 				E654CC122B9D3B020017B3F6 /* View+Extensions.swift in Sources */,
 				E654CC102B9D3B020017B3F6 /* KeyBoardHandler.swift in Sources */,
+				E6993A262BB4615B00B1474C /* Workout.swift in Sources */,
 				E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */,
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
@@ -559,11 +563,11 @@
 				E6129F102BA10412009E12F2 /* EditProfileView.swift in Sources */,
 				E654CC172B9D3B020017B3F6 /* LoginViewModel.swift in Sources */,
 				E654CC242B9D3B020017B3F6 /* WelcomeScreenView.swift in Sources */,
-				E654CC0E2B9D3B020017B3F6 /* LoginAction.swift in Sources */,
 				E6129EF72B9DD228009E12F2 /* LoginView.swift in Sources */,
 				E6129F052B9E6BE3009E12F2 /* FinishOnboardingButton.swift in Sources */,
 				E654CC1E2B9D3B020017B3F6 /* AppBackground.swift in Sources */,
 				E654CC112B9D3B020017B3F6 /* Keyboardresponder.swift in Sources */,
+				E6EFC4FC2BB5DB9E0062D5D2 /* ExerciseManager.swift in Sources */,
 				E654CC232B9D3B020017B3F6 /* WeightAndHeight.swift in Sources */,
 				E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */,
 				E654CC132B9D3B020017B3F6 /* MainScreenView.swift in Sources */,
