@@ -62,6 +62,17 @@ struct DBExercise: Codable {
         self.equipment = equipment
         self.url = url
     }
+    init() {
+        self.exerciseId = "okoaokw"
+        self.name = "Lat Pulldown"
+        self.primaryMuscle = ["Lats"]
+        self.secondaryMuscle = ["Biceps"]
+        self.difficulty = "Intermmediate"
+        self.force = "Pull"
+        self.mechanic = "Compound"
+        self.equipment = "Machine"
+        self.url = ""
+    }
 }
 
 final class ExerciseManager {

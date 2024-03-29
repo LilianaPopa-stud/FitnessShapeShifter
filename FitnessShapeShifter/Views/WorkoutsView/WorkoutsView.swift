@@ -39,6 +39,7 @@ struct WorkoutsView: View {
                     }
                 }
                 .navigationTitle("Your Workouts 🏋️")
+                
             }
         }
     }
