@@ -25,8 +25,6 @@ struct Workout: View {
                     Button(action: {}, label: 
                             {Image(systemName: "ellipsis")
                             .font(.title2)} )
-                  
-                  
                 }
                 HStack{
                     Text(Date(), style: .date)
@@ -88,12 +86,10 @@ struct Workout: View {
                 HStack {
                     VStack{
                         ZStack{
+                        Image("Biceps")
+                        Image("Biceps")
                         Image("Lats")
-                               
-                        Image("Lats")
-                               
-                        Image("Traps")
-                              
+                        Image("Deltoid")
                         Image("Deltoid")
                              
                         }

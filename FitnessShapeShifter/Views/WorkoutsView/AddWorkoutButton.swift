@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct AddWorkoutButton: View {
+    @StateObject var viewModel = ExerciseViewModel()
     var body: some View {
         Button(action: {
+            Task{
+                
+            }
         }
                ,label: {
             VStack {
@@ -29,7 +33,7 @@ struct AddWorkoutButton: View {
                     .stroke(.accentColor2, lineWidth: 1)
                     .shadow(color: .shadow, radius: 4, x: 1, y: 3))
         })
-        }
+    }
 }
 
 #Preview {

@@ -30,7 +30,7 @@ struct MainScreenView: View {
                         }
                         .tag(0)
                         .id(profileViewRefreshFlag)
-                    Explore()
+                    ExercisesExploreAndSearchView()
                         .tabItem {
                             Image(systemName: "magnifyingglass")
                             Text("Explore")

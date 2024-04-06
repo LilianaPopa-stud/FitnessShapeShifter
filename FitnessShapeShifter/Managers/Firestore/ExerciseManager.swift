@@ -2,7 +2,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct DBExercise: Codable {
+struct DBExercise: Codable, Hashable, Identifiable {
     let exerciseId: String
     let name: String
     let primaryMuscle: [String]
@@ -11,7 +11,9 @@ struct DBExercise: Codable {
     let force: String?
     let mechanic: String?
     let equipment: String?
-    var url: String?
+    let url: String?
+    let description: String?
+    var id: String { exerciseId }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -24,6 +26,7 @@ struct DBExercise: Codable {
         self.mechanic = try container.decodeIfPresent(String.self, forKey: .mechanic)
         self.equipment = try container.decodeIfPresent(String.self, forKey: .equipment)
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
     }
     
     enum CodingKeys: CodingKey {
@@ -36,6 +39,7 @@ struct DBExercise: Codable {
         case mechanic
         case equipment
         case url
+        case description
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -49,9 +53,10 @@ struct DBExercise: Codable {
         try container.encodeIfPresent(self.mechanic, forKey: .mechanic)
         try container.encodeIfPresent(self.equipment, forKey: .equipment)
         try container.encodeIfPresent(self.url, forKey: .url)
+        try container.encodeIfPresent(self.description, forKey: .description)
     }
     
-    init(exerciseId: String, name: String, primaryMuscle: [String], secondaryMuscle: [String]?, difficulty: String?, force: String?, mechanic: String?, equipment: String?, url: String?) {
+    init(exerciseId: String, name: String, primaryMuscle: [String], secondaryMuscle: [String]?, difficulty: String?, force: String?, mechanic: String?, equipment: String?, url: String?, description: String?) {
         self.exerciseId = exerciseId
         self.name = name
         self.primaryMuscle = primaryMuscle
@@ -61,17 +66,19 @@ struct DBExercise: Codable {
         self.mechanic = mechanic
         self.equipment = equipment
         self.url = url
+        self.description = nil
     }
     init() {
         self.exerciseId = "okoaokw"
         self.name = "Lat Pulldown"
         self.primaryMuscle = ["Lats"]
         self.secondaryMuscle = ["Biceps"]
-        self.difficulty = "Intermmediate"
+        self.difficulty = "Intermediate"
         self.force = "Pull"
         self.mechanic = "Compound"
         self.equipment = "Machine"
         self.url = ""
+        self.description = "The lat pulldown is a compound exercise that strengthens the muscles in the back, shoulders, and arms. It specifically targets the latissimus dorsi, which is the large muscle that stretches from the middle of your back to your shoulder. This muscle is responsible for pulling movements, such as opening a door or pulling yourself up."
     }
 }
 
@@ -89,7 +96,19 @@ final class ExerciseManager {
         }
     }
     
+    func updateExercise(exercise: DBExercise) throws {
+        try exerciseCollection.document(exercise.exerciseId).setData(from: exercise)
+    }
     
+    func setDescription(exerciseName: String, description: String) async throws {
+        let querySnapshot = try await exerciseCollection.whereField("name", isEqualTo: exerciseName).getDocuments()
+        
+        guard let document = querySnapshot.documents.first else {
+            return // Handle error if document is not found
+        }
+        
+        try await document.reference.updateData(["description": description])
+    }
     // get exercises
     
 }

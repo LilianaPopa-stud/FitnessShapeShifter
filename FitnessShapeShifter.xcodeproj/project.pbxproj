@@ -82,6 +82,9 @@
 		E654CC482B9D3B020017B3F6 /* Southland.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E654CC062B9D3B020017B3F6 /* Southland.ttf */; };
 		E654CC492B9D3B020017B3F6 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */; };
 		E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */; };
+		E6871FCB2BC0448300ED51DB /* AddWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */; };
+		E6871FCD2BC064C600ED51DB /* ExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */; };
+		E6871FCF2BC14FC400ED51DB /* ExerciseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */; };
 		E6993A222BB437C300B1474C /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A212BB437C300B1474C /* WorkoutsView.swift */; };
 		E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */; };
 		E6993A262BB4615B00B1474C /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A252BB4615B00B1474C /* WorkoutView.swift */; };
@@ -165,6 +168,9 @@
 		E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E654CC4D2B9D3FDE0017B3F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutView.swift; sourceTree = "<group>"; };
+		E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListView.swift; sourceTree = "<group>"; };
+		E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetails.swift; sourceTree = "<group>"; };
 		E6993A212BB437C300B1474C /* WorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButton.swift; sourceTree = "<group>"; };
 		E6993A252BB4615B00B1474C /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
@@ -418,6 +424,9 @@
 				E6993A212BB437C300B1474C /* WorkoutsView.swift */,
 				E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */,
 				E6993A252BB4615B00B1474C /* WorkoutView.swift */,
+				E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */,
+				E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */,
+				E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */,
 			);
 			path = WorkoutsView;
 			sourceTree = "<group>";
@@ -555,6 +564,7 @@
 				E654CC162B9D3B020017B3F6 /* SignUpConfirmationButton.swift in Sources */,
 				E6EFC5022BB63D610062D5D2 /* ExerciseViewModel.swift in Sources */,
 				E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */,
+				E6871FCB2BC0448300ED51DB /* AddWorkoutView.swift in Sources */,
 				E654CC222B9D3B020017B3F6 /* NextButton.swift in Sources */,
 				E6129EF62B9DD228009E12F2 /* LogInConfirmationButton.swift in Sources */,
 				E6129EFF2B9DE920009E12F2 /* UserManager.swift in Sources */,
@@ -569,6 +579,7 @@
 				E6993A262BB4615B00B1474C /* WorkoutView.swift in Sources */,
 				E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */,
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
+				E6871FCD2BC064C600ED51DB /* ExerciseListView.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
 				E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */,
 				E6EFC5072BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift in Sources */,
@@ -583,6 +594,7 @@
 				E654CC232B9D3B020017B3F6 /* WeightAndHeight.swift in Sources */,
 				E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */,
 				E654CC132B9D3B020017B3F6 /* MainScreenView.swift in Sources */,
+				E6871FCF2BC14FC400ED51DB /* ExerciseDetails.swift in Sources */,
 				E6EDA0D62BB0D9F1003D85E3 /* Stats.swift in Sources */,
 				E6129F0A2B9FDE6E009E12F2 /* EditableCircularProfileImage.swift in Sources */,
 				E654CC1D2B9D3B020017B3F6 /* ActivityLevel.swift in Sources */,

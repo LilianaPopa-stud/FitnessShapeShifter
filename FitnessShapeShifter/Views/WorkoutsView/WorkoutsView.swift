@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WorkoutsView: View {
     @StateObject var viewModel = ExerciseViewModel()
+    
     var body: some View {
         ZStack{
             AppBackground()
@@ -30,12 +31,17 @@ struct WorkoutsView: View {
                         ForEach(viewModel.exercises, id: \.exerciseId) { exercise in
                             Text(exercise.name)
                                 .padding(.horizontal, 10)
+                            
                         }}
                     Spacer()
                 }
                 .onAppear(){
                     Task {
                         await viewModel.fetchExercises()
+                        // print name of each exercise
+                        for exercise in viewModel.exercises {
+                            print(exercise.name)
+                        }
                     }
                 }
                 .navigationTitle("Your Workouts 🏋️")

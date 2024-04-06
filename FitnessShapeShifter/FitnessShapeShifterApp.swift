@@ -28,6 +28,7 @@ struct FitnessShapeShifterApp: App {
             //RegisterView()
             //WeightAndHeight()
             MainScreenView()
+            //ExercisesExploreAndSearchView()
         }
     }
 }
