@@ -16,7 +16,6 @@ struct WorkoutsView: View {
             NavigationView {
                 VStack {
                     // button "Add workout"
-                 
                     //list of workouts
                     ScrollView {
                         AddWorkoutButton()
@@ -31,7 +30,6 @@ struct WorkoutsView: View {
                         ForEach(viewModel.exercises, id: \.exerciseId) { exercise in
                             Text(exercise.name)
                                 .padding(.horizontal, 10)
-                            
                         }}
                     Spacer()
                 }

@@ -424,8 +424,8 @@
 				E6993A212BB437C300B1474C /* WorkoutsView.swift */,
 				E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */,
 				E6993A252BB4615B00B1474C /* WorkoutView.swift */,
-				E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */,
 				E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */,
+				E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */,
 				E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */,
 			);
 			path = WorkoutsView;

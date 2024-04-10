@@ -24,10 +24,7 @@ struct AddWorkoutView: View {
             
             NavigationView {
                 VStack {
-                    //                    ZStack {
-                    //
                     HStack{
-                        
                         Button(action: {
                             isTimerRunning = false
                         }, label: {
@@ -49,23 +46,22 @@ struct AddWorkoutView: View {
                                 .font(.title3)
                         })
                     }
-                    .padding(.top,30)
-                    .padding(.horizontal,20)
-                    .frame(height: 130)
-                    .background(.black)
                     .ignoresSafeArea(edges: .top)
-                    ScrollView{
+                    .padding(.horizontal,20)
+                    .padding(.bottom,30)
+                    .frame(height: 80)
+                    .background(.black)
+                   
+                    List{
                         ForEach(selectedExercises.sorted(by: { $0.name < $1.name }), id: \.self) { exercise in
-                            
-                                ExerciseDetails(exercise: exercise)
-                                .padding(.horizontal,20)
-                               
-                                 
-                            
-                            
+                             ExerciseDetails(exercise: exercise)
+                                .padding(.top,-20)
+                                
                         }
+                       
                     }
-                    
+                    .listSectionSpacing(.custom(0))
+                    .listStyle(.plain)
                     Spacer()
                     Button(action: { showExerciseList = true }, label: {
                         VStack {
