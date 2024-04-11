@@ -99,12 +99,7 @@ struct ExerciseView: View {
                         }
                     }
                     ZStack {
-                        //                        ForEach(exercise.primaryMuscle + (exercise.secondaryMuscle ?? []), id: \.self) { muscle in
-                        //                            Image(imageName(for: muscle))// Replace with your muscle image
-                        //                                .resizable()
-                        //                                .frame(width: 200, height: 200) // Adjust size as needed
-                        //                                 // Adjust color as needed
-                        //                        }
+                       
                         ForEach(exercise.primaryMuscle, id: \.self) { muscle in
                             
                                 Image(imageName(for: muscle))// Replace with your muscle image
@@ -119,7 +114,7 @@ struct ExerciseView: View {
                                 .resizable()
                                 .frame(width: 200, height: 200)
                         }
-                        Spacer()
+                   
                     }
                 }
                 //info button

@@ -73,14 +73,34 @@ struct ExerciseDetails: View {
                 .padding(.top,10)
             }
             
-        } header: {
+        }
+        header: {
             ZStack {
                 RoundedRectangle(cornerRadius: 0)
                     .fill(.white)
-                      .frame(height: 70)
+                      .frame(height:100)
                       .shadow(color: .shadow, radius: 4, x: 1, y: 3)
 
                 HStack {
+                    ZStack {
+                        
+                        ForEach(exercise.primaryMuscle, id: \.self) { muscle in
+                            
+                            Image(imageName(for: muscle))// Replace with your muscle image
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                            Image(imageName(for: muscle))
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                        }
+                        ForEach(exercise.secondaryMuscle ?? [], id: \.self) { muscle in
+                            Image(imageName(for: muscle))
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                        }
+                    }
+                   
+
                     Text(exercise.name)
                         .font(.headline)
                        
@@ -102,6 +122,46 @@ struct ExerciseDetails: View {
         .foregroundColor(.black)
         
     }
+        func imageName(for muscle: String) -> String {
+            switch muscle {
+            case "Biceps":
+                return "Biceps"
+            case "Triceps":
+                return "Triceps"
+            case "Chest", "Inner Chest", "Lower Chest", "Upper Chest":
+                return "Chest"
+            case "Lats":
+                return "Lats"
+            case "Abdominalis":
+                return "Abdominalis"
+            case "Quadriceps":
+                return "Quads"
+            case "Hamstrings":
+                return "Hamstrings"
+            case "Shoulders":
+                return "Deltoid"
+            case "Front Shoulders":
+                return "Deltoid"
+            case "Traps":
+                return "Traps"
+            case "Calves":
+                return "Calves"
+            case "Glutes":
+                return "Glutes"
+            case "Lower Back":
+                return "Lowerback"
+            case "Forearms":
+                return "Forearm"
+            case "Obliques":
+                return "Obliques"
+            case "Adductors":
+                return "Adductor"
+                // Add more cases for other muscles as needed
+            default:
+                return "none"
+            }
+        }
+    
 }
 struct ExerciseSet {
     var reps: Int

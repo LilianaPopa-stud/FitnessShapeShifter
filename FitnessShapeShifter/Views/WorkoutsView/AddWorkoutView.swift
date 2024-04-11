@@ -61,7 +61,8 @@ struct AddWorkoutView: View {
                        
                     }
                     .listSectionSpacing(.custom(0))
-                    .listStyle(.plain)
+                    .listStyle(.grouped)
+                    .scrollContentBackground(.hidden)
                     Spacer()
                     Button(action: { showExerciseList = true }, label: {
                         VStack {
