@@ -16,6 +16,7 @@ struct AddWorkoutView: View {
     @State private var elapsedTime: TimeInterval = 0
     @State private var showExerciseList = false
     @State private var selectedExercises = [DBExercise]()
+    @State private var isAlertShowing = false
     
     
     var body: some View {
@@ -51,15 +52,14 @@ struct AddWorkoutView: View {
                     .padding(.bottom,30)
                     .frame(height: 80)
                     .background(.black)
-                   
+                    
                     List{
                         ForEach(selectedExercises.sorted(by: { $0.name < $1.name }), id: \.self) { exercise in
-                             ExerciseDetails(exercise: exercise)
-                                .padding(.top,-20)
-                                
+                            ExerciseDetails(exercises: $selectedExercises, exercise: exercise)
+                                .padding(.top,-10)
                         }
-                       
                     }
+                    
                     .listSectionSpacing(.custom(0))
                     .listStyle(.grouped)
                     .scrollContentBackground(.hidden)
@@ -83,40 +83,13 @@ struct AddWorkoutView: View {
                                 .stroke(.accentColor2, lineWidth: 2)
                                 .shadow(color: .shadow, radius: 4, x: 1, y: 3))
                         .padding(.horizontal,60)
-                        .padding(.bottom,40)
+                        .padding(.bottom,10)
                     })
                     .sheet(isPresented: $showExerciseList) {
                         ExerciseListView(returnSelectedExercises: $selectedExercises, showExerciseList: $showExerciseList)
                     }
-                    
-                    
-                    
-                    
-                    
                 }
-                //                .toolbar{
-                ////                    ToolbarItem(placement: .principal){
-                ////                        Text("\(formattedElapsedTime)")
-                ////                            .font(.headline)
-                ////                            .foregroundColor(.white)
-                ////                    }
-                //                    ToolbarItem(placement: .navigationBarLeading){
-                //                        Button(action: {
-                //                            isTimerRunning = false
-                //                        }, label: {
-                //                            Image(systemName: "xmark")
-                //                                .tint(.white)
-                //                        })
-                //                    }
-                //                    ToolbarItem(placement: .navigationBarTrailing){
-                //                        Button(action: {
-                //                            isTimerRunning = false
-                //                        }, label: {
-                //                            Image(systemName: "checkmark.circle.fill")
-                //                                .tint(.white)
-                //                        })
-                //                    }
-                //                }
+                
             }
             
         }
