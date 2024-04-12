@@ -11,13 +11,15 @@ import UIKit
 
 struct AddWorkoutView: View {
     
-    
     @State private var isTimerRunning = false
     @State private var elapsedTime: TimeInterval = 0
     @State private var showExerciseList = false
     @State private var selectedExercises = [DBExercise]()
+    @State private var tuples: [Exercise] = []
+    @State private var sets: [ExerciseSet] = [ExerciseSet(reps: 8, weight: 10)]
     @State private var isAlertShowing = false
-    
+    @State private var isSetEditingPresented = false
+    @State private var exerciseSet: ExerciseSet = ExerciseSet(reps: 0, weight: 0)
     
     var body: some View {
         ZStack {
@@ -52,10 +54,9 @@ struct AddWorkoutView: View {
                     .padding(.bottom,30)
                     .frame(height: 80)
                     .background(.black)
-                    
                     List{
                         ForEach(selectedExercises.sorted(by: { $0.name < $1.name }), id: \.self) { exercise in
-                            ExerciseDetails(exercises: $selectedExercises, exercise: exercise)
+                            ExerciseDetails(exercises: $selectedExercises, exercise: exercise, isSetEditingPresented: $isSetEditingPresented)
                                 .padding(.top,-10)
                         }
                     }
@@ -87,14 +88,26 @@ struct AddWorkoutView: View {
                     })
                     .sheet(isPresented: $showExerciseList) {
                         ExerciseListView(returnSelectedExercises: $selectedExercises, showExerciseList: $showExerciseList)
+                        
                     }
+                    
                 }
                 
             }
             
         }
+        .onChange(of: selectedExercises, {
+            tuples = selectedExercises.map { Exercise(exercise: $0) }
+   
+        })
         .onAppear {
             startTimer()
+        }
+        .sheet(isPresented: $isSetEditingPresented) {
+            SetEditView(isSetEditingPresented: $isSetEditingPresented, exerciseSet: $exerciseSet)
+                .preferredColorScheme(.dark)
+                .presentationDetents([.fraction(0.43)])
+                .ignoresSafeArea(edges: .bottom)
         }
     }
     
@@ -113,6 +126,11 @@ struct AddWorkoutView: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+}
+// Exercise - sets (tuple)
+struct Exercise {
+    var exercise: DBExercise
+    var sets: [ExerciseSet] = [ExerciseSet(reps: 8, weight: 0)]
 }
 
 #Preview {

@@ -13,6 +13,7 @@ struct ExerciseDetails: View {
     @State private var sets: [ExerciseSet] = [ExerciseSet(reps: 12, weight: 20),ExerciseSet(reps: 10, weight: 120),ExerciseSet(reps: 10, weight: 30),ExerciseSet(reps: 10, weight: 40),ExerciseSet(reps: 10, weight: 80)]
     @State private var isAlertShowing = false
     @State private var isExpanded = false
+    @Binding var isSetEditingPresented: Bool
     
     var body: some View {
         Section {
@@ -36,19 +37,28 @@ struct ExerciseDetails: View {
                         Text("\(index + 1)")
                             .font(.subheadline)
                             .frame(width: 50, alignment: .center)
+                            .fontWeight(.semibold)
+                        
                         Spacer()
                         Text("\(sets[index].reps)")
                             .frame(width: 50, alignment: .center)
+                            .fontWeight(.semibold)
                         Spacer()
                         Text("\(sets[index].weight) kg")
                             .frame(width: 100, alignment: .center)
+                            .fontWeight(.semibold)
+                    }
+                    .onTapGesture {
+                        self.isSetEditingPresented = true
+                        
                     }
                 }
                 .onDelete(perform: deleteItems)
-               
+                .onMove(perform: moveItems)
+                
                 Button{
                     withAnimation {
-                        sets.append(ExerciseSet(reps: 12, weight: 20))
+                        sets.append(sets.last ?? ExerciseSet(reps: 8, weight: 10))
                     }
                 } label: {
                     ZStack {
@@ -74,7 +84,7 @@ struct ExerciseDetails: View {
                 .fill(.white)
                 .frame(height:100)
                 .shadow(color: .shadow, radius: 4, x: 1, y: 3)
-                
+            
             
             HStack {
                 //image placeholder
@@ -107,7 +117,7 @@ struct ExerciseDetails: View {
                         HStack {
                             Text(exercise.name)
                                 .font(.headline)
-                         //   Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                            //   Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         }
                         
                         
@@ -115,9 +125,11 @@ struct ExerciseDetails: View {
                             
                             Text("\(sets.count) sets")
                                 .foregroundStyle(.secondary)
-                            Divider()
-                                .frame(width: 1, height: 20)
-                                .overlay(.secondary)
+                            //                            Divider()
+                            //                                .frame(width: 1, height: 20)
+                            //                                .overlay(.secondary)
+                            Text("•")
+                                .foregroundStyle(.secondary)
                             if (sets.count != 0){
                                 if (computeRepsRange().max==computeRepsRange().min){
                                     Text("\(computeRepsRange().min) reps")
@@ -126,11 +138,11 @@ struct ExerciseDetails: View {
                                 else { Text("\(computeRepsRange().min)-\(computeRepsRange().max) reps")
                                         .foregroundStyle(.secondary)
                                 }
-                                Divider()
-                                    .frame(width: 1, height: 20)
-                                    .overlay(.secondary)
+                                Text("•")
+                                    .foregroundStyle(.secondary)
                                 Text("\(computeWeightRange().min)-\(computeWeightRange().max) kg")
                                     .foregroundStyle(.secondary)
+                                
                             }
                         }
                     }
@@ -142,21 +154,21 @@ struct ExerciseDetails: View {
                 
                 Spacer()
                 VStack {
-                        Menu {
-                            Button {
-                                withAnimation {
-                                    isExpanded = true
-                                }
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
+                    Menu {
+                        Button {
+                            withAnimation {
+                                isExpanded = true
                             }
-                            Button(role: .destructive){
-                                withAnimation {
-                                    isAlertShowing.toggle()
-                                }
-                            } label: {
-                                Label("Delete", systemImage: "trash")
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        Button(role: .destructive){
+                            withAnimation {
+                                isAlertShowing.toggle()
                             }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
                         
                     } label: {
                         
@@ -168,7 +180,7 @@ struct ExerciseDetails: View {
                                 .foregroundColor(.accentColor2)
                         }
                     }
-             
+                    
                     Spacer()
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         .padding(.bottom,30)
@@ -176,7 +188,7 @@ struct ExerciseDetails: View {
                             withAnimation(.easeOut(duration: 0.8)){
                                 isExpanded.toggle()
                             }}
-                   
+                    
                 }
                 .frame(height: 100)
                 
@@ -186,10 +198,10 @@ struct ExerciseDetails: View {
             //.foregroundColor(.white)
         }
         
-     
+        
         
     }
-   
+        
     .alert(isPresented: $isAlertShowing) {
         Alert(
             title: Text("Delete Exercise"),
@@ -205,8 +217,10 @@ struct ExerciseDetails: View {
 }
 
 extension ExerciseDetails {
-    func move(from source: IndexSet, to destination: Int) {
+    func moveItems(from source: IndexSet, to destination: Int) {
         sets.move(fromOffsets: source, toOffset: destination)
+        print("Moved from \(source) to \(destination)")
+        
     }
     
     func imageName(for muscle: String) -> String {
@@ -293,5 +307,5 @@ struct ExerciseSet {
 
 
 #Preview {
-    ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise())
+    ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise(), isSetEditingPresented: .constant(false))
 }

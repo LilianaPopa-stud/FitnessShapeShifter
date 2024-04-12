@@ -149,6 +149,7 @@ struct ExerciseListView: View {
             Task {
                 await viewModel.fetchExercises()
                 exercises = viewModel.exercises
+                
             }
         }
     }
