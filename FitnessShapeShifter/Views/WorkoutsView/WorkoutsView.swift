@@ -62,4 +62,5 @@ struct WorkoutsView: View {
 
 #Preview {
     WorkoutsView()
+        .environmentObject(ProfileViewModel())
 }

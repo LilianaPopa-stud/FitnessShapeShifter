@@ -65,7 +65,7 @@ struct AddWorkoutView: View {
                     .frame(height: 80)
                     .background(.black)
                     
-                    List{
+                    List {
                         ForEach(viewModel.tuples.indices, id: \.self) { index in
                             ExerciseDetails(
                                 exercises: $selectedExercises,
@@ -102,7 +102,7 @@ struct AddWorkoutView: View {
                         .padding(.horizontal,60)
                         .padding(.bottom,30)
                     })
-//MARK: ExerciseList sheet
+                    //MARK: ExerciseList sheet
                     .sheet(isPresented: $showExerciseList) {
                         ExerciseListView(returnSelectedExercises: $selectedExercises, showExerciseList: $showExerciseList)
                         
@@ -111,7 +111,7 @@ struct AddWorkoutView: View {
                 }
                 
             }
-//MARK: Modal
+            //MARK: Modal
             if isShowingModal {
                 Color.black.opacity(0.8)
                     .ignoresSafeArea()
@@ -144,7 +144,6 @@ struct AddWorkoutView: View {
                     
                     HStack {
                         TextField("Workout Title", text: $workoutTitle)
-                        //  .background(.black)
                             .focused($isFocused)
                             .padding()
                             .onAppear(){
@@ -156,7 +155,7 @@ struct AddWorkoutView: View {
                     HStack {
                         Text("🕒 \(formattedDuration) ")
                         Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
-                    }
+                        Text("🔥 \(String(format: "%.f",burnedCalories())) kcal ")}
                     .padding(.bottom,5)
                     HStack{
                         
@@ -182,7 +181,7 @@ struct AddWorkoutView: View {
                         Button("Discard",role: .destructive) {
                             isShowingModal = false
                         }
-                       
+                        
                     }
                 }
                 .padding()
@@ -209,20 +208,19 @@ struct AddWorkoutView: View {
         .onAppear {
             startTimer()
         }
-//MARK: SetEditView sheet
+        //MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
             SetEditView(isSetEditingPresented: $isSetEditingPresented,
                         exerciseSet: $exerciseSet,
                         exerciseIndex: $indexOfExercise,
                         setIndex: $indexOfSet,
                         tuples: $viewModel.tuples)
-            .preferredColorScheme(.dark)
             .presentationDetents([.fraction(0.43)])
             .ignoresSafeArea(edges: .bottom)
         }
     }
     
-   //MARK: Other properties
+    //MARK: Other properties
     private var formattedDuration: String {
         let hours = Int(viewModel.elapsedTime) / 3600
         let minutes = (Int(viewModel.elapsedTime) % 3600) / 60
@@ -291,15 +289,22 @@ extension AddWorkoutView {
         }
         return total
     }
-    /*
-     How Does This Weight Lifting Calorie Calculator Work?
-
-     The calorie calculator uses these equations to estimate the caloric cost of weight training:
-
-     Men: [Minutes working out] × [Bodyweight in kg] × 0.0713
-     Women: [Minutes working out] × [Bodyweight in kg] × 0.0637
-     */
     
+    func burnedCalories()-> Double {
+        let minutes =  viewModel.elapsedTime/60
+        guard let weight = profileViewModel.user?.weight else {
+            return 0
+        }
+        if profileViewModel.user?.gender == "Female"{
+            let calories = minutes * weight * 0.0637
+            print(weight)
+            print(calories)
+            return Double(calories)}
+        else {
+            
+            let calories = minutes * weight * 0.0713
+            return Double(calories)}
+        }
     
     func saveWorkout(){
     }
@@ -320,4 +325,5 @@ extension DateFormatter {
 //MARK: Preview
 #Preview {
     AddWorkoutView(viewIsActive: .constant(true))
+        .environmentObject(ProfileViewModel())
 }

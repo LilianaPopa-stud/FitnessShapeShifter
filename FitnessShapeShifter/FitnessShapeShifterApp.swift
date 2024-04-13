@@ -27,9 +27,9 @@ struct FitnessShapeShifterApp: App {
            //WelcomeScreenView()
             //RegisterView()
             //WeightAndHeight()
-           // MainScreenView()
+            MainScreenView()
             //ExercisesExploreAndSearchView()
-            AddWorkoutView(viewIsActive: .constant(true))
+           // AddWorkoutView(viewIsActive: .constant(true))
         }
     }
 }

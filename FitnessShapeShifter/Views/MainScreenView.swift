@@ -10,7 +10,7 @@ import SwiftUI
 struct MainScreenView: View {
     @State private var profileViewRefreshFlag = UUID()
     @State private var showSignInView: Bool = false
-    @EnvironmentObject var profileViewModel: ProfileViewModel
+    @StateObject var profileViewModel: ProfileViewModel = ProfileViewModel()
     @State var selectedTab = 0
     init() {
         
@@ -24,7 +24,7 @@ struct MainScreenView: View {
        
         TabView(selection: $selectedTab){
                    
-            ProfileView(viewModel: profileViewModel, showSignInView: $showSignInView)
+            ProfileView(showSignInView: $showSignInView)
                         .tabItem {
                             Image(systemName: "person")
                             Text("Profile")
@@ -50,6 +50,7 @@ struct MainScreenView: View {
                         }
                         .tag(3)
                 }
+        .environmentObject(profileViewModel)
         
         .onAppear {
             if (try? AuthenticationManager.shared.getAuthenticatedUser()) != nil {
@@ -67,6 +68,7 @@ struct MainScreenView: View {
             profileViewRefreshFlag = UUID()
         }
     }
+    
 }
 
 #Preview {

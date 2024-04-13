@@ -15,7 +15,7 @@ struct SetEditView: View {
     
     var body: some View {
         ZStack {
-          //  Color.primary.ignoresSafeArea()
+            Color.darkGray.ignoresSafeArea()
             VStack(spacing: 20) {
                 Text("Edit Set")
                     .font(.title2)
@@ -67,6 +67,7 @@ struct SetEditView: View {
                 }
             }
         }
+     
         .onAppear(){
             isRepsFieldFocused = true
             isWeightFieldFocused = false

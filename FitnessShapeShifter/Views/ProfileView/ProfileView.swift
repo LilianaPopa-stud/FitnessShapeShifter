@@ -11,7 +11,7 @@ import FirebaseStorage
 
 
 struct ProfileView: View {
-    @ObservedObject var viewModel: ProfileViewModel
+    @EnvironmentObject var viewModel: ProfileViewModel
     @Binding var showSignInView: Bool
     @State private var refreshProfile = false
     @State private var isShowingInfo = false
@@ -267,7 +267,7 @@ struct InfoListItem: View {
 }
 #Preview {
     NavigationStack {
-        ProfileView(viewModel: ProfileViewModel(), showSignInView: .constant(false))
+        ProfileView(showSignInView: .constant(false))
         
     }
 }
