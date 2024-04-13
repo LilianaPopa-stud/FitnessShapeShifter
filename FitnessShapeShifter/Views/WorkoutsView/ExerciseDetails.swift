@@ -222,7 +222,6 @@ struct ExerciseDetails: View {
     .foregroundColor(.black)
     }
 }
-
 extension ExerciseDetails {
     func moveItems(from source: IndexSet, to destination: Int) {
         sets.move(fromOffsets: source, toOffset: destination)

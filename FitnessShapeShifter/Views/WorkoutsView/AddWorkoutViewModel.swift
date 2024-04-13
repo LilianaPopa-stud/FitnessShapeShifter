@@ -16,6 +16,10 @@ class AddWorkoutViewModel: ObservableObject {
     @Published var elapsedTime: TimeInterval = 0
     @Published var date = Date()
     @Published var tuples : [Exercise] = []
+    
+    // save workout to firestore
+    // trebuie sa adaug si datele de la user
+    
    
     
     

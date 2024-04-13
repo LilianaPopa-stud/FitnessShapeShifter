@@ -88,6 +88,7 @@
 		E68B5D332BC94F8B002B3222 /* SetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B5D322BC94F8B002B3222 /* SetEditView.swift */; };
 		E68B5D352BC95FB6002B3222 /* KeyPadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B5D342BC95FB6002B3222 /* KeyPadButton.swift */; };
 		E68B5D372BC9CE2A002B3222 /* AddWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B5D362BC9CE2A002B3222 /* AddWorkoutViewModel.swift */; };
+		E68B5D392BCB3365002B3222 /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B5D382BCB3365002B3222 /* WorkoutManager.swift */; };
 		E6993A222BB437C300B1474C /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A212BB437C300B1474C /* WorkoutsView.swift */; };
 		E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */; };
 		E6993A262BB4615B00B1474C /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6993A252BB4615B00B1474C /* WorkoutView.swift */; };
@@ -177,6 +178,7 @@
 		E68B5D322BC94F8B002B3222 /* SetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEditView.swift; sourceTree = "<group>"; };
 		E68B5D342BC95FB6002B3222 /* KeyPadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadButton.swift; sourceTree = "<group>"; };
 		E68B5D362BC9CE2A002B3222 /* AddWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutViewModel.swift; sourceTree = "<group>"; };
+		E68B5D382BCB3365002B3222 /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		E6993A212BB437C300B1474C /* WorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		E6993A232BB4382E00B1474C /* AddWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButton.swift; sourceTree = "<group>"; };
 		E6993A252BB4615B00B1474C /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				E6129EFE2B9DE920009E12F2 /* UserManager.swift */,
 				E6EFC4FB2BB5DB9E0062D5D2 /* ExerciseManager.swift */,
+				E68B5D382BCB3365002B3222 /* WorkoutManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				E654CC182B9D3B020017B3F6 /* RegisterViewModel.swift in Sources */,
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
 				E6871FCD2BC064C600ED51DB /* ExerciseListView.swift in Sources */,
+				E68B5D392BCB3365002B3222 /* WorkoutManager.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
 				E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */,
 				E6EFC5072BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift in Sources */,

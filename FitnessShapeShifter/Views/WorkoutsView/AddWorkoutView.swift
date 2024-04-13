@@ -10,8 +10,9 @@ import UIKit
 
 
 struct AddWorkoutView: View {
-    
+    //MARK: Properties
     @StateObject var viewModel = AddWorkoutViewModel()
+    @EnvironmentObject var profileViewModel: ProfileViewModel
     @State private var isTimerRunning = false
     @State private var elapsedTime: TimeInterval = 0
     @State private var showExerciseList = false
@@ -23,15 +24,13 @@ struct AddWorkoutView: View {
     @State private var indexOfExercise: Int = 0
     @State private var isShowingModal = false
     @State private var workoutTitle = ""
-    @State private var startDate = Date()
     @State private var endDate = Date()
     @FocusState private var isFocused: Bool
-    @State private var duration: TimeInterval = 0
-    
+    @Binding var viewIsActive: Bool
+    //MARK: Body
     var body: some View {
         ZStack {
             AppBackground()
-            
             NavigationView {
                 VStack {
                     HStack{
@@ -51,7 +50,7 @@ struct AddWorkoutView: View {
                         Button(action: {
                             isTimerRunning = false
                             isShowingModal = true
-                            duration = elapsedTime
+                            viewModel.elapsedTime = elapsedTime
                             endDate = Date()
                             
                         }, label: {
@@ -65,18 +64,19 @@ struct AddWorkoutView: View {
                     .padding(.bottom,30)
                     .frame(height: 80)
                     .background(.black)
+                    
                     List{
                         ForEach(viewModel.tuples.indices, id: \.self) { index in
-                            ExerciseDetails(exercises: $selectedExercises,
-                                            exercise: viewModel.tuples[index].exercise,
-                                            sets: $viewModel.tuples[index].sets,
-                                            isSetEditingPresented: $isSetEditingPresented,
-                                            index: $indexOfSet,
-                                            exerciseIndex: $indexOfExercise)
+                            ExerciseDetails(
+                                exercises: $selectedExercises,
+                                exercise: viewModel.tuples[index].exercise,
+                                sets: $viewModel.tuples[index].sets,
+                                isSetEditingPresented: $isSetEditingPresented,
+                                index: $indexOfSet,
+                                exerciseIndex: $indexOfExercise)
                             .padding(.top,-10)
                         }
                     }
-                    
                     .listSectionSpacing(.custom(0))
                     .listStyle(.grouped)
                     .scrollContentBackground(.hidden)
@@ -100,8 +100,9 @@ struct AddWorkoutView: View {
                                 .stroke(.accentColor2, lineWidth: 2)
                                 .shadow(color: .shadow, radius: 4, x: 1, y: 3))
                         .padding(.horizontal,60)
-                        .padding(.bottom,10)
+                        .padding(.bottom,30)
                     })
+//MARK: ExerciseList sheet
                     .sheet(isPresented: $showExerciseList) {
                         ExerciseListView(returnSelectedExercises: $selectedExercises, showExerciseList: $showExerciseList)
                         
@@ -110,6 +111,7 @@ struct AddWorkoutView: View {
                 }
                 
             }
+//MARK: Modal
             if isShowingModal {
                 Color.black.opacity(0.8)
                     .ignoresSafeArea()
@@ -130,13 +132,13 @@ struct AddWorkoutView: View {
                         .font(.title2)
                         .foregroundColor(.black)
                     // day of the week, month, day, year
-                    Text("\(startDate, formatter: DateFormatter.dayOfWeek), ")
+                    Text("\(viewModel.date, formatter: DateFormatter.dayOfWeek), ")
                         .font(.caption)
                         .foregroundColor(.secondary) +
-                    Text("\(startDate, style: .date)")
+                    Text("\(viewModel.date, style: .date)")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    Text("\(startDate, style: .time) - \(endDate, style: .time)")
+                    Text("\(viewModel.date, style: .time) - \(endDate, style: .time)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -207,6 +209,7 @@ struct AddWorkoutView: View {
         .onAppear {
             startTimer()
         }
+//MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
             SetEditView(isSetEditingPresented: $isSetEditingPresented,
                         exerciseSet: $exerciseSet,
@@ -219,19 +222,11 @@ struct AddWorkoutView: View {
         }
     }
     
-    private func startTimer() {
-        startDate = Date()
-        isTimerRunning = true
-        elapsedTime = 0
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: isTimerRunning) { timer in
-            elapsedTime += 1
-        }
-    }
-    
+   //MARK: Other properties
     private var formattedDuration: String {
-        let hours = Int(duration) / 3600
-        let minutes = (Int(duration) % 3600) / 60
-        let seconds = Int(duration) % 60
+        let hours = Int(viewModel.elapsedTime) / 3600
+        let minutes = (Int(viewModel.elapsedTime) % 3600) / 60
+        let seconds = Int(viewModel.elapsedTime) % 60
         
         if hours == 0 {
             if minutes != 0 {
@@ -257,8 +252,17 @@ struct AddWorkoutView: View {
     }
     
 }
-
-extension AddWorkoutView{
+//MARK: - FUNCTIONS
+extension AddWorkoutView {
+    private func startTimer() {
+        viewModel.date = Date()
+        isTimerRunning = true
+        elapsedTime = 0
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: isTimerRunning) { timer in
+            elapsedTime += 1
+        }
+    }
+    
     func countSets() -> Int {
         var count = 0
         for tuple in viewModel.tuples {
@@ -287,11 +291,20 @@ extension AddWorkoutView{
         }
         return total
     }
+    /*
+     How Does This Weight Lifting Calorie Calculator Work?
+
+     The calorie calculator uses these equations to estimate the caloric cost of weight training:
+
+     Men: [Minutes working out] × [Bodyweight in kg] × 0.0713
+     Women: [Minutes working out] × [Bodyweight in kg] × 0.0637
+     */
+    
     
     func saveWorkout(){
     }
 }
-// Exercise - sets (tuple)
+//MARK: Exercise struct
 struct Exercise {
     var exercise: DBExercise
     var sets: [ExerciseSet] = [ExerciseSet(reps: 8, weight: 10)]
@@ -304,6 +317,7 @@ extension DateFormatter {
     }()
 }
 
+//MARK: Preview
 #Preview {
-    AddWorkoutView()
+    AddWorkoutView(viewIsActive: .constant(true))
 }

@@ -3,8 +3,7 @@
 //  FitnessShapeShifter
 //
 //  Created by Liliana Popa on 10.03.2024.
-//
-// put the following code in a new file named ProfileViewModel.swift
+
 import SwiftUI
 import Swift
 import PhotosUI
@@ -12,7 +11,7 @@ import FirebaseStorage
 
 
 struct ProfileView: View {
-    @StateObject private var viewModel = ProfileViewModel()
+    @ObservedObject var viewModel: ProfileViewModel
     @Binding var showSignInView: Bool
     @State private var refreshProfile = false
     @State private var isShowingInfo = false
@@ -268,7 +267,7 @@ struct InfoListItem: View {
 }
 #Preview {
     NavigationStack {
-        ProfileView(showSignInView: .constant(false))
+        ProfileView(viewModel: ProfileViewModel(), showSignInView: .constant(false))
         
     }
 }
