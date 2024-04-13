@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SetEditView: View {
+    
     @Binding var isSetEditingPresented: Bool
     @State private var reps: String = "0"
     @State private var weight: String = "0"
@@ -8,6 +9,9 @@ struct SetEditView: View {
     @State private var isWeightFieldFocused: Bool = false
     @State private var saveSet: Bool = false
     @Binding  var exerciseSet: ExerciseSet
+    @Binding var exerciseIndex: Int
+    @Binding var setIndex: Int
+    @Binding var tuples: [Exercise]
     
     var body: some View {
         ZStack {
@@ -69,7 +73,7 @@ struct SetEditView: View {
         }
         .onChange(of: saveSet) {
             if saveSet {
-                exerciseSet = saveSetFunc()
+               saveSetFunc()
             }
         }
         
@@ -88,6 +92,7 @@ struct KeyPadRow: View {
 }
 
 struct KeyPad: View {
+    
     @Binding var string: String
     @Binding var isRepsFieldFocused: Bool
     @Binding var saveSet: Bool
@@ -134,16 +139,17 @@ struct KeyPad: View {
 }
 
 extension SetEditView{
-    func saveSetFunc() -> ExerciseSet {
+    func saveSetFunc() {
         isSetEditingPresented = false
-        return ExerciseSet(reps: Int(reps) ?? 0, weight: Int(Double(weight) ?? 0.0))
+        tuples[exerciseIndex].sets[setIndex].reps = Int(reps) ?? 0
+        tuples[exerciseIndex].sets[setIndex].weight = Double(weight) ?? 0.0
     }
 }
 
-struct SetEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        SetEditView(isSetEditingPresented: .constant(true), exerciseSet: .constant(ExerciseSet(reps: 10, weight: 20)))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct SetEditView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SetEditView(isSetEditingPresented: .constant(true), exerciseSet: .constant(ExerciseSet(reps: 10, weight: 20)))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}
 

@@ -10,10 +10,12 @@ import SwiftUI
 struct ExerciseDetails: View {
     @Binding var exercises: [DBExercise]
     let exercise: DBExercise
-    @State private var sets: [ExerciseSet] = [ExerciseSet(reps: 12, weight: 20),ExerciseSet(reps: 10, weight: 120),ExerciseSet(reps: 10, weight: 30),ExerciseSet(reps: 10, weight: 40),ExerciseSet(reps: 10, weight: 80)]
+    @Binding var sets: [ExerciseSet] /*= [ExerciseSet(reps: 12, weight: 20),ExerciseSet(reps: 10, weight: 120),ExerciseSet(reps: 10, weight: 30),ExerciseSet(reps: 10, weight: 40),ExerciseSet(reps: 10, weight: 80)]*/
     @State private var isAlertShowing = false
     @State private var isExpanded = false
     @Binding var isSetEditingPresented: Bool
+    @Binding var index: Int
+    @Binding var exerciseIndex: Int
     
     var body: some View {
         Section {
@@ -44,12 +46,17 @@ struct ExerciseDetails: View {
                             .frame(width: 50, alignment: .center)
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(sets[index].weight) kg")
+                        Text("\(String(format: "%.1f", sets[index].weight)) kg")
                             .frame(width: 100, alignment: .center)
                             .fontWeight(.semibold)
                     }
                     .onTapGesture {
                         self.isSetEditingPresented = true
+                        self.index = index
+                        
+                        
+                        
+                        
                         
                     }
                 }
@@ -140,9 +147,14 @@ struct ExerciseDetails: View {
                                 }
                                 Text("•")
                                     .foregroundStyle(.secondary)
-                                Text("\(computeWeightRange().min)-\(computeWeightRange().max) kg")
-                                    .foregroundStyle(.secondary)
-                                
+                                if (computeWeightRange().max==computeWeightRange().min){
+                                    Text("\(String(format:"%.f",computeWeightRange().min)) kg")
+                                        .foregroundStyle(.secondary)
+                                }
+                                else {
+                                    Text("\(String(format:"%.f",computeWeightRange().min))-\(String(format:"%.f",computeWeightRange().max)) kg")
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         }
                     }
@@ -281,10 +293,10 @@ extension ExerciseDetails {
         return (minRep, maxRep)
         
     }
-    func computeWeightRange() -> (min: Int, max: Int){
-        var weight: Int
-        var minWeight: Int = Int.max
-        var maxWeight: Int = Int.min
+    func computeWeightRange() -> (min: Double, max: Double){
+        var weight: Double
+        var minWeight: Double = Double(Int.max)
+        var maxWeight: Double = Double(Int.min)
         
         for set in sets {
             weight = set.weight
@@ -302,10 +314,10 @@ extension ExerciseDetails {
 
 struct ExerciseSet {
     var reps: Int
-    var weight: Int
+    var weight: Double
 }
 
 
 #Preview {
-    ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise(), isSetEditingPresented: .constant(false))
+    ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise(), sets: .constant([ExerciseSet(reps: 10, weight: 10)]), isSetEditingPresented: .constant(false), index: .constant(1),exerciseIndex:.constant(1))
 }
