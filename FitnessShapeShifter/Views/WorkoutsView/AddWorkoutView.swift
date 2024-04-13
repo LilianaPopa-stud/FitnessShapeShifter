@@ -16,17 +16,17 @@ struct AddWorkoutView: View {
     @State private var elapsedTime: TimeInterval = 0
     @State private var showExerciseList = false
     @State private var selectedExercises = [DBExercise]()
-    @State private var tuples: [Exercise] = []
     @State private var isAlertShowing = false
     @State private var isSetEditingPresented = false
     @State private var exerciseSet: ExerciseSet = ExerciseSet(reps: 0, weight: 0.0)
     @State private var indexOfSet: Int = 0
     @State private var indexOfExercise: Int = 0
-    @State private var isShowingModal = false // State to control modal presentation
-    @State private var workoutTitle = "" // Added state for workout title
+    @State private var isShowingModal = false
+    @State private var workoutTitle = ""
     @State private var startDate = Date()
     @State private var endDate = Date()
     @FocusState private var isFocused: Bool
+    @State private var duration: TimeInterval = 0
     
     var body: some View {
         ZStack {
@@ -51,6 +51,7 @@ struct AddWorkoutView: View {
                         Button(action: {
                             isTimerRunning = false
                             isShowingModal = true
+                            duration = elapsedTime
                             endDate = Date()
                             
                         }, label: {
@@ -65,14 +66,14 @@ struct AddWorkoutView: View {
                     .frame(height: 80)
                     .background(.black)
                     List{
-                        ForEach(tuples.indices, id: \.self) { index in
+                        ForEach(viewModel.tuples.indices, id: \.self) { index in
                             ExerciseDetails(exercises: $selectedExercises,
-                            exercise: tuples[index].exercise,
-                            sets: $tuples[index].sets,
-                            isSetEditingPresented: $isSetEditingPresented,
-                            index: $indexOfSet,
-                            exerciseIndex: $indexOfExercise)
-                                .padding(.top,-10)
+                                            exercise: viewModel.tuples[index].exercise,
+                                            sets: $viewModel.tuples[index].sets,
+                                            isSetEditingPresented: $isSetEditingPresented,
+                                            index: $indexOfSet,
+                                            exerciseIndex: $indexOfExercise)
+                            .padding(.top,-10)
                         }
                     }
                     
@@ -110,70 +111,95 @@ struct AddWorkoutView: View {
                 
             }
             if isShowingModal {
-                            Color.black.opacity(0.8)
-                                .ignoresSafeArea()
+                Color.black.opacity(0.8)
+                    .ignoresSafeArea()
                 VStack(alignment: .center) {
-                                HStack {
-                                    Button(action: {
-                                        isShowingModal = false
-                                    }, label: {
-                                        Image(systemName: "xmark")
-                                            .tint(.secondary)
-                                            .font(.caption)
-                                })
-                                    .padding(.leading, 10)
-                                    .padding(.top, 10)
-                                    Spacer()
-                                }
-                                Text("Workout details")
-                                    .font(.title2)
-                                    .foregroundColor(.black)
-                                // day of the week, month, day, year
-                                Text("\(startDate, formatter: DateFormatter.dayOfWeek), ")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary) +
-                                Text("\(startDate, style: .date)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                Text("\(startDate, style: .time) - \(endDate, style: .time)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
-                                TextField("Workout Title", text: $workoutTitle)
-//                                    .frame(width: 150)
-                                .focused($isFocused)
-                                    .padding()
-                                    .onAppear(){
-                                        isFocused = true
-                                    }
-                               
-                                Button("Save workout") {
-                                    // Perform save action here
-                                    isShowingModal = false
-                                }
-                                .disabled(tuples.isEmpty || workoutTitle.isEmpty)
-                                Button("Discard Workout") {
-                                    isShowingModal = false
-                                }
-                                .foregroundColor(.red)
+                    HStack {
+                        Button(action: {
+                            isShowingModal = false
+                        }, label: {
+                            Image(systemName: "xmark")
+                                .tint(.secondary)
+                                .font(.caption)
+                        })
+                        .padding(.leading, 10)
+                        .padding(.top, 10)
+                        Spacer()
+                    }
+                    Text("Workout details")
+                        .font(.title2)
+                        .foregroundColor(.black)
+                    // day of the week, month, day, year
+                    Text("\(startDate, formatter: DateFormatter.dayOfWeek), ")
+                        .font(.caption)
+                        .foregroundColor(.secondary) +
+                    Text("\(startDate, style: .date)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text("\(startDate, style: .time) - \(endDate, style: .time)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    HStack {
+                        TextField("Workout Title", text: $workoutTitle)
+                        //  .background(.black)
+                            .focused($isFocused)
+                            .padding()
+                            .onAppear(){
+                                isFocused = true
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20)
-                            .padding()
+                        
+                        Spacer()
+                    }
+                    HStack {
+                        Text("🕒 \(formattedDuration) ")
+                        Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
+                    }
+                    .padding(.bottom,5)
+                    HStack{
+                        
+                        Text("\(selectedExercises.count) exercises ")
+                        
+                        Text("\(countSets()) sets ")
+                        Text("\(countReps()) reps ")
+                        
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom,5)
+                    
+                    
+                    VStack {
+                        
+                        Button("Save workout") {
+                            // Perform save action here
+                            isShowingModal = false
                         }
-               
+                        .padding(.bottom,5)
+                        .disabled(viewModel.tuples.isEmpty /*|| workoutTitle.isEmpty*/)
+                        Button("Discard",role: .destructive) {
+                            isShowingModal = false
+                        }
+                       
+                    }
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(20)
+                .padding()
+            }
+            
             
         }
         .onChange(of: selectedExercises, {
             for exercise in selectedExercises {
-                if !tuples.contains(where: { $0.exercise == exercise }) {
-                    tuples.append(Exercise(exercise: exercise))
+                if !viewModel.tuples.contains(where: { $0.exercise == exercise }) {
+                    viewModel.tuples.append(Exercise(exercise: exercise))
                 }
             }
-            for tuple in tuples {
+            for tuple in viewModel.tuples {
                 if !selectedExercises.contains(tuple.exercise) {
-                    tuples.removeAll(where: { $0.exercise == tuple.exercise })
+                    viewModel.tuples.removeAll(where: { $0.exercise == tuple.exercise })
                 }
             }
             
@@ -186,7 +212,7 @@ struct AddWorkoutView: View {
                         exerciseSet: $exerciseSet,
                         exerciseIndex: $indexOfExercise,
                         setIndex: $indexOfSet,
-                        tuples: $tuples)
+                        tuples: $viewModel.tuples)
             .preferredColorScheme(.dark)
             .presentationDetents([.fraction(0.43)])
             .ignoresSafeArea(edges: .bottom)
@@ -197,11 +223,31 @@ struct AddWorkoutView: View {
         startDate = Date()
         isTimerRunning = true
         elapsedTime = 0
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: isTimerRunning) { timer in
             elapsedTime += 1
         }
     }
-   
+    
+    private var formattedDuration: String {
+        let hours = Int(duration) / 3600
+        let minutes = (Int(duration) % 3600) / 60
+        let seconds = Int(duration) % 60
+        
+        if hours == 0 {
+            if minutes != 0 {
+                if minutes < 10 {
+                    return String(format: "%dm %02ds", minutes, seconds)
+                } else {
+                    return String(format: "%02dm %02ds", minutes, seconds)
+                }
+            } else {
+                return String(format: "%ds", seconds)
+            }
+        } else {
+            return String(format: "%2dh %02dm %02ds", hours, minutes, seconds)
+        }
+    }
+    
     
     private var formattedElapsedTime: String {
         let hours = Int(elapsedTime) / 3600
@@ -210,6 +256,40 @@ struct AddWorkoutView: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+}
+
+extension AddWorkoutView{
+    func countSets() -> Int {
+        var count = 0
+        for tuple in viewModel.tuples {
+            count += tuple.sets.count
+        }
+        return count
+    }
+    
+    func countReps()->Int{
+        var count = 0
+        for tuple in viewModel.tuples {
+            for set in tuple.sets {
+                count += set.reps
+            }
+        }
+        return count
+    }
+    
+    func totalValueKg()->Double{
+        
+        var total = 0.0
+        for tuple in viewModel.tuples {
+            for set in tuple.sets {
+                total += set.weight * Double(set.reps)
+            }
+        }
+        return total
+    }
+    
+    func saveWorkout(){
+    }
 }
 // Exercise - sets (tuple)
 struct Exercise {

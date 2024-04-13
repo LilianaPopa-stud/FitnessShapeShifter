@@ -240,7 +240,6 @@
 			children = (
 				E6129EFE2B9DE920009E12F2 /* UserManager.swift */,
 				E6EFC4FB2BB5DB9E0062D5D2 /* ExerciseManager.swift */,
-				E6EFC5012BB63D610062D5D2 /* ExerciseViewModel.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -432,10 +431,10 @@
 				E6993A252BB4615B00B1474C /* WorkoutView.swift */,
 				E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */,
 				E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */,
+				E68B5D362BC9CE2A002B3222 /* AddWorkoutViewModel.swift */,
 				E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */,
 				E68B5D322BC94F8B002B3222 /* SetEditView.swift */,
 				E68B5D342BC95FB6002B3222 /* KeyPadButton.swift */,
-				E68B5D362BC9CE2A002B3222 /* AddWorkoutViewModel.swift */,
 			);
 			path = WorkoutsView;
 			sourceTree = "<group>";
@@ -444,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				E6EFC5062BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift */,
+				E6EFC5012BB63D610062D5D2 /* ExerciseViewModel.swift */,
 				E6EFC5032BB63F300062D5D2 /* ExerciseView.swift */,
 			);
 			path = ExercisesView;

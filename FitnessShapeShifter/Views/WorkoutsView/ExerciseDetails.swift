@@ -53,11 +53,7 @@ struct ExerciseDetails: View {
                     .onTapGesture {
                         self.isSetEditingPresented = true
                         self.index = index
-                        
-                        
-                        
-                        
-                        
+                        self.exerciseIndex = exercises.firstIndex(where: { $0.id == exercise.id })!
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -87,7 +83,7 @@ struct ExerciseDetails: View {
         }
     header: {
         ZStack {
-            RoundedRectangle(cornerRadius: 0)
+            RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
                 .frame(height:100)
                 .shadow(color: .shadow, radius: 4, x: 1, y: 3)
@@ -160,9 +156,8 @@ struct ExerciseDetails: View {
                     }
                 }
                 .onTapGesture {
-                    withAnimation(.easeOut(duration: 0.8)){
-                        isExpanded.toggle()
-                    }}
+                    isExpanded.toggle()
+                }
                 
                 Spacer()
                 VStack {

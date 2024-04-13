@@ -38,7 +38,7 @@ struct DBUser: Codable {
         self.measurementUnit = nil
     }
     
-    // si de ce la log in nu se incarca datele imediat, dar abia dupa ce intri in settings sau dupa ce dai log out si log in iar
+    // vezi de ce la log in nu se incarca datele imediat, dar abia dupa ce intri in settings sau dupa ce dai log out si log in iar
     init(userId: String,
          email: String? = nil,
          photoURL: String? = nil,
@@ -127,18 +127,6 @@ final class UserManager {
     private func userDocument(userId: String) -> DocumentReference {
         return userCollection.document(userId)
     }
-//    private let encoder: Firestore.Encoder = {
-//        let encoder = Firestore.Encoder()
-//        encoder.keyEncodingStrategy = .convertToSnakeCase
-//        return encoder
-//    }()
-//    
-//    private let decoder: Firestore.Decoder = {
-//        let decoder = Firestore.Decoder()
-//        decoder.keyDecodingStrategy = .convertFromSnakeCase
-//        return decoder
-//    }()
-    
     func createNewUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }

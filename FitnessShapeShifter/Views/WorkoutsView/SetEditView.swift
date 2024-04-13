@@ -146,10 +146,5 @@ extension SetEditView{
     }
 }
 
-//struct SetEditView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SetEditView(isSetEditingPresented: .constant(true), exerciseSet: .constant(ExerciseSet(reps: 10, weight: 20)))
-//            .previewLayout(.sizeThatFits)
-//    }
-//}
+
 
