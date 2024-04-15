@@ -306,10 +306,10 @@ extension ExerciseDetails {
     
 }
 
-struct ExerciseSet {
-    var reps: Int
-    var weight: Double
-}
+//struct ExerciseSet {
+//    var reps: Int
+//    var weight: Double
+//}
 
 
 #Preview {

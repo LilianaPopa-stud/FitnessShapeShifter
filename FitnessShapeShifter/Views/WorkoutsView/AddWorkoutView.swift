@@ -171,11 +171,19 @@ struct AddWorkoutView: View {
                     
                     
                     VStack {
-                        
-                        Button("Save workout") {
-                            // Perform save action here
+                        Button(action: {
+                            viewModel.totalReps = countReps()
+                            viewModel.totalSets = countSets()
+                            viewModel.totalValueKg = totalValueKg()
+                            viewModel.caloriesBurned = Int(burnedCalories())
+                            Task{
+                                await viewModel.addWorkout()
+                               try await viewModel.fetchWorkouts()
+                            }
                             isShowingModal = false
-                        }
+                        }, label: {
+                            Text("Save Workout")
+                        })
                         .padding(.bottom,5)
                         .disabled(viewModel.tuples.isEmpty /*|| workoutTitle.isEmpty*/)
                         Button("Discard",role: .destructive) {
@@ -297,14 +305,12 @@ extension AddWorkoutView {
         }
         if profileViewModel.user?.gender == "Female"{
             let calories = minutes * weight * 0.0637
-            print(weight)
-            print(calories)
             return Double(calories)}
         else {
             
             let calories = minutes * weight * 0.0713
             return Double(calories)}
-        }
+    }
     
     func saveWorkout(){
     }
