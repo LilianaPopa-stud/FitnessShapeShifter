@@ -8,8 +8,9 @@ import SwiftUI
 
 struct WorkoutsView: View {
     @State private var isActive: Bool = false
-    @StateObject var viewModel = ExerciseViewModel()
     @EnvironmentObject var profileViewModel: ProfileViewModel
+    @EnvironmentObject var workoutViewModel: WorkoutViewModel
+    @State private var showAlert = false
 
     var body: some View {
         ZStack{
@@ -21,41 +22,56 @@ struct WorkoutsView: View {
                     ScrollView {
                         AddWorkoutButton(isActive: $isActive)
                             .padding(30)
-                        Workout()
-                            .padding(.horizontal,10)
-                        Workout()
-                            .padding(.horizontal,10)
-                        Workout()
-                            .padding(.horizontal,10)
+                        ForEach(workoutViewModel.workouts, id: \.id) { workout in
+                            Workout(workout: workout)
+                                .padding(.horizontal,10)
+                        }
+                       
                         
-                        ForEach(viewModel.exercises, id: \.exerciseId) { exercise in
-                            Text(exercise.name)
-                                .padding(.horizontal, 10)
-                        }}
+                        
+//                        Workout()
+//                            .padding(.horizontal,10)
+//                        Workout()
+//                            .padding(.horizontal,10)
+//
+                    }
                     Spacer()
                 }
                 
                 .onAppear(){
-                    Task {
-                        await viewModel.fetchExercises()
-                        // print name of each exercise
-                        for exercise in viewModel.exercises {
-                            print(exercise.name)
-                        }
-                    }
+                    
+                    
                 }
                 .navigationTitle("Your Workouts 🏋️")
                 
             }
+        
             .overlay(
                 Group {
                     if isActive {
-                        AddWorkoutView(viewIsActive: $isActive)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .edgesIgnoringSafeArea(.all)
+                        AddWorkoutView(viewIsActive: $isActive, showAlert: $showAlert)
+                                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                    .edgesIgnoringSafeArea(.all)
+                                            }
                     }
-                }
+                    
+                
             )
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Workout Saved"), message: Text("Your workout has been successfully saved."), dismissButton: .default(Text("OK")))
+            }
+        }
+        .onAppear(){
+            Task{
+                try await workoutViewModel.fetchWorkoutsDescendingByDate()
+            }
+        }
+        .onChange(of: isActive) {
+            
+                Task{
+                    try await workoutViewModel.fetchWorkoutsDescendingByDate()
+                }
+
         }
     }
 }
@@ -63,4 +79,5 @@ struct WorkoutsView: View {
 #Preview {
     WorkoutsView()
         .environmentObject(ProfileViewModel())
+        .environmentObject(WorkoutViewModel())
 }

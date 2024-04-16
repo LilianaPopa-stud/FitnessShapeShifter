@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class AddWorkoutViewModel: ObservableObject {
+class WorkoutViewModel: ObservableObject {
     @Published var workoutName = ""
     @Published var totalValueKg: Double = 0
     @Published var totalReps: Int = 0
@@ -17,9 +17,12 @@ class AddWorkoutViewModel: ObservableObject {
     @Published var caloriesBurned: Int = 0
     @Published var date = Date()
     @Published var tuples : [Exercise] = []
+    @Published var workouts: [DBWorkout] = []
     
     
     private let userManager = UserManager.shared
+    private let exerciseManager = ExerciseManager.shared
+    @State var exercisesViewModel = ExerciseViewModel()
     
     func addWorkout() async {
         do {
@@ -36,16 +39,42 @@ class AddWorkoutViewModel: ObservableObject {
         }
     }
     
-   
+    
     func fetchWorkouts() async throws{
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             let workouts = try await userManager.fetchWorkouts(userId: authData.uid)
-            print(workouts)
+            self.workouts = workouts
         } catch {
             print("Error fetching workouts:", error)
         }
     }
+    
+    func fetchWorkoutsDescendingByDate() async throws {
+        do {
+            let authData = try AuthenticationManager.shared.getAuthenticatedUser()
+            let workouts = try await userManager.fetchWorkoutsDescendingByDate(userId: authData.uid)
+            self.workouts = workouts
+        } catch {
+            print("Error fetching workouts:", error)
+        }
+    }
+    
+    
+    func getWorkoutExercises(workout: DBWorkout) async throws -> [(ExerciseInWorkout,DBExercise)] {
+        var exercises:[(ExerciseInWorkout,DBExercise)] = []
+        do {
+            for exercise in workout.exercises {
+                let exerciseData = try await exercisesViewModel.getExercise(id: exercise.exerciseId)
+                exercises.append((exercise,exerciseData))
+            }
+            
+        } catch {
+            print("Error fetching exercises:", error) // catch error and handle it
+        }
+        return exercises
+    }
+
     
     // save workout to firestore
     // trebuie sa adaug si datele de la user

@@ -11,6 +11,7 @@ struct MainScreenView: View {
     @State private var profileViewRefreshFlag = UUID()
     @State private var showSignInView: Bool = false
     @StateObject var profileViewModel: ProfileViewModel = ProfileViewModel()
+    @StateObject var workoutViewModel: WorkoutViewModel = WorkoutViewModel()
     @State var selectedTab = 0
     init() {
         
@@ -42,6 +43,7 @@ struct MainScreenView: View {
                             Image(systemName: "dumbbell")
                             Text("Workouts")
                         }
+                        .environmentObject(workoutViewModel)
                         .tag(2)
                     Stats()
                         .tabItem {
@@ -74,4 +76,5 @@ struct MainScreenView: View {
 #Preview {
     MainScreenView()
         .environmentObject(ProfileViewModel())
+        .environmentObject(WorkoutViewModel())
 }

@@ -109,8 +109,11 @@ final class ExerciseManager {
         
         try await document.reference.updateData(["description": description])
     }
-    // get exercises
     
+    func getExercise(exerciseId: String) async throws -> DBExercise {
+        let document = try await exerciseCollection.document(exerciseId).getDocument()
+        return try document.data(as: DBExercise.self)
+    }
     
 }
 

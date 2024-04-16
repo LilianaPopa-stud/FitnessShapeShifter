@@ -102,7 +102,7 @@ struct ExerciseView: View {
                        
                         ForEach(exercise.primaryMuscle, id: \.self) { muscle in
                             
-                                Image(imageName(for: muscle))// Replace with your muscle image
+                                Image(imageName(for: muscle))
                                     .resizable()
                                     .frame(width: 200, height: 200)
                             Image(imageName(for: muscle))
@@ -148,8 +148,8 @@ struct ExerciseView: View {
             return "Chest"
         case "Lats":
             return "Lats"
-        case "Abdominalis":
-            return "Abdominalis"
+        case "Abdominals":
+            return "Abdominals"
         case "Quadriceps":
             return "Quads"
         case "Hamstrings":
@@ -172,7 +172,6 @@ struct ExerciseView: View {
             return "Obliques"
         case "Adductors":
             return "Adductor"
-            // Add more cases for other muscles as needed
         default:
             return "none"
         }

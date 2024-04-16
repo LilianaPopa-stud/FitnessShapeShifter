@@ -89,7 +89,7 @@ struct ExercisesExploreAndSearchView: View {
     
     private func getRandomExercisesPPL(for splitPPL: String) -> [DBExercise]{
         let filteredExercises: [DBExercise]
-        
+         
         switch splitPPL {
         case "Pull":
             filteredExercises = viewModel.exercises.filter { $0.primaryMuscle.contains("Biceps") || $0.primaryMuscle.contains("Lats") }

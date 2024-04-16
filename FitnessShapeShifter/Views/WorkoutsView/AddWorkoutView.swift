@@ -11,7 +11,7 @@ import UIKit
 
 struct AddWorkoutView: View {
     //MARK: Properties
-    @StateObject var viewModel = AddWorkoutViewModel()
+    @StateObject var viewModel = WorkoutViewModel()
     @EnvironmentObject var profileViewModel: ProfileViewModel
     @State private var isTimerRunning = false
     @State private var elapsedTime: TimeInterval = 0
@@ -27,6 +27,7 @@ struct AddWorkoutView: View {
     @State private var endDate = Date()
     @FocusState private var isFocused: Bool
     @Binding var viewIsActive: Bool
+    @Binding var showAlert: Bool
     //MARK: Body
     var body: some View {
         ZStack {
@@ -178,16 +179,19 @@ struct AddWorkoutView: View {
                             viewModel.caloriesBurned = Int(burnedCalories())
                             Task{
                                 await viewModel.addWorkout()
-                               try await viewModel.fetchWorkouts()
                             }
                             isShowingModal = false
+                            showAlert = true
+                            viewIsActive = false
+                            
                         }, label: {
                             Text("Save Workout")
                         })
                         .padding(.bottom,5)
-                        .disabled(viewModel.tuples.isEmpty /*|| workoutTitle.isEmpty*/)
+                        .disabled(viewModel.tuples.isEmpty || workoutTitle.isEmpty)
                         Button("Discard",role: .destructive) {
                             isShowingModal = false
+                            viewIsActive = false
                         }
                         
                     }
@@ -216,6 +220,7 @@ struct AddWorkoutView: View {
         .onAppear {
             startTimer()
         }
+      
         //MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
             SetEditView(isSetEditingPresented: $isSetEditingPresented,
@@ -330,6 +335,6 @@ extension DateFormatter {
 
 //MARK: Preview
 #Preview {
-    AddWorkoutView(viewIsActive: .constant(true))
+    AddWorkoutView(viewIsActive: .constant(true), showAlert: .constant(false))
         .environmentObject(ProfileViewModel())
 }

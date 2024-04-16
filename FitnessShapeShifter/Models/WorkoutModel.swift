@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct DBWorkout: Codable {
+struct DBWorkout: Codable, Identifiable {
     var id: String
     var date: Date
     var title: String
@@ -23,7 +23,7 @@ struct DBWorkout: Codable {
     mutating func setExercises(exercises: [ExerciseInWorkout]) {
         self.exercises = exercises
     }
-  
+    
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.id, forKey: .id)
@@ -45,7 +45,7 @@ struct DBWorkout: Codable {
         case totalSets
         case totalWeight
         case totalCalories
-    
+        
     }
     
     init(from decoder: any Decoder) throws {
@@ -82,6 +82,17 @@ struct DBWorkout: Codable {
         self.totalWeight = totalWeight
         self.totalCalories = totalCalories
         self.exercises = exercises
+    }
+    init(){
+        self.id = UUID().uuidString
+        self.date = Date()
+        self.title = ""
+        self.duration = 0
+        self.totalReps = 0
+        self.totalSets = 0
+        self.totalWeight = 0
+        self.totalCalories = 0
+        self.exercises = []
     }
     
 }
