@@ -86,13 +86,14 @@ struct DBWorkout: Codable, Identifiable {
     init(){
         self.id = UUID().uuidString
         self.date = Date()
-        self.title = ""
-        self.duration = 0
-        self.totalReps = 0
-        self.totalSets = 0
-        self.totalWeight = 0
-        self.totalCalories = 0
-        self.exercises = []
+        self.title = "My Workout"
+        self.duration = 10000
+        self.totalReps = 192
+        self.totalSets = 28
+        self.totalWeight = 9088
+        self.totalCalories = 200
+        self.exercises = [ExerciseInWorkout(exerciseId: "0608158C-6B28-4568-A69C-810DE6A1915B", sets: [ExerciseSet(reps: 10, weight: 10),ExerciseSet(reps: 10, weight: 15)]),ExerciseInWorkout(exerciseId: "32C22586-49B6-48CB-AD85-7BC603BF27CF"
+, sets: [ExerciseSet(reps: 10, weight: 19)])]
     }
     
 }

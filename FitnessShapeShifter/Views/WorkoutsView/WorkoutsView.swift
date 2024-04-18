@@ -11,7 +11,8 @@ struct WorkoutsView: View {
     @EnvironmentObject var profileViewModel: ProfileViewModel
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
     @State private var showAlert = false
-
+    @State private var refreshWorkouts = false
+    @State private var exercisesLoaded = false
     var body: some View {
         ZStack{
             AppBackground()
@@ -23,42 +24,33 @@ struct WorkoutsView: View {
                         AddWorkoutButton(isActive: $isActive)
                             .padding(30)
                         ForEach(workoutViewModel.workouts, id: \.id) { workout in
-                            Workout(workout: workout)
+                            Workout(workout: workout, refreshWorkouts: $refreshWorkouts)
                                 .padding(.horizontal,10)
                         }
-                       
-                        
-                        
-//                        Workout()
-//                            .padding(.horizontal,10)
-//                        Workout()
-//                            .padding(.horizontal,10)
-//
                     }
                     Spacer()
                 }
-                
-                .onAppear(){
-                    
-                    
+                .refreshable {
+                    Task{
+                        try await workoutViewModel.fetchWorkoutsDescendingByDate()
+                    }
                 }
+
                 .navigationTitle("Your Workouts 🏋️")
-                
             }
-        
             .overlay(
                 Group {
                     if isActive {
                         AddWorkoutView(viewIsActive: $isActive, showAlert: $showAlert)
-                                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                    .edgesIgnoringSafeArea(.all)
-                                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .edgesIgnoringSafeArea(.all)
                     }
-                    
-                
+                }
             )
             .alert(isPresented: $showAlert) {
-                Alert(title: Text("Workout Saved"), message: Text("Your workout has been successfully saved."), dismissButton: .default(Text("OK")))
+                Alert(title: Text("Workout logged!"),
+                      message: Text("Your workout has been successfully saved."),
+                      dismissButton: .default(Text("OK")))
             }
         }
         .onAppear(){
@@ -67,11 +59,16 @@ struct WorkoutsView: View {
             }
         }
         .onChange(of: isActive) {
+            Task{
+                try await workoutViewModel.fetchWorkoutsDescendingByDate()
+            }
+        }
+        .onChange(of: refreshWorkouts){
             
-                Task{
-                    try await workoutViewModel.fetchWorkoutsDescendingByDate()
-                }
-
+            Task{
+                try await workoutViewModel.fetchWorkoutsDescendingByDate()
+            }
+            refreshWorkouts.toggle()
         }
     }
 }

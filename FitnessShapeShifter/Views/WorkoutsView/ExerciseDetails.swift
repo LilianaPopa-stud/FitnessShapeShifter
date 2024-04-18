@@ -195,17 +195,11 @@ struct ExerciseDetails: View {
                             withAnimation(.easeOut(duration: 0.8)){
                                 isExpanded.toggle()
                             }}
-                    
                 }
-                .frame(height: 100)
-                
-            }
-            
+                .frame(height: 100)            }
             .padding(.horizontal,10)
-            //.foregroundColor(.white)
+
         }
-        
-        
         
     }
         
@@ -305,12 +299,6 @@ extension ExerciseDetails {
     }
     
 }
-
-//struct ExerciseSet {
-//    var reps: Int
-//    var weight: Double
-//}
-
 
 #Preview {
     ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise(), sets: .constant([ExerciseSet(reps: 10, weight: 10)]), isSetEditingPresented: .constant(false), index: .constant(1),exerciseIndex:.constant(1))

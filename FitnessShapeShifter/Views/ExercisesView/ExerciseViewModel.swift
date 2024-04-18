@@ -44,10 +44,7 @@ final class ExerciseViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
-//    func getExercise(by id: String) -> DBExercise? {
-//        return exercises.first(where: { $0.id == id })
-//    }
+ 
     func getExercise(id: String) async throws -> DBExercise {
         do {
             return try await ExerciseManager.shared.getExercise(exerciseId: id)

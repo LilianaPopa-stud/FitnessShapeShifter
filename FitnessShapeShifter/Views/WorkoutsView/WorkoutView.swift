@@ -13,6 +13,9 @@ struct Workout: View {
     var workout: DBWorkout
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
     @State var exercises: [(ExerciseInWorkout,DBExercise)] = []
+    @State private var isDeleteAlertPresented = false
+    @Binding var refreshWorkouts: Bool
+
     var body: some View {
         // title
         ZStack {
@@ -20,16 +23,51 @@ struct Workout: View {
                 .fill(Color.white)
                 .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
             VStack {
-                
                 HStack {
                     Text("\(workout.title)")
                         .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
                     //button
-                    Button(action: {}, label:
-                            {Image(systemName: "ellipsis")
-                        .font(.title2)} )
+                    // edit and delete buttons
+                    Menu {
+                        Button {
+                            withAnimation {
+                             
+                            }
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        Button(role: .destructive){
+                            isDeleteAlertPresented = true
+                            
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.white)
+                                .frame(width: 10, height: 35)
+                            Image(systemName: "ellipsis")
+                                .foregroundColor(.accentColor2)
+                                .font(.title2)
+                        }
+                    }
+                    .alert(isPresented: $isDeleteAlertPresented) {
+                        Alert(
+                            title: Text("Delete workout"),
+                            message: Text("Are you sure you want to delete this workout? This action cannot be undone."),
+                            primaryButton: .destructive(Text("Delete")) {
+                                Task {
+                                    await workoutViewModel.deleteWorkout(workoutId: workout.id)
+                                        }
+                                refreshWorkouts.toggle()
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
                 }
                 HStack{
                     Text(workout.date, style: .date)
@@ -39,67 +77,17 @@ struct Workout: View {
                 }
                 Divider()
                     .frame(height: 1)
-                    .overlay(.accentColor2)
+                    .overlay(.gray)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        VStack {
-                            Text("Duration")
-                                .font(.caption)
-                            Text("\(formattedDuration)")
-                                .font(.callout)
-                                .fontWeight(.semibold)
+                        HStack {
+                            WorkoutStatView(title: "Duration", value: formattedDuration)
+                            WorkoutStatView(title: "Exercises", value: String(workout.exercises.count))
+                            WorkoutStatView(title: "TVL", value: "\(String(format: "%.f", workout.totalWeight)) kg")
+                            WorkoutStatView(title: "Calories", value: "\(workout.totalCalories)")
+                            WorkoutStatView(title: "Sets", value: "\(workout.totalSets)")
+                            WorkoutStatView(title: "Reps", value: "\(workout.totalReps)")
                         }
-                        .padding(.horizontal,20)
-                        
-                        Divider()
-                            .frame(width: 1)
-                            .overlay(.accentColor2)
-                        
-                        
-                        VStack {
-                            Text("KCal")
-                                .font(.caption)
-                            Text("\(workout.totalCalories)")
-                                .font(.callout)
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.horizontal,20)
-                        
-                        Divider()
-                            .frame(width: 1)
-                            .overlay(.accentColor2)
-                        
-                        
-                        VStack {
-                            Text("TVL")
-                                .font(.caption)
-                            Text("\(String(format: "%.f",workout.totalWeight)) kg")
-                                .font(.callout)
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.horizontal,20)
-                        Divider()
-                            .frame(width: 1)
-                            .overlay(.accentColor2)
-                        VStack {
-                            Text("Sets")
-                                .font(.caption)
-                            Text("\(workout.totalSets)")
-                                .font(.callout)
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.horizontal,20)
-                        Divider()
-                            .frame(width: 1)
-                            .overlay(.accentColor2)
-                        VStack {
-                            Text("Reps")
-                                .font(.caption)
-                            Text("\(workout.totalReps)")
-                                .font(.callout)
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.horizontal,20)
                     }
                     .frame(height: 20)
                     .padding(.top, 10)
@@ -107,60 +95,63 @@ struct Workout: View {
                 }
                 Divider()
                     .frame(height: 1)
-                    .overlay(.accentColor2)
-                    .padding(.bottom,30)
+                    .overlay(.gray)
+                    .padding(.bottom,10)
+                if exercises.isEmpty {
+                    
+                    ProgressView()
+                        .padding(.top,50)
+                        .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                    
+                    } else {
+                        HStack{
+                            ScrollView(.vertical, showsIndicators: false) {
+                                ForEach(getDistinctMuscles(), id: \.self) { muscle in
+                                    Text(muscle)
+                                        .font(.caption)
+                                        .padding(.vertical,5)
+                                        .padding(.horizontal,10)
+                                        .background(Color.accentColor2)
+                                        .cornerRadius(10)
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .frame(width: 120, height: 160)
                 
-                ForEach(exercises, id: \.0.id) { exercise in
-                    VStack {
-                        HStack {
-                            Text(exercise.1.name)
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                            Spacer()
                             
-                        }
-                        
-                    }
-                    
+                            ZStack{
+                                ForEach(exercises, id: \.0.id){ exercise in
+                                    let muscle = exercise.1.primaryMuscle
+                                    let muscle2 = exercise.1.secondaryMuscle
+                                    ForEach(muscle, id: \.self) { muscle in
+                                        Image("\(imageName(for: muscle))")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 200)
+                                            .padding(.trailing, 5)
+                                    }
+                                    ForEach(muscle2 ?? [], id: \.self) { muscle in
+                                        Image("\(imageName(for: muscle))")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 200)
+                                            .padding(.trailing, 5)
+                                    }
+                                }
+                            }
+                            
+                        }}
+                    Spacer()
                 }
-                //
-                // images
-                ZStack{
-                    ForEach(exercises, id: \.0.id){ exercise in
-                        let muscle = exercise.1.primaryMuscle
-                        ForEach(muscle, id: \.self) { muscle in
-                            Image("\(imageName(for: muscle))")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .padding(.trailing, 5)
-                        }
-//                        let muscle2 = exercise.1.secondaryMuscle
-//                        ForEach(muscle2 ?? "none", id: \.self) { muscle in
-//                            Image("\(imageName(for: muscle))")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 30, height: 30)
-//                                .padding(.trailing, 5)
-//                        }
-                    }
-                    
-                }
-                //
-                Spacer()
-                
-            }
-            .padding()
+                .padding()
+            
         }
         .onAppear(){
             Task{
                 exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
             }
         }
-        
-        
     }
-    
     
 }
 
@@ -182,10 +173,9 @@ extension Workout{
                 return String(format: "%ds", seconds)
             }
         } else {
-            return String(format: "%2dh %02dm %02ds", hours, minutes, seconds)
+            return String(format: "%2dh %02dm", hours, minutes)
         }
     }
-    
     func imageName(for muscle: String) -> String {
         switch muscle {
         case "Biceps":
@@ -224,13 +214,53 @@ extension Workout{
             return "none"
         }
     }
+    func getDistinctMuscles() -> [String] {
+        var muscles: [String] = []
+        for exercise in exercises {
+            for muscle in exercise.1.primaryMuscle {
+                if !muscles.contains(muscle) {
+                    muscles.append(muscle)
+                }
+            }
+            if let secondaryMuscle = exercise.1.secondaryMuscle {
+                for muscle in secondaryMuscle {
+                    if !muscles.contains(muscle) {
+                        muscles.append(muscle)
+                    }
+                }
+            }
+        }
+        return muscles
+    }
+
     
     
 }
 
+struct WorkoutStatView: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        VStack {
+            Text(title)
+                .font(.caption)
+            Text(value)
+                .font(.system(size: 16))
+                .fontWeight(.semibold)
+        }
+        .padding(.horizontal, 10)
+        if title != "Reps" {
+            Divider().frame(width: 1)
+                .overlay(Color.gray)
+        }
+    }
+}
+
+
 
 #Preview {
-    Workout(workout: DBWorkout())
+    Workout(workout: DBWorkout(), refreshWorkouts: .constant(false))
         .environmentObject(WorkoutViewModel())
         .previewLayout(.sizeThatFits)
         .padding()

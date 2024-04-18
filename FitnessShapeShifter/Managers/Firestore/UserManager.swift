@@ -62,7 +62,8 @@ final class UserManager {
     func addWorkout(workout: DBWorkout, userId: String, exercises: [ExerciseInWorkout]) async throws {
         let document = workoutCollection(userId: userId).document()
         
-        let workoutData = try Firestore.Encoder().encode(workout)
+        var workoutData = try Firestore.Encoder().encode(workout)
+        workoutData["id"] = document.documentID
         try await document.setData(workoutData)
 
         
@@ -157,6 +158,11 @@ final class UserManager {
         }
         
         return workouts
+    }
+    
+    func deleteWorkout(userId: String, workoutId: String) async throws {
+        //workout is not document id, it is the id of the workout object
+        try await workoutCollection(userId: userId).document(workoutId).delete()
     }
 
     

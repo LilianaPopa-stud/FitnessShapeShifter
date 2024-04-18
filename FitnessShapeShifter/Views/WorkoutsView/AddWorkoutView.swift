@@ -37,6 +37,7 @@ struct AddWorkoutView: View {
                     HStack{
                         Button(action: {
                             isTimerRunning = false
+                            viewIsActive = false
                         }, label: {
                             Image(systemName: "xmark")
                                 .tint(.white)
@@ -177,6 +178,7 @@ struct AddWorkoutView: View {
                             viewModel.totalSets = countSets()
                             viewModel.totalValueKg = totalValueKg()
                             viewModel.caloriesBurned = Int(burnedCalories())
+                            viewModel.workoutName = workoutTitle
                             Task{
                                 await viewModel.addWorkout()
                             }
@@ -185,7 +187,7 @@ struct AddWorkoutView: View {
                             viewIsActive = false
                             
                         }, label: {
-                            Text("Save Workout")
+                            Text("Finish workout")
                         })
                         .padding(.bottom,5)
                         .disabled(viewModel.tuples.isEmpty || workoutTitle.isEmpty)

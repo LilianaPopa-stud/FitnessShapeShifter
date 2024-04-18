@@ -93,16 +93,16 @@ struct ExerciseView: View {
                                         .padding(.horizontal,10)
                                         .background(Color.accentColor2.opacity(0.5))
                                         .cornerRadius(10)
-                                        .foregroundColor(.white)
+                                         .foregroundColor(.white)
                                 }
                             }
                         }
                     }
+                    //muscle map
                     ZStack {
-                       
                         ForEach(exercise.primaryMuscle, id: \.self) { muscle in
                             
-                                Image(imageName(for: muscle))
+                            Image(imageName(for: muscle))
                                     .resizable()
                                     .frame(width: 200, height: 200)
                             Image(imageName(for: muscle))
@@ -138,6 +138,7 @@ struct ExerciseView: View {
             }
         }
     }
+    
     func imageName(for muscle: String) -> String {
         switch muscle {
         case "Biceps":

@@ -74,6 +74,18 @@ class WorkoutViewModel: ObservableObject {
         }
         return exercises
     }
+    
+    func deleteWorkout(workoutId: String) async {
+        do {
+            let authData = try AuthenticationManager.shared.getAuthenticatedUser()
+            try await userManager.deleteWorkout(userId: authData.uid, workoutId: workoutId)
+            print ("Workout deleted")
+            print(workoutId)
+            print(authData.uid)
+        } catch {
+            print("Error deleting workout:", error)
+        }
+    }
 
     
     // save workout to firestore
