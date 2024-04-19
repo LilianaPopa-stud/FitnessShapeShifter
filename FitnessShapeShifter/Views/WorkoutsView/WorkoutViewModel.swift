@@ -19,7 +19,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var tuples : [Exercise] = []
     @Published var workouts: [DBWorkout] = []
     
-    
+    var isLoading: Bool = true
     private let userManager = UserManager.shared
     private let exerciseManager = ExerciseManager.shared
     @State var exercisesViewModel = ExerciseViewModel()
@@ -48,9 +48,11 @@ class WorkoutViewModel: ObservableObject {
         } catch {
             print("Error fetching workouts:", error)
         }
+        
     }
     
     func fetchWorkoutsDescendingByDate() async throws {
+        print(isLoading)
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             let workouts = try await userManager.fetchWorkoutsDescendingByDate(userId: authData.uid)
@@ -58,6 +60,9 @@ class WorkoutViewModel: ObservableObject {
         } catch {
             print("Error fetching workouts:", error)
         }
+        isLoading = false
+        print(isLoading)
+        
     }
     
     

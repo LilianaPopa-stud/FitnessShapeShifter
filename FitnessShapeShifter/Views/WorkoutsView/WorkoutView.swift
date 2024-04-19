@@ -12,9 +12,11 @@ import SwiftUI
 struct Workout: View {
     var workout: DBWorkout
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
+    @EnvironmentObject var profileViewModel: ProfileViewModel
     @State var exercises: [(ExerciseInWorkout,DBExercise)] = []
     @State private var isDeleteAlertPresented = false
     @Binding var refreshWorkouts: Bool
+    @State var isLoading = true
 
     var body: some View {
         // title
@@ -24,6 +26,8 @@ struct Workout: View {
                 .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
             VStack {
                 HStack {
+                    CircularProfileImage(imageState: profileViewModel.imageState, size:  CGSize(width: 45, height: 45))
+                        
                     Text("\(workout.title)")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -97,11 +101,13 @@ struct Workout: View {
                     .frame(height: 1)
                     .overlay(.gray)
                     .padding(.bottom,10)
-                if exercises.isEmpty {
+                
+                if isLoading{
                     
                     ProgressView()
                         .padding(.top,50)
                         .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                    
                     
                     } else {
                         HStack{
@@ -147,9 +153,18 @@ struct Workout: View {
             
         }
         .onAppear(){
-            Task{
-                exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
-            }
+            Task {
+                   do {
+                       exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
+                       isLoading = false
+                   } catch {
+                       print("Error fetching exercises for workout:", error)
+                   }
+               }
+            
+        }
+        .onChange(of: isLoading){
+            refreshWorkouts.toggle()
         }
     }
     
@@ -262,6 +277,7 @@ struct WorkoutStatView: View {
 #Preview {
     Workout(workout: DBWorkout(), refreshWorkouts: .constant(false))
         .environmentObject(WorkoutViewModel())
+        .environmentObject(ProfileViewModel())
         .previewLayout(.sizeThatFits)
         .padding()
     

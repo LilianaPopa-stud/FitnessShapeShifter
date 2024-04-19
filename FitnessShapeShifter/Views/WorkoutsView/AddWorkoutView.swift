@@ -148,6 +148,7 @@ struct AddWorkoutView: View {
                         TextField("Workout Title", text: $workoutTitle)
                             .focused($isFocused)
                             .padding()
+                            .autocapitalization(.words)
                             .onAppear(){
                                 isFocused = true
                             }

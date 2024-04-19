@@ -31,7 +31,7 @@ struct ProfileView: View {
                         VStack {
                             HStack {
                                 Spacer()
-                                CircularProfileImage(imageState: viewModel.imageState)
+                                CircularProfileImage(imageState: viewModel.imageState,size: CGSize(width: 100, height: 100))
                                 Spacer()
                             }
                             
@@ -268,6 +268,7 @@ struct InfoListItem: View {
 #Preview {
     NavigationStack {
         ProfileView(showSignInView: .constant(false))
+            .environmentObject(ProfileViewModel())
         
     }
 }

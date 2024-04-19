@@ -26,12 +26,12 @@ struct ProfileImage: View {
 
 struct CircularProfileImage: View {
     let imageState: ProfileViewModel.ImageState
-    
+    let size: CGSize
     var body: some View {
         ProfileImage(imageState: imageState)
             .scaledToFill()
             .clipShape(Circle())
-            .frame(width: 100, height: 100)
+            .frame(width: size.width, height: size.height)
             .background {
                 Circle().fill(
                     LinearGradient(
@@ -48,7 +48,7 @@ struct EditableCircularProfileImage: View {
     @ObservedObject var viewModel: ProfileViewModel
     
     var body: some View {
-        CircularProfileImage(imageState: viewModel.imageState)
+        CircularProfileImage(imageState: viewModel.imageState, size: CGSize(width: 100, height: 100))
             .overlay(alignment: .bottomTrailing) {
                 PhotosPicker(selection: $viewModel.imageSelection,
                              matching: .images,
