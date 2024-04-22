@@ -13,8 +13,8 @@ struct Workouts: View {
     @State private var refreshWorkouts = false
     @State private var selectedDate = Date()
     @State private var isDatePickerVisible = false
-    @State var detailsViewIsActive = false
-
+    @State private var detailsViewIsActive: [Bool] = []
+    
     var body: some View {
         ZStack {
             AppBackground()
@@ -38,10 +38,10 @@ struct Workouts: View {
                                 Group {
                                     DatePicker("Filter by date", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
                                         .padding(.horizontal)
-                                      }
-                                  
-                                  .colorInvert()
-                                      .colorMultiply(Color.accentColor2)
+                                }
+                                
+                                .colorInvert()
+                                .colorMultiply(Color.accentColor2)
                             } else {
                                 Text(selectedDate, style: .date)
                                     .foregroundColor(.gray)
@@ -74,20 +74,12 @@ struct Workouts: View {
                                     .foregroundStyle(.gray)
                                     .padding(.horizontal, 20)
                             }
-                            ForEach(filteredWorkouts, id: \.id){ workout in
-                                NavigationLink(
-                                    destination:
-                                        WorkoutDetails(isActive: $detailsViewIsActive, workout: workout/*workout: workout, refreshWorkouts: $refreshWorkouts*/)
-                                        .navigationBarBackButtonHidden(true),
-                                    isActive: $detailsViewIsActive){
-                                    Workout(workout: workout, refreshWorkouts: $refreshWorkouts)
-                                        .padding(.horizontal,10)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-        
-                                }
+                            ForEach(filteredWorkouts) { workout in
+                                WorkoutItemView(workout: workout, refreshWorkouts: $refreshWorkouts)
+                                    .padding(.horizontal,10)
                             }
                         }
+                    }
                     
                     Spacer()
                 }
@@ -144,7 +136,25 @@ extension Workouts {
             }
         }
     }
+    
 }
+struct WorkoutItemView: View {
+    let workout: DBWorkout
+    @Binding var refreshWorkouts: Bool
+    @State private var isDetailsViewActive = false
+    
+    var body: some View {
+        NavigationLink(
+            destination: WorkoutDetails(isActive: $isDetailsViewActive, workout: workout)
+            .navigationBarBackButtonHidden(true),
+            isActive: $isDetailsViewActive
+        ) {
+            Workout(workout: workout, refreshWorkouts: $refreshWorkouts)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
+
 
 #Preview {
     Workouts()

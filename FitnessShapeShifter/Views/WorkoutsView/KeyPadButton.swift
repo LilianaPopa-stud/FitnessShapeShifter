@@ -8,8 +8,6 @@ struct KeyPadButton: View {
     var body: some View {
         Button(action: { self.action(self.key) }) {
             Color.clear
-//                .overlay(RoundedRectangle(cornerRadius: 12)
-//                    .stroke(Color.white))
                 .overlay(Text(key).font(.title).foregroundColor(.white))
         }
     }

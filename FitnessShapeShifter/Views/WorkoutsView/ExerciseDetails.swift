@@ -10,7 +10,8 @@ import SwiftUI
 struct ExerciseDetails: View {
     @Binding var exercises: [DBExercise]
     let exercise: DBExercise
-    @Binding var sets: [ExerciseSet] /*= [ExerciseSet(reps: 12, weight: 20),ExerciseSet(reps: 10, weight: 120),ExerciseSet(reps: 10, weight: 30),ExerciseSet(reps: 10, weight: 40),ExerciseSet(reps: 10, weight: 80)]*/
+    @Binding var sets: [ExerciseSet] 
+    @EnvironmentObject var workoutViewModel: WorkoutViewModel
     @State private var isAlertShowing = false
     @State private var isExpanded = false
     @Binding var isSetEditingPresented: Bool
@@ -96,25 +97,19 @@ struct ExerciseDetails: View {
                         
                         ForEach(exercise.primaryMuscle, id: \.self) { muscle in
                             
-                            Image(imageName(for: muscle))// Replace with your muscle image
+                            Image(workoutViewModel.imageName(for: muscle))// Replace with your muscle image
                                 .resizable()
                                 .frame(width: 70, height: 70)
-                            Image(imageName(for: muscle))
+                            Image(workoutViewModel.imageName(for: muscle))
                                 .resizable()
                                 .frame(width: 70, height: 70)
                         }
                         ForEach(exercise.secondaryMuscle ?? [], id: \.self) { muscle in
-                            Image(imageName(for: muscle))
+                            Image(workoutViewModel.imageName(for: muscle))
                                 .resizable()
                                 .frame(width: 70, height: 70)
                         }
                     }
-                    
-                    //                    Image("wide-grip-lat-pulldown")
-                    //                        .resizable()
-                    //                        .scaledToFit()
-                    //                        .frame(maxWidth: 90, maxHeight: 90)
-                    
                     
                     VStack(alignment: .leading) {
                         HStack {
@@ -223,44 +218,6 @@ extension ExerciseDetails {
         
     }
     
-    func imageName(for muscle: String) -> String {
-        switch muscle {
-        case "Biceps":
-            return "Biceps"
-        case "Triceps":
-            return "Triceps"
-        case "Chest", "Inner Chest", "Lower Chest", "Upper Chest":
-            return "Chest"
-        case "Lats":
-            return "Lats"
-        case "Abdominalis":
-            return "Abdominalis"
-        case "Quadriceps":
-            return "Quads"
-        case "Hamstrings":
-            return "Hamstrings"
-        case "Shoulders":
-            return "Deltoid"
-        case "Front Shoulders":
-            return "Deltoid"
-        case "Traps":
-            return "Traps"
-        case "Calves":
-            return "Calves"
-        case "Glutes":
-            return "Glutes"
-        case "Lower Back":
-            return "Lowerback"
-        case "Forearms":
-            return "Forearm"
-        case "Obliques":
-            return "Obliques"
-        case "Adductors":
-            return "Adductor"
-        default:
-            return "none"
-        }
-    }
     func deleteItems(at offsets: IndexSet) {
         sets.remove(atOffsets: offsets)
     }
@@ -302,4 +259,5 @@ extension ExerciseDetails {
 
 #Preview {
     ExerciseDetails(exercises:.constant([DBExercise(),DBExercise()]),exercise: DBExercise(), sets: .constant([ExerciseSet(reps: 10, weight: 10)]), isSetEditingPresented: .constant(false), index: .constant(1),exerciseIndex:.constant(1))
+        .environmentObject(WorkoutViewModel())
 }

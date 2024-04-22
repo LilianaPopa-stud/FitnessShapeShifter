@@ -98,9 +98,10 @@ struct DBWorkout: Codable, Identifiable {
     
 }
 
-struct ExerciseInWorkout: Codable {
+struct ExerciseInWorkout: Codable, Hashable {
+    
     var id: String // that's the document id, because you can have the same exercise multiple times in a workout
-    var exerciseId: String // that's the id of the exercise, to be able to fetch the exercise from the database
+    var exerciseId: String 
     var sets: [ExerciseSet]
     
     func encode(to encoder: any Encoder) throws {
@@ -133,12 +134,19 @@ struct ExerciseInWorkout: Codable {
         self.exerciseId = exerciseId
         self.sets = sets
     }
+   // only for testing, delete later
+    
+    init(){
+        self.id = UUID().uuidString
+        self.exerciseId = "00FAA790-3BE9-4A11-A1FE-9FCCD1D3A36C"
+        self.sets = [ExerciseSet(reps: 10, weight: 10),ExerciseSet(reps: 10, weight: 15)]
+    }
     
    
   
 }
 
-struct ExerciseSet: Codable {
+struct ExerciseSet: Codable,Hashable {
 
     var reps: Int
     var weight: Double

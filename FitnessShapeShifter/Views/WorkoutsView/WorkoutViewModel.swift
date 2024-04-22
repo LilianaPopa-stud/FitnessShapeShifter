@@ -19,6 +19,45 @@ class WorkoutViewModel: ObservableObject {
     @Published var tuples : [Exercise] = []
     @Published var workouts: [DBWorkout] = []
     
+    func imageName(for muscle: String) -> String {
+        switch muscle {
+        case "Biceps":
+            return "Biceps"
+        case "Triceps":
+            return "Triceps"
+        case "Chest", "Inner Chest", "Lower Chest", "Upper Chest":
+            return "Chest"
+        case "Lats":
+            return "Lats"
+        case "Abdominals":
+            return "Abdominals"
+        case "Quadriceps":
+            return "Quads"
+        case "Hamstrings":
+            return "Hamstrings"
+        case "Shoulders":
+            return "Deltoid"
+        case "Front Shoulders":
+            return "Deltoid"
+        case "Traps":
+            return "Traps"
+        case "Calves":
+            return "Calves"
+        case "Glutes":
+            return "Glutes"
+        case "Lower Back":
+            return "Lowerback"
+        case "Forearms":
+            return "Forearm"
+        case "Obliques":
+            return "Obliques"
+        case "Adductors":
+            return "Adductor"
+        default:
+            return "none"
+        }
+    }
+    
     var isLoading: Bool = true
     private let userManager = UserManager.shared
     private let exerciseManager = ExerciseManager.shared
@@ -39,6 +78,21 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+    func updateWorkout(workout: DBWorkout) async {
+        do {
+            let authData = try AuthenticationManager.shared.getAuthenticatedUser()
+            var exercises: [ExerciseInWorkout] = []
+            for tuple in tuples { // exercise - sets
+                let exercise = ExerciseInWorkout(exerciseId: tuple.exercise.id, sets: tuple.sets)
+                exercises.append(exercise)
+            }
+            let updatedWorkout = DBWorkout(date: date, title: workoutName, duration: elapsedTime, totalReps: totalReps, totalSets: totalSets, totalWeight: totalValueKg, totalCalories: Int(caloriesBurned),exercises: exercises)
+            try await userManager.updateWorkout(workout: updatedWorkout, userId: authData.uid, workoutId: workout.id, exercises: exercises)
+        } catch {
+            print("Error updating workout:", error)
+        }
+    }
+    
     
     func fetchWorkouts() async throws{
         do {
@@ -48,7 +102,6 @@ class WorkoutViewModel: ObservableObject {
         } catch {
             print("Error fetching workouts:", error)
         }
-        
     }
     
     func fetchWorkoutsDescendingByDate() async throws {
@@ -91,16 +144,11 @@ class WorkoutViewModel: ObservableObject {
             print("Error deleting workout:", error)
         }
     }
-
     
-    // save workout to firestore
-    // trebuie sa adaug si datele de la user
-    
-    
-    
-    
-    
+   
     
 }
+
+
 
 

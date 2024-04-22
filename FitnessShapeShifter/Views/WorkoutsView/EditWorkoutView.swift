@@ -1,20 +1,16 @@
 //
-//  AddWorkoutView.swift
+//  EditWorkoutView.swift
 //  FitnessShapeShifter
 //
-//  Created by Liliana Popa on 05.04.2024.
+//  Created by Liliana Popa on 22.04.2024.
 //
 
 import SwiftUI
-import UIKit
 
-
-struct AddWorkoutView: View {
-    //MARK: Properties
+struct EditWorkoutView: View {
     @StateObject var viewModel = WorkoutViewModel()
     @EnvironmentObject var profileViewModel: ProfileViewModel
-    @State private var isTimerRunning = false
-    @State private var elapsedTime: TimeInterval = 0
+    @Binding var workout: DBWorkout
     @State private var showExerciseList = false
     @State private var selectedExercises = [DBExercise]()
     @State private var isAlertShowing = false
@@ -28,7 +24,6 @@ struct AddWorkoutView: View {
     @FocusState private var isFocused: Bool
     @Binding var viewIsActive: Bool
     @Binding var showAlert: Bool
-    //MARK: Body
     var body: some View {
         ZStack {
             AppBackground()
@@ -36,25 +31,16 @@ struct AddWorkoutView: View {
                 VStack {
                     HStack{
                         Button(action: {
-                            isTimerRunning = false
                             viewIsActive = false
                         }, label: {
                             Image(systemName: "xmark")
                                 .tint(.white)
                                 .font(.title3)
                         })
-                        Spacer()
-                        Text("\(formattedElapsedTime)")
-                            .font(.headline)
-                            .foregroundColor(.white)
                         
                         Spacer()
                         Button(action: {
-                            isTimerRunning = false
                             isShowingModal = true
-                            viewModel.elapsedTime = elapsedTime
-                            endDate = Date()
-                            
                         }, label: {
                             Image(systemName: "checkmark.circle.fill")
                                 .tint(.white)
@@ -152,7 +138,6 @@ struct AddWorkoutView: View {
                             .onAppear(){
                                 isFocused = true
                             }
-                        
                         Spacer()
                     }
                     HStack {
@@ -160,19 +145,14 @@ struct AddWorkoutView: View {
                         Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
                         Text("🔥 \(String(format: "%.f",burnedCalories())) kcal ")}
                     .padding(.bottom,5)
-                    HStack{
-                        
+                    HStack {
                         Text("\(selectedExercises.count) exercises ")
-                        
                         Text("\(countSets()) sets ")
                         Text("\(countReps()) reps ")
-                        
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .padding(.bottom,5)
-                    
-                    
                     VStack {
                         Button(action: {
                             viewModel.totalReps = countReps()
@@ -181,7 +161,7 @@ struct AddWorkoutView: View {
                             viewModel.caloriesBurned = Int(burnedCalories())
                             viewModel.workoutName = workoutTitle
                             Task{
-                                await viewModel.addWorkout()
+                                await viewModel.updateWorkout(workout: workout)
                             }
                             isShowingModal = false
                             showAlert = true
@@ -196,7 +176,6 @@ struct AddWorkoutView: View {
                             isShowingModal = false
                             viewIsActive = false
                         }
-                        
                     }
                 }
                 .padding()
@@ -220,9 +199,7 @@ struct AddWorkoutView: View {
             }
             
         })
-        .onAppear {
-            startTimer()
-        }
+      
       
         //MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
@@ -234,8 +211,8 @@ struct AddWorkoutView: View {
             .presentationDetents([.fraction(0.43)])
             .ignoresSafeArea(edges: .bottom)
         }
+
     }
-    
     //MARK: Other properties
     private var formattedDuration: String {
         let hours = Int(viewModel.elapsedTime) / 3600
@@ -258,25 +235,9 @@ struct AddWorkoutView: View {
     }
     
     
-    private var formattedElapsedTime: String {
-        let hours = Int(elapsedTime) / 3600
-        let minutes = (Int(elapsedTime) % 3600) / 60
-        let seconds = Int(elapsedTime) % 60
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-    }
-    
 }
-//MARK: - FUNCTIONS
-extension AddWorkoutView {
-    private func startTimer() {
-        viewModel.date = Date()
-        isTimerRunning = true
-        elapsedTime = 0
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: isTimerRunning) { timer in
-            elapsedTime += 1
-        }
-    }
-    
+extension EditWorkoutView {
+
     func countSets() -> Int {
         var count = 0
         for tuple in viewModel.tuples {
@@ -320,25 +281,10 @@ extension AddWorkoutView {
             return Double(calories)}
     }
     
-    func saveWorkout(){
-    }
-}
-//MARK: Exercise struct
-struct Exercise {
-    var exercise: DBExercise
-    var sets: [ExerciseSet] = [ExerciseSet(reps: 8, weight: 10)]
-}
-extension DateFormatter {
-    static let dayOfWeek: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
-        return formatter
-    }()
 }
 
-//MARK: Preview
 #Preview {
-    AddWorkoutView(viewIsActive: .constant(true), showAlert: .constant(false))
+    EditWorkoutView(workout: .constant(DBWorkout()), viewIsActive: .constant(true), showAlert: .constant(false))
         .environmentObject(ProfileViewModel())
         .environmentObject(WorkoutViewModel())
 }

@@ -12,8 +12,6 @@ struct AddWorkoutButton: View {
     @Binding  var isActive: Bool
 
     var body: some View {
-        
-        
         Button(action: {
                        isActive = true
                    }) {

@@ -164,6 +164,18 @@ final class UserManager {
         //workout is not document id, it is the id of the workout object
         try await workoutCollection(userId: userId).document(workoutId).delete()
     }
+    
+   //update everything but timestamp
+    func updateWorkout(workout: DBWorkout, userId: String, workoutId: String,exercises: [ExerciseInWorkout]) async throws {
+        let data = try Firestore.Encoder().encode(workout)
+        try await workoutDocument(userId: userId, workoutId: workoutId).setData(data, merge: true)
+        
+        for exercise in exercises {
+            let exerciseDocument = workoutDocument(userId: userId, workoutId: workoutId).collection("exercises").document(exercise.id)
+            var exerciseData = try Firestore.Encoder().encode(exercise)
+            try await exerciseDocument.setData(exerciseData)
+        }
+    }
 
     
 

@@ -130,14 +130,14 @@ struct Workout: View {
                                     let muscle = exercise.1.primaryMuscle
                                     let muscle2 = exercise.1.secondaryMuscle
                                     ForEach(muscle, id: \.self) { muscle in
-                                        Image("\(imageName(for: muscle))")
+                                        Image("\(workoutViewModel.imageName(for: muscle))")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 200, height: 200)
                                             .padding(.trailing, 5)
                                     }
                                     ForEach(muscle2 ?? [], id: \.self) { muscle in
-                                        Image("\(imageName(for: muscle))")
+                                        Image("\(workoutViewModel.imageName(for: muscle))")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 200, height: 200)
@@ -191,44 +191,7 @@ extension Workout{
             return String(format: "%2dh %02dm", hours, minutes)
         }
     }
-    func imageName(for muscle: String) -> String {
-        switch muscle {
-        case "Biceps":
-            return "Biceps"
-        case "Triceps":
-            return "Triceps"
-        case "Chest", "Inner Chest", "Lower Chest", "Upper Chest":
-            return "Chest"
-        case "Lats":
-            return "Lats"
-        case "Abdominals":
-            return "Abdominals"
-        case "Quadriceps":
-            return "Quads"
-        case "Hamstrings":
-            return "Hamstrings"
-        case "Shoulders":
-            return "Deltoid"
-        case "Front Shoulders":
-            return "Deltoid"
-        case "Traps":
-            return "Traps"
-        case "Calves":
-            return "Calves"
-        case "Glutes":
-            return "Glutes"
-        case "Lower Back":
-            return "Lowerback"
-        case "Forearms":
-            return "Forearm"
-        case "Obliques":
-            return "Obliques"
-        case "Adductors":
-            return "Adductor"
-        default:
-            return "none"
-        }
-    }
+    
     func getDistinctMuscles() -> [String] {
         var muscles: [String] = []
         for exercise in exercises {
