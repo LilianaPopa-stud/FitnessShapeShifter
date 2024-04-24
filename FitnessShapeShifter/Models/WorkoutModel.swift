@@ -45,7 +45,6 @@ struct DBWorkout: Codable, Identifiable {
         case totalSets
         case totalWeight
         case totalCalories
-        
     }
     
     init(from decoder: any Decoder) throws {

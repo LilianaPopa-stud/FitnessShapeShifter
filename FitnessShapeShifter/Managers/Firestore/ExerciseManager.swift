@@ -95,18 +95,15 @@ final class ExerciseManager {
             try document.data(as: DBExercise.self)
         }
     }
-    
     func updateExercise(exercise: DBExercise) throws {
         try exerciseCollection.document(exercise.exerciseId).setData(from: exercise)
     }
-    
     func setDescription(exerciseName: String, description: String) async throws {
         let querySnapshot = try await exerciseCollection.whereField("name", isEqualTo: exerciseName).getDocuments()
         
         guard let document = querySnapshot.documents.first else {
             return // Handle error if document is not found
         }
-        
         try await document.reference.updateData(["description": description])
     }
     

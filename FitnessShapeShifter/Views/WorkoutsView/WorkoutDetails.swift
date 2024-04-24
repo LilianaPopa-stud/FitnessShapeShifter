@@ -12,8 +12,16 @@ struct WorkoutDetails: View {
     @EnvironmentObject var profileViewModel: ProfileViewModel
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
     @State private var isEditingMode = false
+    @State private var isDeleteAlertPresented = false
+    @State private var isEditWorkoutDetailsPresented = false
+    @State private var isUpdatedWorkoutAlertPresented = false
+    @State private var primaryMuscles: [String] = []
+    @State private var secondaryMuscles: [String] = []
+    @State private var workoutTitle: String = ""
+    @State private var workoutDate: Date = Date()
     @Binding var isActive: Bool
-    var workout: DBWorkout
+    @State var workout: DBWorkout
+   
     var body: some View {
         ZStack {
             AppBackground()
@@ -55,64 +63,68 @@ struct WorkoutDetails: View {
                         .padding(.horizontal,20)
                         .padding(.top,20)
                         VStack {
-                            HStack{
-                                Spacer()
-                                ScrollView(.vertical,showsIndicators: false) {
-                                    Text("Primary")
-                                        .fontWeight(.medium)
-                                        .padding(.bottom,10)
-                                        .padding(.top,30)
-                                    ForEach(getDistinctPrimaryMuscles(),id: \.self) { muscle in
-                                        Text("\(muscle)")
-                                            .font(.caption)
-                                            .padding(.vertical,5)
-                                            .padding(.horizontal,10)
-                                            .background(Color.gray.opacity(0.1))
-                                            .cornerRadius(10)
-                                            .foregroundColor(.black)
+                            if (getDistinctPrimaryMuscles().isEmpty || getDistinctSecondaryMuscles().isEmpty) {
+                                ProgressView("Loading Muscles...")
+                                    .progressViewStyle(CircularProgressViewStyle())
+                            } else {
+                                HStack{
+                                    Spacer()
+                                    ScrollView(.vertical,showsIndicators: false) {
+                                        Text("Primary")
+                                            .fontWeight(.medium)
+                                            .padding(.bottom,10)
+                                            .padding(.top,30)
+                                        ForEach(getDistinctPrimaryMuscles(),id: \.self) { muscle in
+                                            Text("\(muscle)")
+                                                .font(.caption)
+                                                .padding(.vertical,5)
+                                                .padding(.horizontal,10)
+                                                .background(Color.gray.opacity(0.1))
+                                                .cornerRadius(10)
+                                                .foregroundColor(.black)
+                                        }
+                                        Text("Secondary")
+                                            .fontWeight(.medium)
+                                            .padding(.vertical,10)
+                                        ForEach(getDistinctSecondaryMuscles(),id: \.self) { muscle in
+                                            Text("\(muscle)")
+                                                .font(.caption)
+                                                .padding(.vertical,5)
+                                                .padding(.horizontal,10)
+                                                .background(Color.gray.opacity(0.1))
+                                                .cornerRadius(10)
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                        
                                     }
-                                    Text("Secondary")
-                                        .fontWeight(.medium)
-                                        .padding(.vertical,10)
-                                    ForEach(getDistinctSecondaryMuscles(),id: \.self) { muscle in
-                                        Text("\(muscle)")
-                                            .font(.caption)
-                                            .padding(.vertical,5)
-                                            .padding(.horizontal,10)
-                                            .background(Color.gray.opacity(0.1))
-                                            .cornerRadius(10)
-                                            .foregroundColor(.black)
+                                    .frame(width: 110, height:270)
+                                    .padding(.bottom,10)
+                                    //                                    .padding(.horizontal,20)
+                                    ZStack{
+                                        ForEach(getDistinctPrimaryMuscles(),id: \.self) { muscle in
+                                            Image("\(workoutViewModel.imageName(for: muscle))")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 230, height: 230)
+                                            Image("\(workoutViewModel.imageName(for: muscle))")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 230, height: 230)
+                                        }
+                                        ForEach(getDistinctSecondaryMuscles(),id: \.self){ muscle in
+                                            Image("\(workoutViewModel.imageName(for: muscle))")
+                                                .resizable()
+                                                .scaledToFit()
+                                            .frame(width: 230, height: 230)}
                                     }
-                                    
-                                    
                                 }
-                                .frame(width: 110, height:270)
-                                .padding(.bottom,10)
-                                //                                    .padding(.horizontal,20)
-                                ZStack{
-                                    ForEach(getDistinctPrimaryMuscles(),id: \.self) { muscle in
-                                        Image("\(workoutViewModel.imageName(for: muscle))")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 230, height: 230)
-                                        Image("\(workoutViewModel.imageName(for: muscle))")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 230, height: 230)
-                                    }
-                                    ForEach(getDistinctSecondaryMuscles(),id: \.self){ muscle in
-                                        Image("\(workoutViewModel.imageName(for: muscle))")
-                                            .resizable()
-                                            .scaledToFit()
-                                        .frame(width: 230, height: 230)}
+                                .background{
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.white)
+                                        .shadow(radius: 5)
                                 }
-                            }
-                            .background{
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.white)
-                                    .shadow(radius: 5)
-                            }
-                        }
+                            }}
                         .padding(.horizontal,20)
                         
                         RoundedRectangle(cornerRadius: 10)
@@ -180,11 +192,64 @@ struct WorkoutDetails: View {
                             .padding(.top,-15)
                         }
                         .listStyle(.plain)
-                        .frame(width: g.size.width, height: g.size.height-300 , alignment: .center)
+                        .frame(width: g.size.width, height: g.size.height, alignment: .center)
                         .foregroundStyle(.black)
-                        
                     }
-                    
+                    if isEditWorkoutDetailsPresented {
+                        Color.black.opacity(0.8)
+                            .ignoresSafeArea()
+                        VStack {
+                            Text("Edit Workout Details")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.black)
+                                .padding(.top,30)
+                            HStack {
+                                Text("Title")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                    .padding(.leading,20)
+                                    .padding(.top,20)
+                                Spacer()
+                            }
+                            TextField("Title", text: $workoutTitle)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
+                                .padding(.horizontal)
+                            HStack {
+                                Text("Date")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                    .padding(.leading,20)
+                                    .padding(.top,30)
+                                Spacer()
+                            }
+                            DatePicker("Workout Date", selection: $workoutDate, displayedComponents: .date)
+                                .datePickerStyle(WheelDatePickerStyle())
+                                .padding(.horizontal)
+                            Button("Update Workout"){
+                                
+                                
+                                Task{
+                                    await workoutViewModel.updateWorkoutDetails(workoutId: workout.id, workoutTitle: workoutTitle, workoutDate: workoutDate)
+                                }
+                                isEditWorkoutDetailsPresented.toggle()
+                                isUpdatedWorkoutAlertPresented = true
+                            }
+                            Button("Cancel") {
+                                
+                                isEditWorkoutDetailsPresented.toggle()
+                            }
+                            .padding(.top,5)
+                            .padding(.bottom,20)
+                            .foregroundColor(.red)
+                        }
+                        .background(Color.white)
+                        .cornerRadius(20)
+                        .padding()
+                    }
                     
                     
                 }
@@ -208,28 +273,35 @@ struct WorkoutDetails: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                    
-                         Menu {
-                             Button(role: .destructive){
-                               //  isDeleteAlertPresented = true
-                                 
-                             } label: {
-                                 Label("Delete", systemImage: "trash")
-                             }
-                             
-                         } label: {
-                         HStack {
-                             Circle()
-                                 .fill(Color.gray.opacity(0.1))
-                                 .frame(width: 30, height: 30)
-                                 .overlay(
-                                     Image(systemName: "ellipsis")
-                                         .foregroundColor(.black)
-                                         .frame(width: 20, height: 20)
-                                 )
-                                 .padding(.trailing,10)
-                         }
-                     }
+                        
+                        Menu {
+                            Button(){
+                                isEditWorkoutDetailsPresented = true
+                                
+                            } label: {
+                                Label("Edit Workout Details", systemImage: "pencil")
+                            }
+                            Button(role: .destructive){
+                                isDeleteAlertPresented = true
+                                
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            
+                            
+                        } label: {
+                            HStack {
+                                Circle()
+                                    .fill(Color.gray.opacity(0.1))
+                                    .frame(width: 30, height: 30)
+                                    .overlay(
+                                        Image(systemName: "ellipsis")
+                                            .foregroundColor(.black)
+                                            .frame(width: 20, height: 20)
+                                    )
+                                    .padding(.trailing,10)
+                            }
+                        }
                         
                     }
                 }
@@ -238,26 +310,43 @@ struct WorkoutDetails: View {
                 Task {
                     do {
                         exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
-                        
+
                         
                     } catch {
                         print("Error fetching exercises for workout:", error)
                     }
                 }
+                workoutTitle = workout.title
+                workoutDate = workout.date
+            }
+            .fullScreenCover(isPresented: $isEditingMode){
+                
+                NavigationView{
+                    EditWorkoutView(viewModel: workoutViewModel,workout: $workout, viewIsActive: $isEditingMode)
+                }
                 
             }
-            .overlay {
-                if isEditingMode{
-                    NavigationView{
-                        EditWorkoutView(viewModel: workoutViewModel,workout: workout, viewIsActive: .constant(true), showAlert: .constant(false))
-                    }
-                }
+            .alert(isPresented: $isDeleteAlertPresented) {
+                Alert(
+                    title: Text("Delete workout"),
+                    message: Text("Are you sure you want to delete this workout? This action cannot be undone."),
+                    primaryButton: .destructive(Text("Delete")) {
+                        Task {
+                            await workoutViewModel.deleteWorkout(workoutId: workout.id)
+                        }
+                        isActive = false},
+                    secondaryButton: .cancel()
+                )
             }
-//            .sheet(isPresented: $isEditingMode){
-//                NavigationView{
-//                    AddWorkoutView(viewModel: workoutViewModel, viewIsActive: .constant(true), showAlert: .constant(false))
-//                }
-//            }
+            .alert(isPresented: $isUpdatedWorkoutAlertPresented)
+            {
+                Alert(
+                    title: Text("Workout Updated"),
+                    message: Text("The workout has been updated successfully"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+           
         }
     }
 }
@@ -293,7 +382,7 @@ extension WorkoutDetails {
             if let secondaryMuscle =
                 exercise.1.secondaryMuscle {
                 for muscle in secondaryMuscle {
-                    if !muscles.contains(muscle) || !primaryMuscles.contains(muscle){
+                    if !muscles.contains(muscle) && !primaryMuscles.contains(muscle){
                         muscles.append(muscle)
                     }
                 }

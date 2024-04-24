@@ -79,6 +79,10 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func updateWorkout(workout: DBWorkout) async {
+        if workoutName.isEmpty {
+            workoutName = workout.title
+        }
+        
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             var exercises: [ExerciseInWorkout] = []
@@ -86,8 +90,8 @@ class WorkoutViewModel: ObservableObject {
                 let exercise = ExerciseInWorkout(exerciseId: tuple.exercise.id, sets: tuple.sets)
                 exercises.append(exercise)
             }
-            let updatedWorkout = DBWorkout(date: date, title: workoutName, duration: elapsedTime, totalReps: totalReps, totalSets: totalSets, totalWeight: totalValueKg, totalCalories: Int(caloriesBurned),exercises: exercises)
-            try await userManager.updateWorkout(workout: updatedWorkout, userId: authData.uid, workoutId: workout.id, exercises: exercises)
+           
+            try await userManager.updateWorkout( userId: authData.uid, workoutId: workout.id, exercises: exercises, totalReps: totalReps, totalSets: totalSets, totalValueKg: totalValueKg, totalCalories: Int(caloriesBurned))
         } catch {
             print("Error updating workout:", error)
         }
@@ -105,7 +109,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func fetchWorkoutsDescendingByDate() async throws {
-        print(isLoading)
+  
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             let workouts = try await userManager.fetchWorkoutsDescendingByDate(userId: authData.uid)
@@ -114,7 +118,6 @@ class WorkoutViewModel: ObservableObject {
             print("Error fetching workouts:", error)
         }
         isLoading = false
-        print(isLoading)
         
     }
     
@@ -137,11 +140,18 @@ class WorkoutViewModel: ObservableObject {
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             try await userManager.deleteWorkout(userId: authData.uid, workoutId: workoutId)
-            print ("Workout deleted")
-            print(workoutId)
-            print(authData.uid)
         } catch {
             print("Error deleting workout:", error)
+        }
+    }
+    
+    func updateWorkoutDetails(workoutId: String, workoutTitle: String, workoutDate: Date) async {
+       
+        do {
+            let authData = try AuthenticationManager.shared.getAuthenticatedUser()
+            try await userManager.updateWorkoutDetails(userId: authData.uid, workoutId: workoutId, workoutTitle: workoutTitle, workoutDate: workoutDate)
+        } catch {
+            print("Error updating workout:", error)
         }
     }
     

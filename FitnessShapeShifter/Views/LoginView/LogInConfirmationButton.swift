@@ -22,7 +22,6 @@ struct LogInConfirmationButton: View {
                 }
                 catch{
                     success = false
-                    print("Error signing up: \(error.localizedDescription)")
                 }
             }
 

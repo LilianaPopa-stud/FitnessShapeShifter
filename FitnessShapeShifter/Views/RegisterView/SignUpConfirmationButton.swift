@@ -15,7 +15,6 @@ struct SignUpConfirmationButton: View {
                         showOnboarding = true
                         //showSignInView = false
                     } catch {
-                        print("Error signing up: \(error.localizedDescription)")
                         errorMessages = error.localizedDescription
                     }
                 }

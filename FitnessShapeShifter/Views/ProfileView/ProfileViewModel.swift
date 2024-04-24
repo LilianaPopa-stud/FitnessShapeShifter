@@ -56,7 +56,6 @@ final class ProfileViewModel: ObservableObject {
                     throw TransferError.importFailed
                 }
                 let image = Image(uiImage: uiImage)
-                print("data in profile image\(data)")
                 return ProfileImage(image: image,uiImageX: uiImage, data: data)
                 
                 
@@ -71,8 +70,6 @@ final class ProfileViewModel: ObservableObject {
             if let imageSelection {
                 let progress = loadTransferable(from: imageSelection)
                 imageState = .loading(progress)
-                print(imageState.self)
-                print("imageSelection changed")
             } else {
                 imageState = .empty
             }
@@ -85,7 +82,6 @@ final class ProfileViewModel: ObservableObject {
         return imageSelection.loadTransferable(type: ProfileImage.self) { result in
             DispatchQueue.main.async { [self] in
                 guard imageSelection == self.imageSelection else {
-                    print("Failed to get the selected item.")
                     return
                 }
                 switch result {
@@ -155,10 +151,8 @@ final class ProfileViewModel: ObservableObject {
         // Function to post data to Firebase Storage with metadata
         imageRef.putData(imageData, metadata: metadata) { metadata, error in
             if let error = error {
-                print("Failed to upload: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
-                print("Image uploaded successfully!")
                 completion(.success(()))
                 self.photoURL = "profile_pictures/\(self.user?.userId ?? "not_authenticated").jpg"
                 
@@ -175,7 +169,6 @@ final class ProfileViewModel: ObservableObject {
             let imageRef = storageReference.child(user?.photoURL ?? "not_authenticated")
             imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
                 if let error = error {
-                    print("Failed to download: \(error.localizedDescription)")
                     self.imageState = .failure(error)
                 } else {
                     self.downloadedUIImage = UIImage(data: data!)

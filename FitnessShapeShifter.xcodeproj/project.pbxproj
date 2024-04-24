@@ -215,6 +215,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E60DF8832BD9ACE400561EEE /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
 		E6129EF32B9DD228009E12F2 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +349,7 @@
 				E6129EF82B9DD5D0009E12F2 /* ProfileView */,
 				E654CBD02B9D3B010017B3F6 /* RegisterView */,
 				E6129EF32B9DD228009E12F2 /* LoginView */,
+				E60DF8832BD9ACE400561EEE /* Statistics */,
 				E654CBD92B9D3B010017B3F6 /* ActivityLevel.swift */,
 				E654CBCC2B9D3B010017B3F6 /* MainScreenView.swift */,
 				E654CBDA2B9D3B010017B3F6 /* AppBackground.swift */,
@@ -351,7 +360,6 @@
 				E6129F042B9E6BE3009E12F2 /* FinishOnboardingButton.swift */,
 				E654CBDF2B9D3B010017B3F6 /* WeightAndHeight.swift */,
 				E654CBE02B9D3B010017B3F6 /* WelcomeScreenView.swift */,
-				E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */,
 				E6EDA0D72BB0DA44003D85E3 /* Explore.swift */,
 				E654CC072B9D3B020017B3F6 /* fonts */,
 			);

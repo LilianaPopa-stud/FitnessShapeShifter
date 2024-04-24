@@ -13,17 +13,17 @@ struct EditWorkoutView: View {
     @Binding var workout: DBWorkout
     @State private var showExerciseList = false
     @State private var selectedExercises = [DBExercise]()
+    @State private var alreadyLoggedExercises: [DBExercise] = []
     @State private var isAlertShowing = false
     @State private var isSetEditingPresented = false
     @State private var exerciseSet: ExerciseSet = ExerciseSet(reps: 0, weight: 0.0)
     @State private var indexOfSet: Int = 0
     @State private var indexOfExercise: Int = 0
     @State private var isShowingModal = false
-    @State private var workoutTitle = ""
     @State private var endDate = Date()
     @FocusState private var isFocused: Bool
     @Binding var viewIsActive: Bool
-    @Binding var showAlert: Bool
+    
     var body: some View {
         ZStack {
             AppBackground()
@@ -116,34 +116,16 @@ struct EditWorkoutView: View {
                         .padding(.top, 10)
                         Spacer()
                     }
-                    Text("Workout details")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                    // day of the week, month, day, year
-                    Text("\(viewModel.date, formatter: DateFormatter.dayOfWeek), ")
-                        .font(.caption)
-                        .foregroundColor(.secondary) +
-                    Text("\(viewModel.date, style: .date)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text("\(viewModel.date, style: .time) - \(endDate, style: .time)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    
+                   
                     HStack {
-                        TextField("Workout Title", text: $workoutTitle)
-                            .focused($isFocused)
-                            .padding()
-                            .autocapitalization(.words)
-                            .onAppear(){
-                                isFocused = true
-                            }
-                        Spacer()
+                        Text("\(workout.title)")
+                            .font(.title3)
+                            .foregroundColor(.black)
                     }
+                    .padding(.vertical,5)
                     HStack {
-                        Text("🕒 \(formattedDuration) ")
-                        Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
-                        Text("🔥 \(String(format: "%.f",burnedCalories())) kcal ")}
+                    Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
+                   }
                     .padding(.bottom,5)
                     HStack {
                         Text("\(selectedExercises.count) exercises ")
@@ -158,21 +140,20 @@ struct EditWorkoutView: View {
                             viewModel.totalReps = countReps()
                             viewModel.totalSets = countSets()
                             viewModel.totalValueKg = totalValueKg()
-                            viewModel.caloriesBurned = Int(burnedCalories())
-                            viewModel.workoutName = workoutTitle
+                            
                             Task{
                                 await viewModel.updateWorkout(workout: workout)
                             }
+                            
                             isShowingModal = false
-                            showAlert = true
                             viewIsActive = false
                             
                         }, label: {
-                            Text("Finish workout")
+                            Text("Update")
                         })
                         .padding(.bottom,5)
-                        .disabled(viewModel.tuples.isEmpty || workoutTitle.isEmpty)
-                        Button("Discard",role: .destructive) {
+                        .disabled(viewModel.tuples.isEmpty)
+                        Button("Cancel",role: .destructive) {
                             isShowingModal = false
                             viewIsActive = false
                         }
@@ -183,8 +164,6 @@ struct EditWorkoutView: View {
                 .cornerRadius(20)
                 .padding()
             }
-            
-            
         }
         .onChange(of: selectedExercises, {
             for exercise in selectedExercises {
@@ -199,6 +178,12 @@ struct EditWorkoutView: View {
             }
             
         })
+        .onAppear {
+            for tuple in viewModel.tuples {
+                selectedExercises.append(
+                    tuple.exercise
+                )}
+        }
       
       
         //MARK: SetEditView sheet
@@ -214,27 +199,7 @@ struct EditWorkoutView: View {
 
     }
     //MARK: Other properties
-    private var formattedDuration: String {
-        let hours = Int(viewModel.elapsedTime) / 3600
-        let minutes = (Int(viewModel.elapsedTime) % 3600) / 60
-        let seconds = Int(viewModel.elapsedTime) % 60
-        
-        if hours == 0 {
-            if minutes != 0 {
-                if minutes < 10 {
-                    return String(format: "%dm %02ds", minutes, seconds)
-                } else {
-                    return String(format: "%02dm %02ds", minutes, seconds)
-                }
-            } else {
-                return String(format: "%ds", seconds)
-            }
-        } else {
-            return String(format: "%2dh %02dm %02ds", hours, minutes, seconds)
-        }
-    }
-    
-    
+ 
 }
 extension EditWorkoutView {
 
@@ -281,10 +246,12 @@ extension EditWorkoutView {
             return Double(calories)}
     }
     
+    
+    
 }
 
 #Preview {
-    EditWorkoutView(workout: .constant(DBWorkout()), viewIsActive: .constant(true), showAlert: .constant(false))
+    EditWorkoutView(workout: .constant(DBWorkout()), viewIsActive: .constant(true))
         .environmentObject(ProfileViewModel())
         .environmentObject(WorkoutViewModel())
 }

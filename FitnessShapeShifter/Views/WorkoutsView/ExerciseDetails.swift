@@ -17,7 +17,6 @@ struct ExerciseDetails: View {
     @Binding var isSetEditingPresented: Bool
     @Binding var index: Int
     @Binding var exerciseIndex: Int
-    
     var body: some View {
         Section {
             if isExpanded {
@@ -80,7 +79,6 @@ struct ExerciseDetails: View {
                 }
                 .padding(.top,10)
             }
-            
         }
     header: {
         ZStack {
@@ -117,15 +115,11 @@ struct ExerciseDetails: View {
                                 .font(.headline)
                             //   Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         }
-                        
-                        
                         HStack {
                             
                             Text("\(sets.count) sets")
                                 .foregroundStyle(.secondary)
-                            //                            Divider()
-                            //                                .frame(width: 1, height: 20)
-                            //                                .overlay(.secondary)
+                           
                             Text("•")
                                 .foregroundStyle(.secondary)
                             if (sets.count != 0){
@@ -214,7 +208,6 @@ struct ExerciseDetails: View {
 extension ExerciseDetails {
     func moveItems(from source: IndexSet, to destination: Int) {
         sets.move(fromOffsets: source, toOffset: destination)
-        print("Moved from \(source) to \(destination)")
         
     }
     

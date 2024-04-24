@@ -47,7 +47,6 @@ struct ForgotPasswordView: View {
                                 do {
                                     try await viewModel.forgotPasswordResetLink()
                                     success = true
-                                    print("Password reset link sent")
                                 } catch {
                                     print("Error sending password reset email: \(error.localizedDescription)")
                                 }

@@ -18,11 +18,9 @@ struct EditProfileView: View {
                 viewModel.uploadImage { result in
                     switch result {
                     case .success:
-                        print("Upload successful")
                         self.message = "Saved!"
                         
                     case .failure(let error):
-                        print("Upload failed with error: \(error.localizedDescription)")
                         self.message = "Upload failed, please try again."
                     }
                     if message == "Saved!"{

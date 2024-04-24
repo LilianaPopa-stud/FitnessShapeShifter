@@ -32,46 +32,8 @@ struct Workout: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
-                    //button
-                    // edit and delete buttons
-                    Menu {
-                        Button {
-                            withAnimation {
-                             
-                            }
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        Button(role: .destructive){
-                            isDeleteAlertPresented = true
-                            
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.white)
-                                .frame(width: 10, height: 35)
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(.accentColor2)
-                                .font(.title2)
-                        }
-                    }
-                    .alert(isPresented: $isDeleteAlertPresented) {
-                        Alert(
-                            title: Text("Delete workout"),
-                            message: Text("Are you sure you want to delete this workout? This action cannot be undone."),
-                            primaryButton: .destructive(Text("Delete")) {
-                                Task {
-                                    await workoutViewModel.deleteWorkout(workoutId: workout.id)
-                                        }
-                                refreshWorkouts.toggle()
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
+                 
+                
                 }
                 HStack{
                     Text(workout.date, style: .date)
