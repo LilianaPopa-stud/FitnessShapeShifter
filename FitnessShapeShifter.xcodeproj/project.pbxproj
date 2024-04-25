@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E60DF8852BDA68A900561EEE /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60DF8842BDA68A900561EEE /* StatsViewModel.swift */; };
+		E60DF8872BDA76A300561EEE /* PeriodSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60DF8862BDA76A300561EEE /* PeriodSelectionSheet.swift */; };
 		E6129EF42B9DD228009E12F2 /* ForgotPasswordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EEF2B9DD228009E12F2 /* ForgotPasswordButton.swift */; };
 		E6129EF52B9DD228009E12F2 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF02B9DD228009E12F2 /* ForgotPasswordView.swift */; };
 		E6129EF62B9DD228009E12F2 /* LogInConfirmationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129EF12B9DD228009E12F2 /* LogInConfirmationButton.swift */; };
@@ -105,6 +107,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E60DF8842BDA68A900561EEE /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
+		E60DF8862BDA76A300561EEE /* PeriodSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSelectionSheet.swift; sourceTree = "<group>"; };
 		E6129EEF2B9DD228009E12F2 /* ForgotPasswordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordButton.swift; sourceTree = "<group>"; };
 		E6129EF02B9DD228009E12F2 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		E6129EF12B9DD228009E12F2 /* LogInConfirmationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInConfirmationButton.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 			isa = PBXGroup;
 			children = (
 				E6EDA0D52BB0D9F1003D85E3 /* Stats.swift */,
+				E60DF8862BDA76A300561EEE /* PeriodSelectionSheet.swift */,
+				E60DF8842BDA68A900561EEE /* StatsViewModel.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -613,6 +619,7 @@
 				E69709592BCCAA6F006FD5ED /* UserModel.swift in Sources */,
 				E654CC122B9D3B020017B3F6 /* View+Extensions.swift in Sources */,
 				E68B5D332BC94F8B002B3222 /* SetEditView.swift in Sources */,
+				E60DF8872BDA76A300561EEE /* PeriodSelectionSheet.swift in Sources */,
 				E654CC102B9D3B020017B3F6 /* KeyBoardHandler.swift in Sources */,
 				E68B5D352BC95FB6002B3222 /* KeyPadButton.swift in Sources */,
 				E6993A262BB4615B00B1474C /* WorkoutView.swift in Sources */,
@@ -636,6 +643,7 @@
 				E654CC132B9D3B020017B3F6 /* MainScreenView.swift in Sources */,
 				E6871FCF2BC14FC400ED51DB /* ExerciseDetails.swift in Sources */,
 				E6EDA0D62BB0D9F1003D85E3 /* Stats.swift in Sources */,
+				E60DF8852BDA68A900561EEE /* StatsViewModel.swift in Sources */,
 				E6129F0A2B9FDE6E009E12F2 /* EditableCircularProfileImage.swift in Sources */,
 				E654CC1D2B9D3B020017B3F6 /* ActivityLevel.swift in Sources */,
 				E6129F122BA11259009E12F2 /* ProfileViewModel.swift in Sources */,
