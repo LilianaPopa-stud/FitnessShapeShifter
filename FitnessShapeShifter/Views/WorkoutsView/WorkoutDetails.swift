@@ -226,8 +226,8 @@ struct WorkoutDetails: View {
                                     .padding(.top,30)
                                 Spacer()
                             }
-                            DatePicker("Workout Date", selection: $workoutDate, displayedComponents: .date)
-                                .datePickerStyle(WheelDatePickerStyle())
+                            DatePicker("", selection: $workoutDate, in: ...Date(), displayedComponents: .date)
+                                           .datePickerStyle(WheelDatePickerStyle())
                                 .padding(.horizontal)
                             Button("Update Workout"){
                                 

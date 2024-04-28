@@ -8,14 +8,14 @@
 import Foundation
 struct DBWorkout: Codable, Identifiable {
     var id: String
-    var date: Date
+    var date: Date = Date()
     var title: String
     var duration: TimeInterval
     var totalReps: Int
     var totalSets: Int
     var totalWeight: Double
     var totalCalories: Int
-    
+    var nrOfExercises: Int
     var exercises: [ExerciseInWorkout]
     
     
@@ -34,6 +34,7 @@ struct DBWorkout: Codable, Identifiable {
         try container.encode(self.totalSets, forKey: .totalSets)
         try container.encode(self.totalWeight, forKey: .totalWeight)
         try container.encode(self.totalCalories, forKey: .totalCalories)
+        try container.encode(self.nrOfExercises, forKey: .nrOfExercises)
         
     }
     enum CodingKeys: CodingKey {
@@ -45,6 +46,7 @@ struct DBWorkout: Codable, Identifiable {
         case totalSets
         case totalWeight
         case totalCalories
+        case nrOfExercises
     }
     
     init(from decoder: any Decoder) throws {
@@ -58,11 +60,12 @@ struct DBWorkout: Codable, Identifiable {
         self.totalWeight = try container.decode(Double.self, forKey: .totalWeight)
         self.totalCalories = try container.decode(Int.self, forKey: .totalCalories)
         self.exercises = []
+        self.nrOfExercises = 0
     }
     
     init(id: String, date: Date, title: String, duration: TimeInterval, totalReps: Int, totalSets: Int, totalWeight: Double,totalCalories: Int, exercises: [ExerciseInWorkout]) {
         self.id = id
-        self.date = date
+        self.date = Date()
         self.title = title
         self.duration = duration
         self.totalReps = totalReps
@@ -70,10 +73,11 @@ struct DBWorkout: Codable, Identifiable {
         self.totalWeight = totalWeight
         self.totalCalories = totalCalories
         self.exercises = exercises
+        self.nrOfExercises = exercises.count
     }
     init(date: Date, title: String, duration: TimeInterval, totalReps: Int, totalSets: Int, totalWeight: Double, totalCalories: Int, exercises: [ExerciseInWorkout]) {
         self.id = UUID().uuidString
-        self.date = date
+        self.date = Date()
         self.title = title
         self.duration = duration
         self.totalReps = totalReps
@@ -81,6 +85,7 @@ struct DBWorkout: Codable, Identifiable {
         self.totalWeight = totalWeight
         self.totalCalories = totalCalories
         self.exercises = exercises
+        self.nrOfExercises = exercises.count
     }
     init(){
         self.id = UUID().uuidString
@@ -93,6 +98,7 @@ struct DBWorkout: Codable, Identifiable {
         self.totalCalories = 200
         self.exercises = [ExerciseInWorkout(exerciseId: "0608158C-6B28-4568-A69C-810DE6A1915B", sets: [ExerciseSet(reps: 10, weight: 10),ExerciseSet(reps: 10, weight: 15)]),ExerciseInWorkout(exerciseId: "32C22586-49B6-48CB-AD85-7BC603BF27CF"
 , sets: [ExerciseSet(reps: 10, weight: 19)])]
+        self.nrOfExercises = 2
     }
     
 }

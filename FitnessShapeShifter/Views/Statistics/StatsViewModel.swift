@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 @MainActor
 class StatsViewModel: ObservableObject {
     
@@ -16,31 +17,31 @@ class StatsViewModel: ObservableObject {
     @Published var reps: Int = 0
     @Published var sets: Int = 0
     @Published var hours: Double = 0.0
-    @Published var startDate: Date = Date()
-    @Published var endDate: Date = Date()
+    @Published var allTimeStats: Bool = true
     @Published var selectedDateRange: DateInterval = DateInterval()
     
     private let userManager = UserManager.shared
     
     // all time stats
     func fetchStats() async throws {
-       // get user id
+        // get user id
         let authData = try AuthenticationManager.shared.getAuthenticatedUser()
         let userId = authData.uid
-
-        // get user workouts
-        let workouts = try await userManager.fetchWorkouts(userId: userId)
+        var workouts: [DBWorkout] = []
+        if allTimeStats {
+            // get all time stats
+            workouts = try await userManager.fetchWorkouts(userId: userId)
+        }
+        else {
+            // get stats for selected date range
+            workouts = try await userManager.fetchWorkoutsInDateRange(userId: userId, startDate: selectedDateRange.start, endDate: selectedDateRange.end)
+        }
         nrOfWorkouts = workouts.count
         TVL = workouts.map{Int($0.totalWeight)}.reduce(0,+)
         calories = workouts.map{$0.totalCalories}.reduce(0,+)
         reps = workouts.map{$0.totalReps}.reduce(0,+)
         sets = workouts.map{$0.totalSets}.reduce(0,+)
         hours = workouts.map{Double($0.duration)}.reduce(0,+)
-        
-        // get user exercises
-    
-        
-        
     }
-    
+
 }

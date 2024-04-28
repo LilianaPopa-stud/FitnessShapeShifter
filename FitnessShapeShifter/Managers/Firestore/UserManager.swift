@@ -63,6 +63,7 @@ final class UserManager {
         
         var workoutData = try Firestore.Encoder().encode(workout)
         workoutData["id"] = document.documentID
+        workoutData["nrOfExercises"] = exercises.count
         try await document.setData(workoutData)
 
         for exercise in exercises {
@@ -165,13 +166,14 @@ final class UserManager {
             "totalReps": totalReps,
             "totalSets": totalSets,
             "totalWeight": totalValueKg,
-            "totalCalories": totalCalories
+            "totalCalories": totalCalories,
+            "nrOfExercises": exercises.count
         ]
         try await workoutDocument.updateData(data)
         // add the new exercises
         for exercise in exercises {
             let exerciseDocument = workoutDocument.collection("exercises").document(exercise.id)
-            var exerciseData = try Firestore.Encoder().encode(exercise)
+            let exerciseData = try Firestore.Encoder().encode(exercise)
             try await exerciseDocument.setData(exerciseData)
         }
     }
@@ -185,6 +187,47 @@ final class UserManager {
             "date": workoutDate
         ]
         try await workoutDocument(userId: userId, workoutId: workoutId).updateData(data)
+    }
+    
+    func fetchWorkoutsInDateRange(userId: String, startDate: Date, endDate: Date) async throws  -> [DBWorkout] {
+        var workouts: [DBWorkout] = []
+        let query = try await workoutCollection(userId: userId).whereField("date", isGreaterThanOrEqualTo: startDate).whereField("date", isLessThanOrEqualTo: endDate).getDocuments()
+        
+//        for document in query.documents {
+//            let workoutData = document.data()
+//            var workout = try Firestore.Decoder().decode(DBWorkout.self, from: workoutData)
+//       
+//            let exerciseDocuments = try await document.reference.collection("exercises").getDocuments()
+//            var exercises: [ExerciseInWorkout] = []
+//            for exerciseDocument in exerciseDocuments.documents {
+//                let exerciseData = exerciseDocument.data()
+//                guard let exerciseId = exerciseData["exerciseId"] as? String,
+//                      let setsData = exerciseData["sets"] as? [[String: Any]] else {
+//                    break;
+//                }
+//                let sets = setsData.compactMap { setData -> ExerciseSet? in
+//                    guard let reps = setData["reps"] as? Int,
+//                          let weight = setData["weight"] as? Double else {
+//                        // Handle missing or invalid set data
+//                        return nil
+//                    }
+//                    return ExerciseSet(reps: reps, weight: weight)
+//                }
+//                let exercise = ExerciseInWorkout(id: exerciseDocument.documentID, exerciseId: exerciseId, sets: sets)
+//                exercises.append(exercise)
+//            }
+//            workout.setExercises(exercises: exercises)
+//            workouts.append(workout)
+//        }
+        // fetch only workout data without exercises
+        for document in query.documents {
+            let workoutData = document.data()
+            var workout = try Firestore.Decoder().decode(DBWorkout.self, from: workoutData)
+            workouts.append(workout)
+        }
+       print(workouts)
+        return workouts
+        
     }
 
     

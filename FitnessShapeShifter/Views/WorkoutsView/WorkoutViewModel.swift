@@ -91,7 +91,7 @@ class WorkoutViewModel: ObservableObject {
                 exercises.append(exercise)
             }
            
-            try await userManager.updateWorkout( userId: authData.uid, workoutId: workout.id, exercises: exercises, totalReps: totalReps, totalSets: totalSets, totalValueKg: totalValueKg, totalCalories: Int(caloriesBurned))
+            try await userManager.updateWorkout(userId: authData.uid, workoutId: workout.id, exercises: exercises, totalReps: totalReps, totalSets: totalSets, totalValueKg: totalValueKg, totalCalories: Int(caloriesBurned))
         } catch {
             print("Error updating workout:", error)
         }

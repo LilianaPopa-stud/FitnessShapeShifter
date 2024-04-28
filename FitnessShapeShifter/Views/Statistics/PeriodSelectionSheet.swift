@@ -5,6 +5,7 @@
 //  Created by Liliana Popa on 25.04.2024.
 //
 import SwiftUI
+import Foundation
 
 enum DateIntervalType: String, CaseIterable {
     case allTime = "All Time"
@@ -14,6 +15,8 @@ enum DateIntervalType: String, CaseIterable {
 }
 
 struct PeriodSelectionSheet: View {
+    @Binding var selectedOption: String
+    @Binding var allTimeStats: Bool
     @Binding var dateInterval: DateInterval
     @Binding var isShowingSheet: Bool
     @State private var selectedIntervalType: DateIntervalType = .week
@@ -52,8 +55,6 @@ struct PeriodSelectionSheet: View {
                         }
                     }
                     .pickerStyle(.inline)
-                    
-                    
                     // based on selection, display the corresponding date picker
                     if selectedIntervalType == .week {
                         MultiDatePicker("", selection: datesBinding)
@@ -85,20 +86,51 @@ struct PeriodSelectionSheet: View {
                         .pickerStyle(WheelPickerStyle())
                     }
                     
+                    
                 }
                 .scrollContentBackground(.hidden)
                 
                 
                 Button(action: {
+                    if selectedIntervalType != .allTime {
+                        allTimeStats = false
+                    }
                     if selectedIntervalType == .week {
                         // first date and last date of the week
-                      
+                        let (firstDay, lastDay) = getWeekBounds(for: dates.first)
+                               guard let firstDay = firstDay, let lastDay = lastDay else { return }
+                               dateInterval = DateInterval(start: firstDay, end: lastDay)
+                        var dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd MMM yyyy"
+                        let lastDayString = dateFormatter.string(from: lastDay)
+                        dateFormatter.dateFormat = "dd"
+                        let firstDayString = dateFormatter.string(from: firstDay)
+                        selectedOption = "\(firstDayString)-\(lastDayString)"
+                        
                         
                     } else if selectedIntervalType == .month {
-                        // do something with the selected month
+                        let firstDay = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: 1))
+                        let lastDay = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDay!)
+                        guard let firstDay = firstDay, let lastDay = lastDay else { return }
+                        dateInterval = DateInterval(start: firstDay, end: lastDay)
+                        var dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "MMMM yyyy"
+                        let lastDayString = dateFormatter.string(from: lastDay)
+                        selectedOption = lastDayString
+                        
                     } else if selectedIntervalType == .year {
-                        // do something with the selected year
+                        print(selectedYear)
+                        let firstDay = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))
+                        let lastDay = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))
+                        dateInterval = DateInterval(start: firstDay ?? Date(), end: lastDay ?? Date())
+                        selectedOption = String(selectedYear)
+                        
+                    }   else if selectedIntervalType == .allTime {
+                        allTimeStats = true
+                        selectedOption = "All time"
                     }
+                    isShowingSheet = false
+                print("Selected interval:  \(dateInterval)") // DELETE this
                 }, label: {
                     VStack {
                         Text("Apply")
@@ -130,6 +162,32 @@ struct PeriodSelectionSheet: View {
             }
         }
     }
+    private func getWeekBounds() -> (firstDay: Date?, lastDay: Date?) {
+        guard let firstDateComponent = dates.min(by: { $0.date! < $1.date! }),
+              let lastDateComponent = dates.max(by: { $0.date! < $1.date! }) else {
+            return (nil, nil)
+        }
+        
+        let firstDay = calendar.date(from: firstDateComponent)
+        let lastDay = calendar.date(from: lastDateComponent)
+     
+        return (firstDay, lastDay)
+    }
+    private func getWeekBounds(for dateComponent: DateComponents?) -> (firstDay: Date?, lastDay: Date?) {
+        guard let dateComponent = dateComponent,
+              let date = calendar.date(from: dateComponent) else {
+            return (nil, nil)
+        }
+        
+        var startOfWeek: Date = Date()
+        var interval: TimeInterval = 0
+        _ = calendar.dateInterval(of: .weekOfYear, start: &startOfWeek, interval: &interval, for: date)
+        
+        let endOfWeek = startOfWeek.addingTimeInterval(interval - 1)
+        
+        return (startOfWeek, endOfWeek)
+    }
+
     
 }
 extension Calendar {
@@ -143,5 +201,5 @@ extension Calendar {
 }
 
 #Preview {
-    PeriodSelectionSheet(dateInterval: .constant(DateInterval()), isShowingSheet: .constant(true) )
+    PeriodSelectionSheet(selectedOption: .constant("All time"), allTimeStats: .constant(false), dateInterval: .constant(DateInterval()), isShowingSheet: .constant(true) )
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Stats: View {
     @StateObject var viewModel: StatsViewModel = StatsViewModel()
-    
+    @State private var selectedOption: String = "All time"
     @State private var isShowingSheet = false
     @State var nrOfWorkouts: Int = 50
     @State var TVL: Int = 30222
@@ -24,17 +24,20 @@ struct Stats: View {
                 ScrollView {
                     VStack{
                         HStack
-                        {
-                            Text("Overall stats")
+                        { Text("Overall stats")
                                 .font(.headline)
                                 .fontWeight(.semibold)
                             Spacer()
-                            DatePicker("", selection: .constant(Date()))
-                                .onTapGesture {
+                            Text("\(selectedOption)")
+                                .padding(.horizontal,15)
+                                .padding(.vertical,5)
+                            //system gray 6
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .onTapGesture{
                                     self.isShowingSheet = true
                                 }
                         }
-                        
                         .padding(.horizontal)
                         .padding(.vertical,10)
                         Group{
@@ -61,6 +64,10 @@ struct Stats: View {
                             
                         }
                         .padding(.horizontal)
+                       
+                        LineChartTVL()
+                            .padding(.top,30)
+                            .padding(.horizontal)
                         
                         Spacer()
                     }
@@ -71,14 +78,23 @@ struct Stats: View {
             
         }
         .sheet(isPresented: $isShowingSheet) {
-            PeriodSelectionSheet(dateInterval: $viewModel.selectedDateRange, isShowingSheet: self.$isShowingSheet)
+            PeriodSelectionSheet(selectedOption: $selectedOption, allTimeStats: $viewModel.allTimeStats, dateInterval: $viewModel.selectedDateRange, isShowingSheet: self.$isShowingSheet)
         }
         .onAppear{
             Task {
                try await viewModel.fetchStats()
             }
         }
-        
+        .onChange(of: viewModel.selectedDateRange){
+            Task {
+                try await viewModel.fetchStats()
+            }
+        }
+        .onChange(of: viewModel.allTimeStats){
+            Task {
+                try await viewModel.fetchStats()
+            }
+        }
     }
 }
 
@@ -104,7 +120,6 @@ struct StatCellView: View {
                 )
             
             VStack(alignment: .leading){
-                
                 HStack {
                     Text(title)
                         .font(.subheadline)
@@ -112,8 +127,7 @@ struct StatCellView: View {
                     Spacer()
                 }
                 .padding(.top,5)
-                HStack{
-                    
+                HStack {
                     Text(value)
                         .font(.title)
                         .fontWeight(.semibold)
