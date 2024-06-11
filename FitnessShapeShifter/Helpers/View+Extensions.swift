@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// Custom SwiftUI View Extensions
+
 extension View {
-    // View Alignments
+
     @ViewBuilder
     func hSpacing(_ alignment: Alignment = .center) -> some View {
         self

@@ -19,7 +19,6 @@ struct EditProfileView: View {
                     switch result {
                     case .success:
                         self.message = "Saved!"
-                        
                     case .failure(let error):
                         self.message = "Upload failed, please try again."
                     }

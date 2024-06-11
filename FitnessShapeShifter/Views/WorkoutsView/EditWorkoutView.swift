@@ -137,16 +137,15 @@ struct EditWorkoutView: View {
                     .padding(.bottom,5)
                     VStack {
                         Button(action: {
-                            viewModel.totalReps = countReps()
-                            viewModel.totalSets = countSets()
-                            viewModel.totalValueKg = totalValueKg()
-                            
-                            Task{
+                          Task {
+                                viewModel.totalReps = countReps()
+                                viewModel.totalSets = countSets()
+                                viewModel.totalValueKg = totalValueKg()
                                 await viewModel.updateWorkout(workout: workout)
+                              isShowingModal = false
+                              viewIsActive = false
                             }
-                            
-                            isShowingModal = false
-                            viewIsActive = false
+                           
                             
                         }, label: {
                             Text("Update")

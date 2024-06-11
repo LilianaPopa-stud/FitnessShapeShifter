@@ -17,72 +17,116 @@ struct Stats: View {
     @State var reps: Int = 888
     @State var sets: Int = 19
     @State var hours: Double = 10.3
+    @State private var currentIndex = 0
+    
     var body: some View {
         ZStack{
             AppBackground()
             NavigationStack {
                 ScrollView {
-                    VStack{
-                        HStack
-                        { Text("Overall stats")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                            Spacer()
-                            Text("\(selectedOption)")
-                                .padding(.horizontal,15)
-                                .padding(.vertical,5)
-                            //system gray 6
-                                .background(Color(.systemGray6))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .onTapGesture{
-                                    self.isShowingSheet = true
-                                }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical,10)
-                        Group{
-                            HStack {
-                                StatCellView(title: "🏋️Workouts",value: String(viewModel.nrOfWorkouts) )
-                                
-                                StatCellView(title: "💪TVL",value: String("\(viewModel.TVL) kg"))
-                                    .padding(.leading,10)
+                    TabView(selection: $currentIndex.animation()){
+                        VStack{
+                            HStack
+                            { Text("Overall stats")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                Spacer()
+                                Text("\(selectedOption)")
+                                    .padding(.horizontal,15)
+                                    .padding(.vertical,5)
+                                //system gray 6
+                                    .background(Color(.systemGray6))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .onTapGesture{
+                                        self.isShowingSheet = true
+                                    }
                             }
-                            .padding(.bottom,1)
-                            HStack {
-                                StatCellView(title: "🔥Calories",value: String(viewModel.calories) )
-                                
-                                StatCellView(title: "🕙Hours",value: String(format: "%.2f",viewModel.hours/3600))
-                                    .padding(.leading,10)
-                            }
-                            .padding(.bottom,1)
-                            HStack {
-                                StatCellView(title: "🔁Sets",value: String(viewModel.sets) )
-                                  
-                                StatCellView(title: "🔁Repetitions",value: String(viewModel.reps))
-                                    .padding(.leading,10)
-                            }
-                            
-                        }
-                        .padding(.horizontal)
-                       
-                        LineChartTVL()
-                            .padding(.top,30)
                             .padding(.horizontal)
+                            .padding(.vertical,10)
+                            
+                            Group{
+                                HStack {
+                                    StatCellView(title: "🏋️Workouts",value: String(viewModel.nrOfWorkouts) )
+                                    
+                                    StatCellView(title: "💪TVL",value: String("\(viewModel.TVL) kg"))
+                                        .padding(.leading,10)
+                                }
+                                .padding(.bottom,1)
+                                HStack {
+                                    StatCellView(title: "🔥Calories",value: String(viewModel.calories) )
+                                    
+                                    StatCellView(title: "🕙Hours",value: String(format: "%.2f",viewModel.hours/3600))
+                                        .padding(.leading,10)
+                                }
+                                .padding(.bottom,1)
+                                HStack {
+                                    StatCellView(title: "🔁Sets",value: String(viewModel.sets) )
+                                    
+                                    StatCellView(title: "🔁Repetitions",value: String(viewModel.reps))
+                                        .padding(.leading,10)
+                                }
+                                
+                            }
+                            .padding(.horizontal)
+                        }
+                        .tag(0)
+                        .frame(height: 240)
                         
-                        Spacer()
+                        
+                        VStack {
+                            HStack
+                            { Text("TVL: ")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                Spacer()
+                                Text("\(selectedOption)")
+                                    .padding(.horizontal,15)
+                                    .padding(.vertical,5)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .onTapGesture{
+                                        self.isShowingSheet = true
+                                    }
+                            }
+                            .padding(.horizontal)
+                            .padding(.vertical,10)
+                            LineChartTVL()
+                                .padding(.horizontal)
+                                .environmentObject(StatsViewModel())
+                      
+                        }
+                        .tag(1)
+                        
+                        Text("More Items")
+                            .frame(height: 300)
+                            .tag(2)
                     }
+                    .overlay(Fancy3DotsIndexView(numberOfPages: 3, currentIndex: currentIndex))
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .frame(height: 330)
+                    .tabViewStyle(.page)
                     
                 }
-                .navigationTitle("Statistics")
+                // .navigationTitle("Stats")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) { 
+                       
+                        VStack {
+                            Text("Statistics")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                        }
+                        .foregroundColor(.black)
+                    }
+                }
             }
-            
         }
         .sheet(isPresented: $isShowingSheet) {
             PeriodSelectionSheet(selectedOption: $selectedOption, allTimeStats: $viewModel.allTimeStats, dateInterval: $viewModel.selectedDateRange, isShowingSheet: self.$isShowingSheet)
         }
         .onAppear{
             Task {
-               try await viewModel.fetchStats()
+                try await viewModel.fetchStats()
             }
         }
         .onChange(of: viewModel.selectedDateRange){
@@ -145,4 +189,5 @@ struct StatCellView: View {
 
 #Preview {
     Stats()
+        .environmentObject(StatsViewModel())
 }

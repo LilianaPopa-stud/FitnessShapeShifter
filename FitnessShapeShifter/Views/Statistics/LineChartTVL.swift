@@ -9,20 +9,18 @@ import SwiftUI
 import Charts
 import Foundation
 
+@MainActor
 class LineChartViewModel: ObservableObject {
     @Published var data: [Date: Double] = [:]
     @Published var dataTVL: [TVL] = []
     @Published var selectedDateRange: DateInterval = DateInterval()
     @Published var isAllTime: Bool = true
-    @Published var months: [Date] = []
+    
+
     
     private let userManager = UserManager.shared
     func fetchTVL() async throws {
-        if !isAllTime {
-            // Fetch workouts in the selected date range
-        } else {
-            // Fetch all workouts
-        }
+      
         let authData = try AuthenticationManager.shared.getAuthenticatedUser()
         let userId = authData.uid
         // Calculate total weight lifted for each month
@@ -30,36 +28,36 @@ class LineChartViewModel: ObservableObject {
         try await userManager.fetchWorkoutsInDateRange(userId: userId, startDate: selectedDateRange.start, endDate: selectedDateRange.end)
         
         
-        guard let earliestDate = allWorkouts.map({ $0.date }).min() else {
+        guard allWorkouts.map({ $0.date }).min() != nil else {
             return
         }
         
-        
-        // Calculate the start date (one month before the earliest workout date)
-        let startDate = Calendar.current.date(byAdding: .month, value: -1, to: earliestDate)!
-        let endDate = Date()
-        
+       
         var totalWeightByMonth: [Date: Double] = [:]
         allWorkouts.forEach { workout in
-            let lastDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: workout.date)!
-            totalWeightByMonth[lastDayOfMonth] = (totalWeightByMonth[lastDayOfMonth] ?? 0) + workout.totalWeight
+            let calendar = Calendar.current
+            let endOfLastMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: workout.date))!
+            let startOfMonth = calendar.date(byAdding: DateComponents(month: 0, day: 1), to: endOfLastMonth)!
+            
+            totalWeightByMonth[startOfMonth] = (totalWeightByMonth[startOfMonth] ?? 0) + workout.totalWeight
         }
 
-       
-        
-        
-        var currentDate = startDate
-        while currentDate <= endDate {
-            if totalWeightByMonth[currentDate] == nil {
+        var currentMonth = totalWeightByMonth.keys.min()!
+        // current month - 1
+        currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+        let endDate = totalWeightByMonth.keys.max()!
+        while currentMonth <= endDate {
+            if totalWeightByMonth[currentMonth] == nil {
                 
-                totalWeightByMonth[currentDate] = 0
+                totalWeightByMonth[currentMonth] = 0
             }
-            currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate)!
+            currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
         }
         
         
         dataTVL = totalWeightByMonth.map { TVL(date: $0.key, value: $0.value, type: .basic) }
         dataTVL.sort(by: { $0.date < $1.date })
+        print(dataTVL)
         
         
     }
@@ -90,12 +88,13 @@ struct LineChartTVL: View {
        return Gradient(colors: [Color.accentColor2, Color.accentColor2.opacity(0.1)])
      }
     @StateObject var viewModel = LineChartViewModel()
+ 
     var body: some View {
         VStack{
             Chart {
                 ForEach(viewModel.dataTVL, id: \.id) { item in
                     LineMark(
-                        x: .value("Weekday", item.date),
+                        x: .value("Month", item.date),
                         y: .value("Value", item.value)
                     )
                    
@@ -108,7 +107,7 @@ struct LineChartTVL: View {
                             .frame(width: 6, height: 6)
                     }
                     AreaMark(
-                        x: .value("Weekday", item.date),
+                        x: .value("Month", item.date),
                         y: .value("Value", item.value)
                          )
                          .interpolationMethod(.linear)
@@ -119,18 +118,18 @@ struct LineChartTVL: View {
             .padding(5)
             .background(Color(.systemGray6))
             .chartXAxis {
-                AxisMarks(values: .stride(by: .month, count: 2)) { _ in
-                    AxisValueLabel(format: .dateTime.month(.abbreviated), centered: true)
+                
+                AxisMarks(values: .stride(by: .month, count: viewModel.dataTVL.count>10 ? 2 : 1)){ _ in
+                    AxisGridLine()
+                    AxisValueLabel(format: .dateTime.month(.abbreviated), centered: false)
                   }
                 }
-        }
-        .frame(height: 330)
+          }
+        .frame(height: 230)
         .onAppear{
             Task{
-                do{
+                do {
                     try await viewModel.fetchTVL()
-                   for item in viewModel.dataTVL{
-                   }
                     
                 }
                 catch{
@@ -148,5 +147,6 @@ struct LineChartTVL: View {
 
 #Preview {
     LineChartTVL()
+    
     
 }

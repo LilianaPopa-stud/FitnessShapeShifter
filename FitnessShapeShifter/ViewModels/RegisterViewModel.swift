@@ -23,7 +23,7 @@ class RegisterViewModel: ObservableObject {
         print("successfully signed up")
         let user = DBUser(auth: returnedUserData, displayName: displayName)
         try await UserManager.shared.createNewUser(user: user)
-       // try await UserManager.shared.createNewUser(auth: returnedUserData)
+
     }
 
 }

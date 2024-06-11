@@ -1,14 +1,12 @@
 //
 //  ProfileView.swift
 //  FitnessShapeShifter
-//
 //  Created by Liliana Popa on 10.03.2024.
 
 import SwiftUI
 import Swift
 import PhotosUI
 import FirebaseStorage
-
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
@@ -26,8 +24,8 @@ struct ProfileView: View {
                         Spacer()
                         ProgressView()
                             .padding()
-                    } else {
-                        
+                    }
+                        else {
                         VStack {
                             HStack {
                                 Spacer()
@@ -47,7 +45,7 @@ struct ProfileView: View {
                             Text("Joined on: \(viewModel.user?.dateCreated ?? Date(), style: .date)")
                                 .font(.caption2)
                                 .padding(.bottom, 10)
-                          
+                            
                             
                         }
                         .shadow(radius: 10)
@@ -61,7 +59,7 @@ struct ProfileView: View {
                             }
                         }
                         .padding(.horizontal,25)
-                        .padding(.top,10)
+                        //.padding(.top,10)
                         
                         List {
                             Section(header: Text("Profile Information").bold()) {
@@ -83,11 +81,11 @@ struct ProfileView: View {
                                     
                                     // Popover
                                     .popover(isPresented: $isShowingInfo, arrowEdge: .top) {
-                                       InfoContent()
-                                        .padding()
-                                        .background(Color.white)
-                                        .cornerRadius(10)
-                                        .shadow(radius: 5)
+                                        InfoContent()
+                                            .padding()
+                                            .background(Color.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
                                     }
                                     Spacer()
                                 }
@@ -128,13 +126,13 @@ struct ProfileView: View {
                 viewModel.downloadImage()
                 viewModel.uiImage = nil
                 viewModel.isLoading = false // delete later
-             
+                
             }
         }
         
     }
     
- 
+    
     /// functions
     func computeBMI() -> Double {
         guard let weight = viewModel.user?.weight,
@@ -215,16 +213,14 @@ struct StatView: View {
                 .stroke(.accentColor2, lineWidth: 1)
                 .shadow(color: .shadow, radius: 4, x: 1, y: 3)
                 .frame(minWidth: 100, idealWidth: 150, maxWidth: .infinity, minHeight: 60, idealHeight: 60, maxHeight: 75, alignment: .center)
-           
             VStack(alignment: .center) {
                 Text(title)
-                
                 Text(value)
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .foregroundStyle(.accentColor2)
             }
             .padding(EdgeInsets(top: -5, leading: 2, bottom: -5, trailing: 2))
-            
         }
     }
 }
@@ -246,7 +242,6 @@ struct InfoContent: View {
             Spacer()
             Text("Daily calorie needs based on goal: ").bold() +
             Text("The total number of calories your body needs in a day, adjusted according to your specific fitness goal to support weight loss, muscle gain, or overall health and activity level. ")
-            
             Spacer()
             
         }
@@ -259,8 +254,7 @@ struct InfoListItem: View {
     var body: some View {
         HStack {
             Text(title)
-                .bold() // Making the title bold
-            // Spacer()
+                .bold()
             Text(value)
         }
     }

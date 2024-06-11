@@ -82,7 +82,6 @@ class WorkoutViewModel: ObservableObject {
         if workoutName.isEmpty {
             workoutName = workout.title
         }
-        
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             var exercises: [ExerciseInWorkout] = []
@@ -96,8 +95,6 @@ class WorkoutViewModel: ObservableObject {
             print("Error updating workout:", error)
         }
     }
-    
-    
     func fetchWorkouts() async throws{
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
@@ -120,7 +117,6 @@ class WorkoutViewModel: ObservableObject {
         isLoading = false
         
     }
-    
     
     func getWorkoutExercises(workout: DBWorkout) async throws -> [(ExerciseInWorkout,DBExercise)] {
         var exercises:[(ExerciseInWorkout,DBExercise)] = []

@@ -13,8 +13,8 @@ struct MainScreenView: View {
     @StateObject var profileViewModel: ProfileViewModel = ProfileViewModel()
     @StateObject var workoutViewModel: WorkoutViewModel = WorkoutViewModel()
     @State var selectedTab = 0
+    
     init() {
-       
         UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor1
         let attributes: [NSAttributedString.Key:Any] = [
             .foregroundColor: UIColor.white]

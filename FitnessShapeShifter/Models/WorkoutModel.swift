@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//model
 struct DBWorkout: Codable, Identifiable {
     var id: String
     var date: Date = Date()

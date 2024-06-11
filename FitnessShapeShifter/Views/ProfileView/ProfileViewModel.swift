@@ -38,11 +38,9 @@ final class ProfileViewModel: ObservableObject {
         case success(Image)
         case failure(Error)
     }
-    
     enum TransferError: Error {
         case importFailed
     }
-    
     struct ProfileImage: Transferable {
         let image: Image
         let uiImageX: UIImage
@@ -50,7 +48,6 @@ final class ProfileViewModel: ObservableObject {
         
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
-                
                 guard let uiImage = UIImage(data: data)
                 else {
                     throw TransferError.importFailed
