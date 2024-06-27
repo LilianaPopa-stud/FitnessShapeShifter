@@ -90,7 +90,6 @@ struct LoginView: View {
                 .scrollTargetBehavior(.paging)
                 .safeAreaPadding(.horizontal, 10)
                 
-                // pinning the sign up button to the bottom of the screen
                 VStack{
                     Spacer()
                     SignUp(showSignInView: $showSignInView)

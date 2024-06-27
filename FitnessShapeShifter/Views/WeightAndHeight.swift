@@ -60,6 +60,7 @@ struct WeightAndHeight: View {
                         .pickerStyle(DefaultPickerStyle())
                     }
                     
+                    
                     HStack {
                         TextField("Height (cm)", value: $viewModel.height, format: .number)
                             .textFieldStyle(RoundedBorderTextFieldStyle())

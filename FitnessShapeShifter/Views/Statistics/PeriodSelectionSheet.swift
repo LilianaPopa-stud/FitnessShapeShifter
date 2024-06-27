@@ -19,7 +19,7 @@ struct PeriodSelectionSheet: View {
     @Binding var allTimeStats: Bool
     @Binding var dateInterval: DateInterval
     @Binding var isShowingSheet: Bool
-    @State private var selectedIntervalType: DateIntervalType = .week
+    @Binding var selectedIntervalType: DateIntervalType
     @State private var selectedYear = Calendar.current.component(.year, from: Date())
     @State private var selectedMonth = Calendar.current.component(.month, from: Date())
     @State private var dates: Set<DateComponents> = []
@@ -31,7 +31,7 @@ struct PeriodSelectionSheet: View {
             let added = newValue.subtracting(dates)
             if let firstAdded = added.first, let date = calendar.date(from: firstAdded) {
                 selectWeek(for: date)
-            } else { // this means a date is deselected, so deselect the whole week
+            } else {
                 dates = []
             }
         }
@@ -55,7 +55,6 @@ struct PeriodSelectionSheet: View {
                         }
                     }
                     .pickerStyle(.inline)
-                    // based on selection, display the corresponding date picker
                     if selectedIntervalType == .week {
                         MultiDatePicker("", selection: datesBinding)
                             .frame(height: 300)
@@ -96,10 +95,9 @@ struct PeriodSelectionSheet: View {
                         allTimeStats = false
                     }
                     if selectedIntervalType == .week {
-                        // first date and last date of the week
                         let (firstDay, lastDay) = getWeekBounds(for: dates.first)
-                               guard let firstDay = firstDay, let lastDay = lastDay else { return }
-                               dateInterval = DateInterval(start: firstDay, end: lastDay)
+                        guard let firstDay = firstDay, let lastDay = lastDay else { return }
+                        dateInterval = DateInterval(start: firstDay, end: lastDay)
                         var dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "dd MMM yyyy"
                         let lastDayString = dateFormatter.string(from: lastDay)
@@ -130,7 +128,6 @@ struct PeriodSelectionSheet: View {
                         selectedOption = "All time"
                     }
                     isShowingSheet = false
-                print("Selected interval:  \(dateInterval)") // DELETE this
                 }, label: {
                     VStack {
                         Text("Apply")
@@ -170,7 +167,7 @@ struct PeriodSelectionSheet: View {
         
         let firstDay = calendar.date(from: firstDateComponent)
         let lastDay = calendar.date(from: lastDateComponent)
-     
+        
         return (firstDay, lastDay)
     }
     private func getWeekBounds(for dateComponent: DateComponents?) -> (firstDay: Date?, lastDay: Date?) {
@@ -187,7 +184,7 @@ struct PeriodSelectionSheet: View {
         
         return (startOfWeek, endOfWeek)
     }
-
+    
     
 }
 extension Calendar {
@@ -201,5 +198,5 @@ extension Calendar {
 }
 
 #Preview {
-    PeriodSelectionSheet(selectedOption: .constant("All time"), allTimeStats: .constant(false), dateInterval: .constant(DateInterval()), isShowingSheet: .constant(true) )
+    PeriodSelectionSheet(selectedOption: .constant("All time"), allTimeStats: .constant(false), dateInterval: .constant(DateInterval()), isShowingSheet: .constant(true), selectedIntervalType: .constant(.allTime))
 }

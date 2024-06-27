@@ -21,7 +21,7 @@ struct WorkoutDetails: View {
     @State private var workoutDate: Date = Date()
     @Binding var isActive: Bool
     @State var workout: DBWorkout
-   
+    
     var body: some View {
         ZStack {
             AppBackground()
@@ -126,7 +126,18 @@ struct WorkoutDetails: View {
                                 }
                             }}
                         .padding(.horizontal,20)
-                        
+                        .alert(isPresented: $isDeleteAlertPresented) {
+                            Alert(
+                                title: Text("Delete workout"),
+                                message: Text("Are you sure you want to delete this workout? This action cannot be undone."),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    Task {
+                                        await workoutViewModel.deleteWorkout(workoutId: workout.id)
+                                    }
+                                    isActive = false},
+                                secondaryButton: .cancel()
+                            )
+                        }
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.white)
                             .shadow(radius: 5)
@@ -227,7 +238,7 @@ struct WorkoutDetails: View {
                                 Spacer()
                             }
                             DatePicker("", selection: $workoutDate, in: ...Date(), displayedComponents: .date)
-                                           .datePickerStyle(WheelDatePickerStyle())
+                                .datePickerStyle(WheelDatePickerStyle())
                                 .padding(.horizontal)
                             Button("Update Workout"){
                                 
@@ -281,12 +292,14 @@ struct WorkoutDetails: View {
                             } label: {
                                 Label("Edit Workout Details", systemImage: "pencil")
                             }
+                            
                             Button(role: .destructive){
                                 isDeleteAlertPresented = true
                                 
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
+                            
                             
                             
                         } label: {
@@ -310,7 +323,7 @@ struct WorkoutDetails: View {
                 Task {
                     do {
                         exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
-
+                        
                         
                     } catch {
                         print("Error fetching exercises for workout:", error)
@@ -326,18 +339,6 @@ struct WorkoutDetails: View {
                 }
                 
             }
-            .alert(isPresented: $isDeleteAlertPresented) {
-                Alert(
-                    title: Text("Delete workout"),
-                    message: Text("Are you sure you want to delete this workout? This action cannot be undone."),
-                    primaryButton: .destructive(Text("Delete")) {
-                        Task {
-                            await workoutViewModel.deleteWorkout(workoutId: workout.id)
-                        }
-                        isActive = false},
-                    secondaryButton: .cancel()
-                )
-            }
             .alert(isPresented: $isUpdatedWorkoutAlertPresented)
             {
                 Alert(
@@ -346,7 +347,8 @@ struct WorkoutDetails: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-           
+            
+            
         }
     }
 }

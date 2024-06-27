@@ -18,14 +18,13 @@ struct ProfileView: View {
         ZStack {
             AppBackground()
             NavigationView {
-                
                 VStack {
                     if viewModel.isLoading {
                         Spacer()
                         ProgressView()
                             .padding()
                     }
-                        else {
+                    else {
                         VStack {
                             HStack {
                                 Spacer()
@@ -59,7 +58,6 @@ struct ProfileView: View {
                             }
                         }
                         .padding(.horizontal,25)
-                        //.padding(.top,10)
                         
                         List {
                             Section(header: Text("Profile Information").bold()) {
@@ -94,7 +92,7 @@ struct ProfileView: View {
                         }
                         //.scrollContentBackground(.hidden)
                         .listStyle(.insetGrouped)
-                        .accentColor(.blue) // Adjust accent color as desired
+                        .accentColor(.blue)
                     }
                     Spacer()
                 }
@@ -125,8 +123,6 @@ struct ProfileView: View {
                 try? await viewModel.loadCurrentUser()
                 viewModel.downloadImage()
                 viewModel.uiImage = nil
-                viewModel.isLoading = false // delete later
-                
             }
         }
         

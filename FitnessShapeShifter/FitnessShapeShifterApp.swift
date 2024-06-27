@@ -24,12 +24,7 @@ struct FitnessShapeShifterApp: App {
     
     var body: some Scene {
         WindowGroup {
-           //WelcomeScreenView()
-            //RegisterView()
-            //WeightAndHeight()
             MainScreenView()
-            //ExercisesExploreAndSearchView()
-           // AddWorkoutView(viewIsActive: .constant(true))
         }
     }
 }

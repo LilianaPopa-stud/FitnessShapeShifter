@@ -14,51 +14,47 @@ struct ExerciseItem: View {
     var body: some View {
         Section {
             if isExpanded {
-              
+                
+                HStack {
+                    Text("Set")
+                        .font(.subheadline)
+                        .frame(width: 50, alignment: .center)
+                    Spacer()
+                    Text("Reps")
+                        .frame(width: 50, alignment: .center)
+                    Spacer()
+                    Text("Weight")
+                        .frame(width: 80, alignment: .center)
+                }
+                .onAppear {
+                    sets = exercise.0.sets
+                }
+                .padding(.bottom,5)
+                .padding(.top,5)
+                .foregroundColor(.gray)
+                
+                ForEach(sets.indices, id: \.self) { index in
                     HStack {
-                        Text("Set")
-                            .font(.subheadline)
+                        Text("\(index + 1)")
+                            .frame(width: 50, alignment:  .center)
+                        Spacer()
+                        Text("\(sets[index].reps)")
                             .frame(width: 50, alignment: .center)
                         Spacer()
-                        Text("Reps")
-                            .frame(width: 50, alignment: .center)
-                        Spacer()
-                        Text("Weight")
+                        Text(String(format:"%.1f kg",sets[index].weight))
                             .frame(width: 80, alignment: .center)
-                    }
-                    .onAppear {
-                        sets = exercise.0.sets
                     }
                     .padding(.bottom,5)
                     .padding(.top,5)
-                   // .padding(.leading,20)
-                    .foregroundColor(.gray)
                     
-                    ForEach(sets.indices, id: \.self) { index in
-                        HStack {
-                            Text("\(index + 1)")
-                                .frame(width: 50, alignment:  .center)
-                            Spacer()
-                            Text("\(sets[index].reps)")
-                                .frame(width: 50, alignment: .center)
-                            Spacer()
-                            Text(String(format:"%.1f kg",sets[index].weight))
-                                .frame(width: 80, alignment: .center)
-                        }
-                        .padding(.bottom,5)
-                        .padding(.top,5)
-                       // .padding(.leading,20)
-                       // .foregroundColor(.black)
-                       
-                        
-                    }
-                    .onDelete(perform: { indexSet in
-                       print("delete")
-                    })
                 }
-                
-
-                
+                .onDelete(perform: { indexSet in
+                    print("delete")
+                })
+            }
+            
+            
+            
             
         } header: {
             Group {
@@ -67,7 +63,7 @@ struct ExerciseItem: View {
                         Text(exercise.1.name)
                             .font(.title3)
                             .bold()
-                           // .padding(.leading,20)
+                        
                         Spacer()
                         Button(action: {
                             isExpanded.toggle()
@@ -90,18 +86,15 @@ struct ExerciseItem: View {
                         Spacer()
                     }
                     .foregroundColor(.gray)
-                    //.padding(.leading,20)
+                    
                 }
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.white)
-                        .shadow(radius: 5)
-                )
+                        .shadow(radius: 5))
             }
-           
         }
-
     }
 }
 

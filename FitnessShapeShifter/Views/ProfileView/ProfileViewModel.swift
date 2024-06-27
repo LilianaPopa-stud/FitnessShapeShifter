@@ -24,11 +24,14 @@ final class ProfileViewModel: ObservableObject {
     @Published var goal: String = ""
     @Published var activityLevel: String = ""
     @Published var measurementUnit: String = ""
-    @Published private(set) var user: DBUser? = nil
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var uiImage: UIImage? = nil 
     @Published var downloadedUIImage: UIImage? = nil
     @Published var isLoading = false
+    
+    @Published private(set) var user: DBUser? = nil
+    
+    
     init(user: DBUser? = nil) {
         self.user = user
     }
@@ -49,17 +52,12 @@ final class ProfileViewModel: ObservableObject {
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
                 guard let uiImage = UIImage(data: data)
-                else {
-                    throw TransferError.importFailed
-                }
+                else { throw TransferError.importFailed }
                 let image = Image(uiImage: uiImage)
                 return ProfileImage(image: image,uiImageX: uiImage, data: data)
-                
-                
             }
         }
     }
-    
     @Published  var imageState: ImageState = .empty
     
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -72,9 +70,7 @@ final class ProfileViewModel: ObservableObject {
             }
         }
     }
-    
-    // MARK: - Private Methods
-    
+ 
     private func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
         return imageSelection.loadTransferable(type: ProfileImage.self) { result in
             DispatchQueue.main.async { [self] in
@@ -117,6 +113,28 @@ final class ProfileViewModel: ObservableObject {
         Task {
             try await UserManager.shared.updateUserProfileImage(userId: user.userId, photoURL: photoURL)
             self.user = try await UserManager.shared.fetchUser(userId: user.userId)
+        }
+    }
+    
+    func saveEditedProfile(ageIndexChanged: Bool) async throws {
+        guard let user else { return }
+        if fullName.isEmpty {
+            fullName = user.displayName ?? ""
+        }
+        if weight == nil {
+            weight = user.weight
+        }
+        if height == nil {
+            height = user.height
+        }
+        if ageIndexChanged==false {
+            age = user.age ?? 0
+        }
+        
+        Task {
+            try await UserManager.shared.updateUserProfile(userId: user.userId, displayName: fullName, age:age, weight:weight ?? 0, height:height ?? 0)
+            self.user = try await UserManager.shared.fetchUser(userId: user.userId)
+            
         }
     }
     

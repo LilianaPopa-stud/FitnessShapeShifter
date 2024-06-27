@@ -44,14 +44,14 @@ final class ExerciseViewModel: ObservableObject {
         }
         isLoading = false
     }
- 
+    
     func getExercise(id: String) async throws -> DBExercise {
         do {
             return try await ExerciseManager.shared.getExercise(exerciseId: id)
         } catch {
-            throw error // change this later
+            throw error
         }
-     
+        
     }
     
     

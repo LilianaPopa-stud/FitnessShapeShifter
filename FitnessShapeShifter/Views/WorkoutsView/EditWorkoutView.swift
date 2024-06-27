@@ -116,7 +116,7 @@ struct EditWorkoutView: View {
                         .padding(.top, 10)
                         Spacer()
                     }
-                   
+                    
                     HStack {
                         Text("\(workout.title)")
                             .font(.title3)
@@ -124,8 +124,8 @@ struct EditWorkoutView: View {
                     }
                     .padding(.vertical,5)
                     HStack {
-                    Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
-                   }
+                        Text("💪 TVL: \(String(format: "%.f",totalValueKg())) kg ")
+                    }
                     .padding(.bottom,5)
                     HStack {
                         Text("\(selectedExercises.count) exercises ")
@@ -137,15 +137,15 @@ struct EditWorkoutView: View {
                     .padding(.bottom,5)
                     VStack {
                         Button(action: {
-                          Task {
+                            Task {
                                 viewModel.totalReps = countReps()
                                 viewModel.totalSets = countSets()
                                 viewModel.totalValueKg = totalValueKg()
                                 await viewModel.updateWorkout(workout: workout)
-                              isShowingModal = false
-                              viewIsActive = false
+                                isShowingModal = false
+                                viewIsActive = false
                             }
-                           
+                            
                             
                         }, label: {
                             Text("Update")
@@ -183,8 +183,8 @@ struct EditWorkoutView: View {
                     tuple.exercise
                 )}
         }
-      
-      
+        
+        
         //MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
             SetEditView(isSetEditingPresented: $isSetEditingPresented,
@@ -195,13 +195,13 @@ struct EditWorkoutView: View {
             .presentationDetents([.fraction(0.43)])
             .ignoresSafeArea(edges: .bottom)
         }
-
+        
     }
     //MARK: Other properties
- 
+    
 }
 extension EditWorkoutView {
-
+    
     func countSets() -> Int {
         var count = 0
         for tuple in viewModel.tuples {

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FinishOnboardingButton: View {
     @ObservedObject var viewModel: ProfileViewModel
-    // @Binding var errorMessages: String?
     @Binding var showSignInView: Bool
     @Binding var showOnboarding: Bool
     var activityLevel: String

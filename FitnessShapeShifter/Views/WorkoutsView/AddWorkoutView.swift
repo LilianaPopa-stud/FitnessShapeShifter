@@ -133,7 +133,6 @@ struct AddWorkoutView: View {
                     Text("Workout details")
                         .font(.title2)
                         .foregroundColor(.black)
-                    // day of the week, month, day, year
                     Text("\(viewModel.date, formatter: DateFormatter.dayOfWeek), ")
                         .font(.caption)
                         .foregroundColor(.secondary) +
@@ -223,7 +222,7 @@ struct AddWorkoutView: View {
         .onAppear {
             startTimer()
         }
-      
+        
         //MARK: SetEditView sheet
         .sheet(isPresented: $isSetEditingPresented) {
             SetEditView(isSetEditingPresented: $isSetEditingPresented,

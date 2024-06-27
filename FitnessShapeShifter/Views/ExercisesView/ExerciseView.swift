@@ -93,7 +93,7 @@ struct ExerciseView: View {
                                         .padding(.horizontal,10)
                                         .background(Color.accentColor2.opacity(0.5))
                                         .cornerRadius(10)
-                                         .foregroundColor(.white)
+                                        .foregroundColor(.white)
                                 }
                             }
                         }
@@ -103,8 +103,8 @@ struct ExerciseView: View {
                         ForEach(exercise.primaryMuscle, id: \.self) { muscle in
                             
                             Image(imageName(for: muscle))
-                                    .resizable()
-                                    .frame(width: 200, height: 200)
+                                .resizable()
+                                .frame(width: 200, height: 200)
                             Image(imageName(for: muscle))
                                 .resizable()
                                 .frame(width: 200, height: 200)
@@ -114,10 +114,10 @@ struct ExerciseView: View {
                                 .resizable()
                                 .frame(width: 200, height: 200)
                         }
-                   
+                        
                     }
                 }
-                //info button
+                // description
                 VStack {
                     if let description = exercise.description {
                         Text(description)
@@ -125,8 +125,8 @@ struct ExerciseView: View {
                             .foregroundColor(.black)
                             .padding(.leading, 40)
                             .padding(.trailing, 40)
-                            .lineLimit(showFullDescription ? nil : 2) // Show only 3 lines initially
-                            .opacity(showFullDescription ? 1 : 0.6) // Show full description if toggled
+                            .lineLimit(showFullDescription ? nil : 2)
+                            .opacity(showFullDescription ? 1 : 0.6)
                             .padding(.bottom, 10)
                             .onTapGesture {
                                 showFullDescription.toggle()

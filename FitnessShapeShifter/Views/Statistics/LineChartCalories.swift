@@ -1,24 +1,22 @@
 //
-//  LineChartTVL.swift
+//  LineChartCalories.swift
 //  FitnessShapeShifter
 //
-//  Created by Liliana Popa on 26.04.2024.
+//  Created by Liliana Popa on 17.06.2024.
 //
 
 import SwiftUI
 import Charts
-import Foundation
-
 
 @MainActor
-class LineChartViewModel: ObservableObject {
-    
-    @Published var dataTVL: [TVL] = []
+class LineChartCaloriesViewModel: ObservableObject {
+    @Published var dataCalories: [Item] = []
     @Published var selectedInterval: DateInterval = DateInterval()
     @Published var selectedIntervalType: DateIntervalType = .week
     
     private let userManager = UserManager.shared
-    func fetchTVL() async throws {
+    
+    func fetchCalories() async throws {
         let authData = try AuthenticationManager.shared.getAuthenticatedUser()
         let userId = authData.uid
         
@@ -30,10 +28,8 @@ class LineChartViewModel: ObservableObject {
         default:
             allWorkouts = try await userManager.fetchWorkoutsInDateRange(userId: userId, startDate: selectedInterval.start, endDate: selectedInterval.end)
         }
-        print(selectedInterval.start)
-        print(selectedInterval.end)
         
-        var totalWeightByInterval: [Date: Double] = [:]
+        var totalCaloriesByInterval: [Date: Int] = [:]
         let calendar = Calendar.current
         
         switch selectedIntervalType {
@@ -45,13 +41,13 @@ class LineChartViewModel: ObservableObject {
             
             var currentDate = firstWorkoutDate
             while currentDate <= lastWorkoutDate {
-                totalWeightByInterval[currentDate.startOfMonth()] = 0
+                totalCaloriesByInterval[currentDate.startOfMonth()] = 0
                 currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!
             }
             
             allWorkouts.forEach { workout in
                 let intervalStartDate = calendar.date(from: calendar.dateComponents([.year, .month], from: workout.date))!
-                totalWeightByInterval[intervalStartDate] = (totalWeightByInterval[intervalStartDate] ?? 0) + workout.totalWeight
+                totalCaloriesByInterval[intervalStartDate] = (totalCaloriesByInterval[intervalStartDate] ?? 0) + workout.totalCalories
             }
             
         case .year:
@@ -62,13 +58,13 @@ class LineChartViewModel: ObservableObject {
             
             var currentDate = firstWorkoutDate
             while currentDate <= lastWorkoutDate {
-                totalWeightByInterval[currentDate.startOfMonth()] = 0
+                totalCaloriesByInterval[currentDate.startOfMonth()] = 0
                 currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!
             }
             
             allWorkouts.forEach { workout in
                 let intervalStartDate = calendar.date(from: calendar.dateComponents([.year, .month], from: workout.date))!
-                totalWeightByInterval[intervalStartDate] = (totalWeightByInterval[intervalStartDate] ?? 0) + workout.totalWeight
+                totalCaloriesByInterval[intervalStartDate] = (totalCaloriesByInterval[intervalStartDate] ?? 0) + workout.totalCalories
             }
             
         case .month:
@@ -76,13 +72,13 @@ class LineChartViewModel: ObservableObject {
             let endOfMonth = selectedInterval.end.endOfMonth()
             
             while startOfMonth <= endOfMonth {
-                totalWeightByInterval[startOfMonth] = 0
+                totalCaloriesByInterval[startOfMonth] = 0
                 startOfMonth = calendar.date(byAdding: .day, value: 1, to: startOfMonth)!
             }
             
             allWorkouts.forEach { workout in
                 let intervalStartDate = calendar.date(from: calendar.dateComponents([.year, .month, .day], from: workout.date))!
-                totalWeightByInterval[intervalStartDate] = (totalWeightByInterval[intervalStartDate] ?? 0) + workout.totalWeight
+                totalCaloriesByInterval[intervalStartDate] = (totalCaloriesByInterval[intervalStartDate] ?? 0) + workout.totalCalories
             }
             
         case .week:
@@ -91,86 +87,40 @@ class LineChartViewModel: ObservableObject {
             
             var currentDate = startOfWeek
             while currentDate <= endOfWeek {
-                totalWeightByInterval[currentDate] = 0
+                totalCaloriesByInterval[currentDate] = 0
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
             
             allWorkouts.forEach { workout in
                 let intervalStartDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear, .weekday], from: workout.date))!
-                totalWeightByInterval[intervalStartDate] = (totalWeightByInterval[intervalStartDate] ?? 0) + workout.totalWeight
+                totalCaloriesByInterval[intervalStartDate] = (totalCaloriesByInterval[intervalStartDate] ?? 0) + workout.totalCalories
             }
         }
         
-        let sortedIntervals = totalWeightByInterval.keys.sorted()
-        dataTVL = sortedIntervals.map { date in
-            TVL(date: date, value: totalWeightByInterval[date]!, type: .basic)
+        let sortedIntervals = totalCaloriesByInterval.keys.sorted()
+        dataCalories = sortedIntervals.map { date in
+            Item(date: date, value: totalCaloriesByInterval[date]!, type: .basic)
         }
-        print(dataTVL)
-        
-    }
-}
-extension Date {
-    func startOfMonth() -> Date {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: self)
-        return calendar.date(from: components)!
-    }
-    
-    func endOfMonth() -> Date {
-        let calendar = Calendar.current
-        var components = DateComponents()
-        components.month = 1
-        components.day = -1
-        return calendar.date(byAdding: components, to: self.startOfMonth())!
-    }
-    
-    func startOfWeek() -> Date {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        return calendar.date(from: components)!
-    }
-    
-    func endOfWeek() -> Date {
-        let calendar = Calendar.current
-        var components = DateComponents()
-        components.day = 7
-        return calendar.date(byAdding: components, to: self.startOfWeek())!
+        dataCalories.sort(by: { $0.date < $1.date })
     }
 }
 
-struct TVL: Identifiable, Equatable{
-    var id = UUID()
-    var date: Date
-    var value: Double
-    
-    var type: LineChartType
-}
-
-enum LineChartType: String, CaseIterable, Plottable {
-    case basic = "basic"
-    
-    var color: Color {
-        switch self {
-        case .basic: return .accentColor2
-        }
-    }
-}
-
-struct LineChartTVL: View {
+struct LineChartCalories: View {
     private var areaBackground: Gradient {
         return Gradient(colors: [Color.accentColor2, Color.accentColor2.opacity(0.1)])
     }
+    
     @Binding var selectedIntervalType: DateIntervalType
-    @StateObject var viewModel = LineChartViewModel()
+    @StateObject var viewModel = LineChartCaloriesViewModel()
     @Binding var selectedDateRange: DateInterval
     
     var body: some View {
         VStack {
             Chart {
-                ForEach(viewModel.dataTVL, id: \.id) { item in
+                ForEach(viewModel.dataCalories, id: \.id) { item in
                     LineMark(
                         x: .value("Date", item.date),
-                        y: .value("Value", item.value)
+                        y: .value("Calories", item.value)
                     )
                     .foregroundStyle(item.type.color)
                     .interpolationMethod(.linear)
@@ -182,7 +132,7 @@ struct LineChartTVL: View {
                     }
                     AreaMark(
                         x: .value("Date", item.date),
-                        y: .value("Value", item.value)
+                        y: .value("Calories", item.value)
                     )
                     .interpolationMethod(.linear)
                     .foregroundStyle(areaBackground)
@@ -203,9 +153,9 @@ struct LineChartTVL: View {
             viewModel.selectedInterval = selectedDateRange
             Task {
                 do {
-                    try await viewModel.fetchTVL()
+                    try await viewModel.fetchCalories()
                 } catch {
-                    print("Error fetching TVL")
+                    print("Error fetching Calories")
                 }
             }
         }
@@ -213,9 +163,18 @@ struct LineChartTVL: View {
             viewModel.selectedIntervalType = newIntervalType
             Task {
                 do {
-                    try await viewModel.fetchTVL()
+                    try await viewModel.fetchCalories()
                 } catch {
-                    print("Error fetching TVL")
+                    print("Error fetching Calories")
+                }
+            }
+        }
+        .onChange(of: selectedDateRange) { _ in
+            Task {
+                do {
+                    try await viewModel.fetchCalories()
+                } catch {
+                    print("Error fetching Calories")
                 }
             }
         }
@@ -251,7 +210,7 @@ struct LineChartTVL: View {
             return axisDates
             
         case .year, .allTime:
-            return viewModel.dataTVL.map { $0.date }
+            return viewModel.dataCalories.map { $0.date }
         }
     }
     
@@ -265,11 +224,9 @@ struct LineChartTVL: View {
             return .dateTime.month(.abbreviated)
         }
     }
-    
 }
 
 #Preview {
-    LineChartTVL(selectedIntervalType: .constant(.allTime), selectedDateRange: .constant(DateInterval()))
-    
-    
+    LineChartCalories(selectedIntervalType: .constant(.allTime), selectedDateRange: .constant(DateInterval()))
 }
+

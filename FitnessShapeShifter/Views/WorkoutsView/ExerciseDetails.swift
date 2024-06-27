@@ -113,7 +113,6 @@ struct ExerciseDetails: View {
                         HStack {
                             Text(exercise.name)
                                 .font(.headline)
-                            //   Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         }
                         HStack {
                             

@@ -102,7 +102,7 @@ final class ExerciseManager {
         let querySnapshot = try await exerciseCollection.whereField("name", isEqualTo: exerciseName).getDocuments()
         
         guard let document = querySnapshot.documents.first else {
-            return // Handle error if document is not found
+            return
         }
         try await document.reference.updateData(["description": description])
     }

@@ -4,18 +4,18 @@ import SwiftUI
 
 struct KeyPadButton: View {
     var key: String
-
+    
     var body: some View {
         Button(action: { self.action(self.key) }) {
             Color.clear
                 .overlay(Text(key).font(.title).foregroundColor(.white))
         }
     }
-
+    
     enum ActionKey: EnvironmentKey {
         static var defaultValue: (String) -> Void { { _ in } }
     }
-
+    
     @Environment(\.keyPadButtonAction) var action: (String) -> Void
 }
 

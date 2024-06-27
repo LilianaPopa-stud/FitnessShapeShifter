@@ -89,7 +89,7 @@ class WorkoutViewModel: ObservableObject {
                 let exercise = ExerciseInWorkout(exerciseId: tuple.exercise.id, sets: tuple.sets)
                 exercises.append(exercise)
             }
-           
+            
             try await userManager.updateWorkout(userId: authData.uid, workoutId: workout.id, exercises: exercises, totalReps: totalReps, totalSets: totalSets, totalValueKg: totalValueKg, totalCalories: Int(caloriesBurned))
         } catch {
             print("Error updating workout:", error)
@@ -106,7 +106,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func fetchWorkoutsDescendingByDate() async throws {
-  
+        
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             let workouts = try await userManager.fetchWorkoutsDescendingByDate(userId: authData.uid)
@@ -127,7 +127,7 @@ class WorkoutViewModel: ObservableObject {
             }
             
         } catch {
-            print("Error fetching exercises:", error) // catch error and handle it
+            print("Error fetching exercises:", error) 
         }
         return exercises
     }
@@ -142,7 +142,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func updateWorkoutDetails(workoutId: String, workoutTitle: String, workoutDate: Date) async {
-       
+        
         do {
             let authData = try AuthenticationManager.shared.getAuthenticatedUser()
             try await userManager.updateWorkoutDetails(userId: authData.uid, workoutId: workoutId, workoutTitle: workoutTitle, workoutDate: workoutDate)
@@ -151,7 +151,7 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-   
+    
     
 }
 

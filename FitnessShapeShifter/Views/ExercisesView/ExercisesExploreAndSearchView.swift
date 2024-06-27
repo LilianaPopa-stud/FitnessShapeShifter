@@ -20,12 +20,6 @@ struct ExercisesExploreAndSearchView: View {
                     ScrollView (showsIndicators: false) {
                         VStack {
                             if searchText.isEmpty {
-                                //                                Text("Some inspiration for your workouts 🏋️‍♀️")
-                                //                                    .font(Font.custom("Bodoni 72", size: 30, relativeTo: .title))
-                                //                                   // .font(.title)
-                                //                                    .padding(.horizontal,10)
-                                //                                    .padding(.top,10)
-                                //                                    .multilineTextAlignment(.center)
                                 ForEach(splitPPL, id: \.self) { splitPPL in
                                     VStack(alignment: .leading) {
                                         Text(splitPPL)
@@ -55,7 +49,7 @@ struct ExercisesExploreAndSearchView: View {
                             else {
                                 if filteredExercises.isEmpty {
                                     Text("No exercises found.")
-                                        .foregroundColor(.gray) // You can adjust color as per your UI
+                                        .foregroundColor(.gray) 
                                         .padding()
                                 }
                                 else {

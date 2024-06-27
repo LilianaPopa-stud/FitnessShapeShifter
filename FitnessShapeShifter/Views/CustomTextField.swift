@@ -10,15 +10,13 @@ struct CustomTextField: View {
     
     var body: some View {
         ZStack {
-          
-            Image(systemName: sfIcon ?? "person")
-                    .foregroundColor(.black)
-                    .scaledToFit()
-                    .frame(height: 20)
-                    .padding(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
             
+            Image(systemName: sfIcon ?? "person")
+                .foregroundColor(.black)
+                .scaledToFit()
+                .frame(height: 20)
+                .padding(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             if isPasswordField {
                 if showPassword {

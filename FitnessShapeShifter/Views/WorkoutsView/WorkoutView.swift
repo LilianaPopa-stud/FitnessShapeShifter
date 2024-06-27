@@ -17,7 +17,7 @@ struct Workout: View {
     @State private var isDeleteAlertPresented = false
     @Binding var refreshWorkouts: Bool
     @State var isLoading = true
-
+    
     var body: some View {
         // title
         ZStack {
@@ -27,13 +27,13 @@ struct Workout: View {
             VStack {
                 HStack {
                     CircularProfileImage(imageState: profileViewModel.imageState, size:  CGSize(width: 45, height: 45))
-                        
+                    
                     Text("\(workout.title)")
                         .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
-                 
-                
+                    
+                    
                 }
                 HStack{
                     Text(workout.date, style: .date)
@@ -71,58 +71,58 @@ struct Workout: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .gray))
                     
                     
-                    } else {
-                        HStack{
-                            ScrollView(.vertical, showsIndicators: false) {
-                                ForEach(getDistinctMuscles(), id: \.self) { muscle in
-                                    Text(muscle)
-                                        .font(.caption)
-                                        .padding(.vertical,5)
-                                        .padding(.horizontal,10)
-                                        .background(Color.accentColor2)
-                                        .cornerRadius(10)
-                                        .foregroundColor(.white)
+                } else {
+                    HStack{
+                        ScrollView(.vertical, showsIndicators: false) {
+                            ForEach(getDistinctMuscles(), id: \.self) { muscle in
+                                Text(muscle)
+                                    .font(.caption)
+                                    .padding(.vertical,5)
+                                    .padding(.horizontal,10)
+                                    .background(Color.accentColor2)
+                                    .cornerRadius(10)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .frame(width: 120, height: 160)
+                        
+                        
+                        ZStack{
+                            ForEach(exercises, id: \.0.id){ exercise in
+                                let muscle = exercise.1.primaryMuscle
+                                let muscle2 = exercise.1.secondaryMuscle
+                                ForEach(muscle, id: \.self) { muscle in
+                                    Image("\(workoutViewModel.imageName(for: muscle))")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 200, height: 200)
+                                        .padding(.trailing, 5)
+                                }
+                                ForEach(muscle2 ?? [], id: \.self) { muscle in
+                                    Image("\(workoutViewModel.imageName(for: muscle))")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 200, height: 200)
+                                        .padding(.trailing, 5)
                                 }
                             }
-                            .frame(width: 120, height: 160)
-                
-                            
-                            ZStack{
-                                ForEach(exercises, id: \.0.id){ exercise in
-                                    let muscle = exercise.1.primaryMuscle
-                                    let muscle2 = exercise.1.secondaryMuscle
-                                    ForEach(muscle, id: \.self) { muscle in
-                                        Image("\(workoutViewModel.imageName(for: muscle))")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 200)
-                                            .padding(.trailing, 5)
-                                    }
-                                    ForEach(muscle2 ?? [], id: \.self) { muscle in
-                                        Image("\(workoutViewModel.imageName(for: muscle))")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 200)
-                                            .padding(.trailing, 5)
-                                    }
-                                }
-                            }
-                            
-                        }}
-                    Spacer()
-                }
-                .padding()
+                        }
+                        
+                    }}
+                Spacer()
+            }
+            .padding()
             
         }
         .onAppear(){
             Task {
-                   do {
-                       exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
-                       isLoading = false
-                   } catch {
-                       print("Error fetching exercises for workout:", error)
-                   }
-               }
+                do {
+                    exercises = try await workoutViewModel.getWorkoutExercises(workout: workout)
+                    isLoading = false
+                } catch {
+                    print("Error fetching exercises for workout:", error)
+                }
+            }
             
         }
         .onChange(of: isLoading){
@@ -172,7 +172,7 @@ extension Workout{
         }
         return muscles
     }
-
+    
     
     
 }

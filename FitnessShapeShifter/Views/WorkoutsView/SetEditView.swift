@@ -32,7 +32,6 @@ struct SetEditView: View {
                                 .foregroundColor(.white)
                                 .font(.title2)
                                 .disabled(true)
-                                //.background(.black)
                                 .onTapGesture {
                                     isRepsFieldFocused = true
                                     isWeightFieldFocused = false
@@ -45,15 +44,11 @@ struct SetEditView: View {
                                 .foregroundColor(.white)
                                 .font(.title2)
                                 .keyboardType(.numberPad)
-                               // .background(.black)
                                 .disabled(true)
                                 .onTapGesture {
                                     isRepsFieldFocused = false
                                     isWeightFieldFocused = true
                                 }
-                            
-                            // + and - buttons
-                            
                         }
                         .padding(.horizontal,20)
                     }
@@ -67,14 +62,14 @@ struct SetEditView: View {
                 }
             }
         }
-     
+        
         .onAppear(){
             isRepsFieldFocused = true
             isWeightFieldFocused = false
         }
         .onChange(of: saveSet) {
             if saveSet {
-               saveSetFunc()
+                saveSetFunc()
             }
         }
         
@@ -126,14 +121,13 @@ struct KeyPad: View {
             // minus case for weight
         case "-" where Double(string) ?? 0>0: string = String((Double(string) ?? 0.0)-0.5)
         case "-" where Int(string) ?? 0==0: string = "0"
-            
             // save
         case "Save": saveSet = true
-            // default case (numbers
+            // default case
         default: if string == "0" && key != "0" {
             string = key }
             else {
-            string += key
+                string += key
             }
         }
     }

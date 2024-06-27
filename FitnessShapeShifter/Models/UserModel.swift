@@ -21,7 +21,6 @@ struct DBUser: Codable {
     let activityLevel: String?
     let measurementUnit: String?
     
-    
     init(auth: AuthDataResultModel, displayName: String? = nil) {
         self.userId = auth.uid
         self.email = auth.email
@@ -36,8 +35,6 @@ struct DBUser: Codable {
         self.activityLevel = nil
         self.measurementUnit = nil
     }
-    
-    // vezi de ce la log in nu se incarca datele imediat, dar abia dupa ce intri in settings sau dupa ce dai log out si log in iar
     init(userId: String,
          email: String? = nil,
          photoURL: String? = nil,
@@ -62,7 +59,6 @@ struct DBUser: Codable {
         self.goal = goal
         self.measurementUnit = measurementUnit
         self.gender = gender
-        
     }
    
     enum CodingKeys: String, CodingKey {
@@ -95,7 +91,7 @@ struct DBUser: Codable {
         self.activityLevel = try container.decodeIfPresent(String.self, forKey: .activityLevel)
         self.measurementUnit = try container.decodeIfPresent(String.self, forKey: .measurementUnit)
     }
-    //
+    
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.userId, forKey: .userId)
@@ -111,7 +107,4 @@ struct DBUser: Codable {
         try container.encodeIfPresent(self.activityLevel, forKey: .activityLevel)
         try container.encodeIfPresent(self.measurementUnit, forKey: .measurementUnit)
     }
-    
-    
-    
 }

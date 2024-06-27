@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ExerciseListView: View {
-//    @State private var selectedExercises = Set<DBExercise>()
     @Binding var returnSelectedExercises: [DBExercise]
     @State var selectedExercises: Set<DBExercise> =  Set<DBExercise>()
     @State private var exercises: [DBExercise] = []
@@ -25,12 +24,12 @@ struct ExerciseListView: View {
         return Dictionary(grouping: sortedExercises, by: { String($0.name.prefix(1)).uppercased() })
     }
     private var filteredExercisesForSearch: [DBExercise] {
-          if searchText.isEmpty {
-              return exercises
-          } else {
-              return exercises.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-          }
-      }
+        if searchText.isEmpty {
+            return exercises
+        } else {
+            return exercises.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
     var body: some View {
         NavigationView {
             VStack {

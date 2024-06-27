@@ -22,18 +22,14 @@ class StatsViewModel: ObservableObject {
     
     private let userManager = UserManager.shared
     
-    // all time stats
     func fetchStats() async throws {
-        // get user id
         let authData = try AuthenticationManager.shared.getAuthenticatedUser()
         let userId = authData.uid
         var workouts: [DBWorkout] = []
         if allTimeStats {
-            // get all time stats
             workouts = try await userManager.fetchWorkouts(userId: userId)
         }
         else {
-            // get stats for selected date range
             workouts = try await userManager.fetchWorkoutsInDateRange(userId: userId, startDate: selectedDateRange.start, endDate: selectedDateRange.end)
         }
         nrOfWorkouts = workouts.count

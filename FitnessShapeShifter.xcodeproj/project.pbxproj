@@ -21,6 +21,7 @@
 		E6129F0A2B9FDE6E009E12F2 /* EditableCircularProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F092B9FDE6E009E12F2 /* EditableCircularProfileImage.swift */; };
 		E6129F102BA10412009E12F2 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F0F2BA10412009E12F2 /* EditProfileView.swift */; };
 		E6129F122BA11259009E12F2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6129F112BA11259009E12F2 /* ProfileViewModel.swift */; };
+		E64899A62C208A9B00B47729 /* LineChartCalories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64899A52C208A9B00B47729 /* LineChartCalories.swift */; };
 		E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */; };
 		E654CBAF2B9D38400017B3F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBAE2B9D38400017B3F6 /* Assets.xcassets */; };
 		E654CBB22B9D38400017B3F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E654CBB12B9D38400017B3F6 /* Preview Assets.xcassets */; };
@@ -85,6 +86,7 @@
 		E654CC482B9D3B020017B3F6 /* Southland.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E654CC062B9D3B020017B3F6 /* Southland.ttf */; };
 		E654CC492B9D3B020017B3F6 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */; };
 		E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */; };
+		E658E0152C1FCDF80053834B /* MuscleChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658E0142C1FCDF80053834B /* MuscleChart.swift */; };
 		E6871FCB2BC0448300ED51DB /* AddWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */; };
 		E6871FCD2BC064C600ED51DB /* ExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */; };
 		E6871FCF2BC14FC400ED51DB /* ExerciseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */; };
@@ -105,6 +107,7 @@
 		E6EFC5072BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EFC5062BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift */; };
 		E6F72BB92BD5E4E1002242AD /* EditWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F72BB82BD5E4E1002242AD /* EditWorkoutView.swift */; };
 		E6F89F522BDF12AB00927BE5 /* Fancy3DotsIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F89F512BDF12AB00927BE5 /* Fancy3DotsIndexView.swift */; };
+		E6FEA39C2C2085B200E2EE8D /* LineChartReps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FEA39B2C2085B200E2EE8D /* LineChartReps.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +124,7 @@
 		E6129F092B9FDE6E009E12F2 /* EditableCircularProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCircularProfileImage.swift; sourceTree = "<group>"; };
 		E6129F0F2BA10412009E12F2 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		E6129F112BA11259009E12F2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E64899A52C208A9B00B47729 /* LineChartCalories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartCalories.swift; sourceTree = "<group>"; };
 		E654CBA72B9D383E0017B3F6 /* FitnessShapeShifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessShapeShifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E654CBAA2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessShapeShifterApp.swift; sourceTree = "<group>"; };
 		E654CBAE2B9D38400017B3F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		E654CC082B9D3B020017B3F6 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E654CC0D2B9D3B020017B3F6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E654CC4D2B9D3FDE0017B3F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E658E0142C1FCDF80053834B /* MuscleChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleChart.swift; sourceTree = "<group>"; };
 		E6871FCA2BC0448300ED51DB /* AddWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutView.swift; sourceTree = "<group>"; };
 		E6871FCC2BC064C600ED51DB /* ExerciseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListView.swift; sourceTree = "<group>"; };
 		E6871FCE2BC14FC400ED51DB /* ExerciseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetails.swift; sourceTree = "<group>"; };
@@ -202,6 +207,7 @@
 		E6EFC5062BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesExploreAndSearchView.swift; sourceTree = "<group>"; };
 		E6F72BB82BD5E4E1002242AD /* EditWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutView.swift; sourceTree = "<group>"; };
 		E6F89F512BDF12AB00927BE5 /* Fancy3DotsIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fancy3DotsIndexView.swift; sourceTree = "<group>"; };
+		E6FEA39B2C2085B200E2EE8D /* LineChartReps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartReps.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +235,9 @@
 				E60DF8862BDA76A300561EEE /* PeriodSelectionSheet.swift */,
 				E60DF8842BDA68A900561EEE /* StatsViewModel.swift */,
 				E60DF8882BDB004100561EEE /* LineChartTVL.swift */,
+				E6FEA39B2C2085B200E2EE8D /* LineChartReps.swift */,
+				E64899A52C208A9B00B47729 /* LineChartCalories.swift */,
+				E658E0142C1FCDF80053834B /* MuscleChart.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -603,7 +612,9 @@
 				E654CC142B9D3B020017B3F6 /* RegisterView.swift in Sources */,
 				E6993A222BB437C300B1474C /* Workouts.swift in Sources */,
 				E6D10E162BD446CC00FBA592 /* ExerciseItem.swift in Sources */,
+				E6FEA39C2C2085B200E2EE8D /* LineChartReps.swift in Sources */,
 				E654CC162B9D3B020017B3F6 /* SignUpConfirmationButton.swift in Sources */,
+				E64899A62C208A9B00B47729 /* LineChartCalories.swift in Sources */,
 				E6EFC5022BB63D610062D5D2 /* ExerciseViewModel.swift in Sources */,
 				E654CBAB2B9D383E0017B3F6 /* FitnessShapeShifterApp.swift in Sources */,
 				E6871FCB2BC0448300ED51DB /* AddWorkoutView.swift in Sources */,
@@ -630,6 +641,7 @@
 				E654CC202B9D3B020017B3F6 /* GenderView.swift in Sources */,
 				E6871FCD2BC064C600ED51DB /* ExerciseListView.swift in Sources */,
 				E654CC4C2B9D3B020017B3F6 /* SettingsView.swift in Sources */,
+				E658E0152C1FCDF80053834B /* MuscleChart.swift in Sources */,
 				E6993A242BB4382E00B1474C /* AddWorkoutButton.swift in Sources */,
 				E6EFC5072BB6DBCE0062D5D2 /* ExercisesExploreAndSearchView.swift in Sources */,
 				E6129F102BA10412009E12F2 /* EditProfileView.swift in Sources */,

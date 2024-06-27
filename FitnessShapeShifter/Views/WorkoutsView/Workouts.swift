@@ -21,7 +21,6 @@ struct Workouts: View {
             NavigationView {
                 VStack {
                     // button "Add workout"
-                    //list of workouts
                     ScrollView {
                         AddWorkoutButton(isActive: $isActive)
                             .padding(30)
@@ -50,7 +49,7 @@ struct Workouts: View {
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 10)
-                        
+                        //list of workouts
                         if workoutViewModel.isLoading {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle())
@@ -146,7 +145,7 @@ struct WorkoutItemView: View {
     var body: some View {
         NavigationLink(
             destination: WorkoutDetails(isActive: $isDetailsViewActive, workout: workout)
-            .navigationBarBackButtonHidden(true),
+                .navigationBarBackButtonHidden(true),
             isActive: $isDetailsViewActive
         ) {
             Workout(workout: workout, refreshWorkouts: $refreshWorkouts)
